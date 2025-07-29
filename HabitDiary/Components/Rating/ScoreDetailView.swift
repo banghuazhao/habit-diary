@@ -256,7 +256,7 @@ class ScoreDetailViewModel: HashableObject {
     }
     
     private func loadCheckInsData() async {
-        currentScore = min(allCheckIns.count * 2, ScoreCategory.totalCheckIns.maxScore)
+        currentScore = min(allCheckIns.count, ScoreCategory.totalCheckIns.maxScore)
         percentage = Double(currentScore) / Double(ScoreCategory.totalCheckIns.maxScore)
         
         let today = Date()
@@ -283,7 +283,7 @@ class ScoreDetailViewModel: HashableObject {
     
     private func loadStreakData() async {
         let longestStreak = calculateLongestStreak()
-        currentScore = min(longestStreak * 2, ScoreCategory.longestStreak.maxScore)
+        currentScore = min(longestStreak * 5, ScoreCategory.longestStreak.maxScore)
         percentage = Double(currentScore) / Double(ScoreCategory.longestStreak.maxScore)
         
         let currentStreak = calculateCurrentStreak()

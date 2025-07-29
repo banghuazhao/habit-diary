@@ -60,14 +60,12 @@ class RatingService {
             .filter { $0.isUnlocked }
         
         // Score based on number of unlocked achievements
-        // 10 points per achievement
         return min(achievements.count * 10, ScoreCategory.achievements.maxScore)
     }
     
     private func calculateCheckInsScore() -> Int {
         // Score based on total number of check-ins
-        // 2 points per check-in, max 200 points (100 check-ins)
-        return min(allCheckIns.count * 2, ScoreCategory.totalCheckIns.maxScore)
+        return min(allCheckIns.count * 1, ScoreCategory.totalCheckIns.maxScore)
     }
     
     private func calculateLongestStreakScore() -> Int {
@@ -104,7 +102,7 @@ class RatingService {
         // Check if the last streak is the longest
         longestStreak = max(longestStreak, currentStreak)
         
-        return min(longestStreak * 2, ScoreCategory.longestStreak.maxScore)
+        return min(longestStreak * 5, ScoreCategory.longestStreak.maxScore)
     }
     
     func getScoreBreakdown() -> [ScoreBreakdownItem] {

@@ -129,6 +129,16 @@
         }
       }
     },
+    "%lld-%lld points" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld-%2$lld points"
+          }
+        }
+      }
+    },
     "%lld/%lld" : {
       "localizations" : {
         "en" : {
@@ -178,6 +188,7 @@
       }
     },
     "%lld/1200" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -196,6 +207,9 @@
           }
         }
       }
+    },
+    "%lld+ points" : {
+
     },
     "• " : {
       "localizations" : {
@@ -276,6 +290,7 @@
       }
     },
     "0-99 points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -350,9 +365,6 @@
         }
       }
     },
-    "5 points per active habit. Focus on quality over quantity - having 10-20 consistent habits is better than many inactive ones." : {
-
-    },
     "5 points per day in your longest consecutive streak. Building long streaks shows exceptional consistency and dedication." : {
 
     },
@@ -366,6 +378,12 @@
           }
         }
       }
+    },
+    "10 points per active habit. Focus on quality over quantity - having 10-20 consistent habits is better than many inactive ones." : {
+
+    },
+    "10 points per unlocked achievement. Complete challenges like streaks, consistency goals, and milestones to earn more points." : {
+
     },
     "10 points per unlocked achievement. Currently %lld achievements available." : {
       "extractionState" : "stale",
@@ -389,13 +407,11 @@
         }
       }
     },
-    "12 points per unlocked achievement. Complete challenges like streaks, consistency goals, and milestones to earn more points." : {
-
-    },
     "35+ habit templates across health, productivity, learning, relationships, and personal growth." : {
 
     },
     "100-199 points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -406,6 +422,7 @@
       }
     },
     "200-299 points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -416,6 +433,7 @@
       }
     },
     "300-399 points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -426,6 +444,7 @@
       }
     },
     "400-499 points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -436,6 +455,7 @@
       }
     },
     "500-599 points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -446,6 +466,7 @@
       }
     },
     "600-699 points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -456,6 +477,7 @@
       }
     },
     "700-799 points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -466,6 +488,7 @@
       }
     },
     "800-899 points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -476,6 +499,7 @@
       }
     },
     "900-999 points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -486,6 +510,7 @@
       }
     },
     "1000-1099 points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -496,6 +521,7 @@
       }
     },
     "1100+ points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2649,6 +2675,9 @@
         }
       }
     },
+    "Motivation" : {
+
+    },
     "My Habit Rating" : {
 
     },
@@ -3046,6 +3075,9 @@
         }
       }
     },
+    "Progress in %@" : {
+
+    },
     "Progress to %@" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3058,6 +3090,16 @@
     },
     "Purple" : {
 
+    },
+    "Range: %lld - %@ points" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Range: %1$lld - %2$@ points"
+          }
+        }
+      }
     },
     "Rate Us" : {
       "localizations" : {
@@ -4364,6 +4406,9 @@
           }
         }
       }
+    },
+    "Your Performance:" : {
+
     },
     "Your rating is calculated based on your overall health and wellness habits across multiple dimensions. Focus on building consistent habits across all categories to improve your rating!" : {
       "localizations" : {

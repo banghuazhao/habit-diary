@@ -170,19 +170,11 @@ struct RatingLevelRow: View {
     }
     
     private var scoreRangeText: String {
-        switch rating {
-        case .f: return String(localized: "0-99 points")
-        case .dMinus: return String(localized: "100-199 points")
-        case .d: return String(localized: "200-299 points")
-        case .cMinus: return String(localized: "300-399 points")
-        case .c: return String(localized: "400-499 points")
-        case .bMinus: return String(localized: "500-599 points")
-        case .b: return String(localized: "600-699 points")
-        case .aMinus: return String(localized: "700-799 points")
-        case .a: return String(localized: "800-899 points")
-        case .s: return String(localized: "900-999 points")
-        case .ss: return String(localized: "1000-1099 points")
-        case .sss: return String(localized: "1100+ points")
+        let range = rating.scoreRange
+        if range.upperBound == Int.max {
+            return String(localized: "\(range.lowerBound)+ points")
+        } else {
+            return String(localized: "\(range.lowerBound)-\(range.upperBound) points")
         }
     }
 }

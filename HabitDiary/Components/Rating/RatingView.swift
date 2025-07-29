@@ -16,6 +16,11 @@ struct RatingView: View {
                     // Rating Card
                     ratingCard
                     
+                    // Motivational Message Card
+                    if let breakdown = viewModel.scoreBreakdown {
+                        motivationalCard(rating: breakdown.rating)
+                    }
+                    
                     // Score Breakdown
                     scoreBreakdownSection
                 }
@@ -78,14 +83,29 @@ struct RatingView: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                         Spacer()
-                        Text(String(localized: "\(breakdown.totalScore)/1200"))
+                        Text(String(localized: "\(breakdown.totalScore)/\(breakdown.maxPossibleScore)"))
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
                     
-                    ProgressView(value: Double(breakdown.totalScore), total: 1200)
+                    ProgressView(value: breakdown.overallProgress)
                         .progressViewStyle(LinearProgressViewStyle(tint: breakdown.rating.color))
                         .scaleEffect(x: 1, y: 2, anchor: .center)
+                    
+                    // Progress within current rating
+                    HStack {
+                        Text(String(localized: "Progress in \(breakdown.rating.description)"))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        Text(String(format: "%.1f%%", breakdown.progressInCurrentRating * 100))
+                            .font(.caption)
+                            .foregroundColor(breakdown.rating.color)
+                    }
+                    
+                    ProgressView(value: breakdown.progressInCurrentRating)
+                        .progressViewStyle(LinearProgressViewStyle(tint: breakdown.rating.color.opacity(0.7)))
+                        .scaleEffect(x: 1, y: 1.5, anchor: .center)
                 }
                 
                 if let nextRating = viewModel.scoreBreakdown?.nextRating {
@@ -107,6 +127,37 @@ struct RatingView: View {
         }
     }
     
+    private func motivationalCard(rating: HabitRating) -> some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: "quote.bubble.fill")
+                    .foregroundColor(rating.color)
+                    .font(.title3)
+                
+                Text(String(localized: "Motivation"))
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                Spacer()
+            }
+            
+            Text(rating.motivationalMessage)
+                .font(.body)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(rating.color.opacity(0.05))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(rating.color.opacity(0.2), lineWidth: 1)
+                )
+        )
+    }
+    
     private func progressToNextRatingCard(nextRating: HabitRating) -> some View {
         VStack(spacing: 12) {
             HStack {
@@ -118,14 +169,24 @@ struct RatingView: View {
             }
             
             if let breakdown = viewModel.scoreBreakdown {
-                HStack {
-                    Text(String(localized: "\(breakdown.scoreToNextRating) points needed"))
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Text(nextRating.description)
-                        .font(.subheadline)
-                        .foregroundColor(nextRating.color)
+                VStack(spacing: 8) {
+                    HStack {
+                        Text(String(localized: "\(breakdown.scoreToNextRating) points needed"))
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        Text(nextRating.description)
+                            .font(.subheadline)
+                            .foregroundColor(nextRating.color)
+                    }
+                    
+                    // Show score range for next rating
+                    HStack {
+                        Text(String(localized: "Range: \(nextRating.scoreRange.lowerBound) - \(nextRating.scoreRange.upperBound == Int.max ? "∞" : "\(nextRating.scoreRange.upperBound)") points"))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
                 }
             }
         }
@@ -160,15 +221,21 @@ struct RatingView: View {
         @State var isInfoPresented: Bool = false
         
         var body: some View {
-            VStack(spacing: 8) {
+            VStack(spacing: 12) {
                 HStack {
                     Image(systemName: item.icon)
                         .foregroundColor(item.color)
                         .frame(width: 24)
                     
-                    Text(item.title)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(item.title)
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                        
+                        Text(item.performanceLevel.description)
+                            .font(.caption)
+                            .foregroundColor(item.performanceLevel.color)
+                    }
                     
                     Button(action: {
                         isInfoPresented.toggle()
@@ -188,8 +255,25 @@ struct RatingView: View {
                                 Text(item.explanation)
                                     .font(.body)
                                     .multilineTextAlignment(.leading)
+                                
+                                // Performance level explanation
+                                VStack(alignment: .leading, spacing: 8) {
+                                    HStack {
+                                        Text(String(localized: "Your Performance:"))
+                                            .font(.subheadline)
+                                            .fontWeight(.medium)
+                                        Text(item.performanceLevel.description)
+                                            .font(.subheadline)
+                                            .foregroundColor(item.performanceLevel.color)
+                                    }
+                                    
+                                    Text(String(format: "%.1f%% of maximum possible score", item.percentage * 100))
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                                .padding(.top, 8)
                             }
-                            .frame(minHeight: 150)
+                            .frame(minHeight: 200)
                         }
                         .padding()
                         .presentationCompactAdaptation(.popover)
@@ -197,19 +281,46 @@ struct RatingView: View {
                     
                     Spacer()
                     
-                    Text(String(localized: "\(item.score)/\(item.maxScore)"))
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text(String(localized: "\(item.score)/\(item.maxScore)"))
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundColor(.primary)
+                        
+                        Text(String(format: "%.0f%%", item.percentage * 100))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 
-                ProgressView(value: item.percentage)
-                    .progressViewStyle(LinearProgressViewStyle(tint: item.color))
-                    .scaleEffect(x: 1, y: 1.5, anchor: .center)
+                // Progress bar with performance color
+                VStack(spacing: 4) {
+                    ProgressView(value: item.percentage)
+                        .progressViewStyle(LinearProgressViewStyle(tint: item.performanceLevel.color))
+                        .scaleEffect(x: 1, y: 1.5, anchor: .center)
+                    
+                    // Performance level indicator
+                    HStack {
+                        Spacer()
+                        HStack(spacing: 4) {
+                            Circle()
+                                .fill(item.performanceLevel.color)
+                                .frame(width: 6, height: 6)
+                            Text(item.performanceLevel.description)
+                                .font(.caption2)
+                                .foregroundColor(item.performanceLevel.color)
+                        }
+                    }
+                }
             }
             .padding(16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color(.systemBackground))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(item.performanceLevel.color.opacity(0.2), lineWidth: 1)
+                    )
                     .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
             )
         }

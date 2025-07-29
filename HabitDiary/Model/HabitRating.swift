@@ -85,9 +85,9 @@ enum HabitRating: String, CaseIterable {
         case 420..<560: return .bMinus
         case 560..<720: return .b
         case 720..<900: return .aMinus
-        case 900..<1100: return .a
-        case 1100..<1320: return .s
-        case 1320..<1560: return .ss
+        case 900..<1050: return .a
+        case 1050..<1200: return .s
+        case 1200..<1300: return .ss
         default: return .sss
         }
     }
@@ -101,11 +101,11 @@ enum HabitRating: String, CaseIterable {
         case .c: return 300...419
         case .bMinus: return 420...559
         case .b: return 560...719
-        case .aMinus: return 720...899
-        case .a: return 900...1099
-        case .s: return 1100...1319
-        case .ss: return 1320...1559
-        case .sss: return 1560...Int.max
+        case .aMinus: return 719...899
+        case .a: return 900...1049
+        case .s: return 1050...1199
+        case .ss: return 1200...1299
+        case .sss: return 1300...Int.max
         }
     }
 }
@@ -127,8 +127,8 @@ enum ScoreCategory: String, CaseIterable {
     
     var maxScore: Int {
         switch self {
-        case .activeHabits: return 400 // 5 points per habit, max 80 habits
-        case .achievements: return AchievementDefinitions.all.count * 12 // 12 points per achievement
+        case .activeHabits: return 400 // 10 points per habit, max 40 habits
+        case .achievements: return AchievementDefinitions.all.count * 10 // 12 points per achievement
         case .totalCheckIns: return 300 // 1 point per check-in, max 300 check-ins
         case .longestStreak: return 500 // 5 points per day, max 100 days
         }
@@ -155,9 +155,9 @@ enum ScoreCategory: String, CaseIterable {
     var calculationExplanation: String {
         switch self {
         case .activeHabits:
-            return String(localized: "5 points per active habit. Focus on quality over quantity - having 10-20 consistent habits is better than many inactive ones.")
+            return String(localized: "10 points per active habit. Focus on quality over quantity - having 10-20 consistent habits is better than many inactive ones.")
         case .achievements:
-            return String(localized: "12 points per unlocked achievement. Complete challenges like streaks, consistency goals, and milestones to earn more points.")
+            return String(localized: "10 points per unlocked achievement. Complete challenges like streaks, consistency goals, and milestones to earn more points.")
         case .totalCheckIns:
             return String(localized: "1 point per check-in across all habits. Every completed habit counts toward your total score.")
         case .longestStreak:
