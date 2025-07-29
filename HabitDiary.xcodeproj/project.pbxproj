@@ -1,0 +1,469 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		41449E722E166E9B00DEB393 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41449E712E166E9B00DEB393 /* StoreKit.framework */; };
+		41FFF2722E14E9FC004ACA97 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 41FFF2712E14E9FC004ACA97 /* GoogleMobileAds */; };
+		993B4CDF2E1A8BDA0027D86C /* MoreApps in Frameworks */ = {isa = PBXBuildFile; productRef = 993B4CDE2E1A8BDA0027D86C /* MoreApps */; };
+		996BA7BB2DF19E3A00A4B9FC /* SharingGRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 996BA7BA2DF19E3A00A4B9FC /* SharingGRDB */; };
+		996BA8C32E0A71CA00A4B9FC /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 996BA8C22E0A71CA00A4B9FC /* SwiftUINavigation */; };
+		99774EEA2E1007C20099920F /* EasyToast in Frameworks */ = {isa = PBXBuildFile; productRef = 99774EE92E1007C20099920F /* EasyToast */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		41449E712E166E9B00DEB393 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		993A34222DEB1031002CEA39 /* HabitDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9920DB662E3827460045E3EB /* Exceptions for "HabitDiary" folder in "HabitDiary" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Config/Debug.xcconfig,
+				Config/Release.xcconfig,
+			);
+			target = 993A34212DEB1031002CEA39 /* HabitDiary */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		993A34242DEB1031002CEA39 /* HabitDiary */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9920DB662E3827460045E3EB /* Exceptions for "HabitDiary" folder in "HabitDiary" target */,
+			);
+			path = HabitDiary;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		993A341F2DEB1031002CEA39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				41FFF2722E14E9FC004ACA97 /* GoogleMobileAds in Frameworks */,
+				99774EEA2E1007C20099920F /* EasyToast in Frameworks */,
+				41449E722E166E9B00DEB393 /* StoreKit.framework in Frameworks */,
+				993B4CDF2E1A8BDA0027D86C /* MoreApps in Frameworks */,
+				996BA8C32E0A71CA00A4B9FC /* SwiftUINavigation in Frameworks */,
+				996BA7BB2DF19E3A00A4B9FC /* SharingGRDB in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		41449E702E166E9B00DEB393 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				41449E712E166E9B00DEB393 /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		993A34192DEB1031002CEA39 = {
+			isa = PBXGroup;
+			children = (
+				993A34242DEB1031002CEA39 /* HabitDiary */,
+				41449E702E166E9B00DEB393 /* Frameworks */,
+				993A34232DEB1031002CEA39 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		993A34232DEB1031002CEA39 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				993A34222DEB1031002CEA39 /* HabitDiary.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		993A34212DEB1031002CEA39 /* HabitDiary */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 993A34482DEB1032002CEA39 /* Build configuration list for PBXNativeTarget "HabitDiary" */;
+			buildPhases = (
+				993A341E2DEB1031002CEA39 /* Sources */,
+				993A341F2DEB1031002CEA39 /* Frameworks */,
+				993A34202DEB1031002CEA39 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				993A34242DEB1031002CEA39 /* HabitDiary */,
+			);
+			name = HabitDiary;
+			packageProductDependencies = (
+				996BA7BA2DF19E3A00A4B9FC /* SharingGRDB */,
+				996BA8C22E0A71CA00A4B9FC /* SwiftUINavigation */,
+				99774EE92E1007C20099920F /* EasyToast */,
+				41FFF2712E14E9FC004ACA97 /* GoogleMobileAds */,
+				993B4CDE2E1A8BDA0027D86C /* MoreApps */,
+			);
+			productName = LongevityMaster;
+			productReference = 993A34222DEB1031002CEA39 /* HabitDiary.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		993A341A2DEB1031002CEA39 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					993A34212DEB1031002CEA39 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = 993A341D2DEB1031002CEA39 /* Build configuration list for PBXProject "HabitDiary" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = 993A34192DEB1031002CEA39;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				996BA7B92DF19E3A00A4B9FC /* XCRemoteSwiftPackageReference "sharing-grdb" */,
+				996BA8C12E0A71CA00A4B9FC /* XCRemoteSwiftPackageReference "swift-navigation" */,
+				99774EE82E1007C20099920F /* XCRemoteSwiftPackageReference "EasyToast" */,
+				41FFF2142E14E225004ACA97 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				993B4CDD2E1A8BDA0027D86C /* XCLocalSwiftPackageReference "LongevityMaster/Modules/MoreApps" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 993A34232DEB1031002CEA39 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				993A34212DEB1031002CEA39 /* HabitDiary */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		993A34202DEB1031002CEA39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		993A341E2DEB1031002CEA39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		993A34462DEB1032002CEA39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 993A34242DEB1031002CEA39 /* HabitDiary */;
+			baseConfigurationReferenceRelativePath = Config/Debug.xcconfig;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = E6968P466E;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		993A34472DEB1032002CEA39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 993A34242DEB1031002CEA39 /* HabitDiary */;
+			baseConfigurationReferenceRelativePath = Config/Release.xcconfig;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = E6968P466E;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		993A34492DEB1032002CEA39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 993A34242DEB1031002CEA39 /* HabitDiary */;
+			baseConfigurationReferenceRelativePath = Config/Debug.xcconfig;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0.0.1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "HabitDiary/HabitDiary-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Banghua-Zhao.Habit-Diary";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		993A344A2DEB1032002CEA39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 993A34242DEB1031002CEA39 /* HabitDiary */;
+			baseConfigurationReferenceRelativePath = Config/Release.xcconfig;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0.0.1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "HabitDiary/HabitDiary-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Banghua-Zhao.Habit-Diary";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		993A341D2DEB1031002CEA39 /* Build configuration list for PBXProject "HabitDiary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				993A34462DEB1032002CEA39 /* Debug */,
+				993A34472DEB1032002CEA39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		993A34482DEB1032002CEA39 /* Build configuration list for PBXNativeTarget "HabitDiary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				993A34492DEB1032002CEA39 /* Debug */,
+				993A344A2DEB1032002CEA39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		993B4CDD2E1A8BDA0027D86C /* XCLocalSwiftPackageReference "LongevityMaster/Modules/MoreApps" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = LongevityMaster/Modules/MoreApps;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		41FFF2142E14E225004ACA97 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.6.0;
+			};
+		};
+		996BA7B92DF19E3A00A4B9FC /* XCRemoteSwiftPackageReference "sharing-grdb" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/sharing-grdb";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.1;
+			};
+		};
+		996BA8C12E0A71CA00A4B9FC /* XCRemoteSwiftPackageReference "swift-navigation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-navigation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.1;
+			};
+		};
+		99774EE82E1007C20099920F /* XCRemoteSwiftPackageReference "EasyToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/banghuazhao/EasyToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		41FFF2712E14E9FC004ACA97 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 41FFF2142E14E225004ACA97 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+		993B4CDE2E1A8BDA0027D86C /* MoreApps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 993B4CDD2E1A8BDA0027D86C /* XCLocalSwiftPackageReference "LongevityMaster/Modules/MoreApps" */;
+			productName = MoreApps;
+		};
+		996BA7BA2DF19E3A00A4B9FC /* SharingGRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 996BA7B92DF19E3A00A4B9FC /* XCRemoteSwiftPackageReference "sharing-grdb" */;
+			productName = SharingGRDB;
+		};
+		996BA8C22E0A71CA00A4B9FC /* SwiftUINavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 996BA8C12E0A71CA00A4B9FC /* XCRemoteSwiftPackageReference "swift-navigation" */;
+			productName = SwiftUINavigation;
+		};
+		99774EE92E1007C20099920F /* EasyToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99774EE82E1007C20099920F /* XCRemoteSwiftPackageReference "EasyToast" */;
+			productName = EasyToast;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 993A341A2DEB1031002CEA39 /* Project object */;
+}
