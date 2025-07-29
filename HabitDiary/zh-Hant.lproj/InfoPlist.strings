@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  Habit Diary
+
+  Created by Banghua Zhao on 04/07/2025.
+  
+*/
+
+"CFBundleDisplayName" = "習慣養成家";
+"NSUserTrackingUsageDescription" = "此識別碼將用於向您投放個人化廣告。";

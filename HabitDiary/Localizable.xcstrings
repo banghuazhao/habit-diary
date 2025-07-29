@@ -91,7 +91,20 @@
       }
     },
     "%lld habits selected" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已选择 %lld 个习惯"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已選擇 %lld 個習慣"
+          }
+        }
+      }
     },
     "%lld of %lld unlocked" : {
       "localizations" : {
@@ -209,7 +222,20 @@
       }
     },
     "%lld+ points" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld+ 分"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld+ 分"
+          }
+        }
+      }
     },
     "• " : {
       "localizations" : {
@@ -408,7 +434,20 @@
       }
     },
     "35+ habit templates across health, productivity, learning, relationships, and personal growth." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "涵盖健康、生产力、学习、人际关系和个人成长的35+习惯模板。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "涵蓋健康、生產力、學習、人際關係和個人成長的35+習慣模板。"
+          }
+        }
+      }
     },
     "100-199 points" : {
       "extractionState" : "stale",
@@ -532,6 +571,7 @@
       }
     },
     "A healthy outside starts from the inside." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -564,6 +604,12 @@
     "Achievements" : {
       "localizations" : {
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成就"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "成就"
@@ -622,7 +668,20 @@
       }
     },
     "Advance through 12 levels from Beginner (F) to Legend (SSS) based on your habit consistency and achievements." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基于您的习惯一致性和成就，从初学者(F)到传奇(SSS)晋升12个等级。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基於您的習慣一致性和成就，從初學者(F)到傳奇(SSS)晉升12個等級。"
+          }
+        }
+      }
     },
     "Advanced" : {
       "localizations" : {
@@ -825,7 +884,20 @@
 
     },
     "Back" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "返回"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "返回"
+          }
+        }
+      }
     },
     "Balance high-impact habits with sustainable ones" : {
       "extractionState" : "stale",
@@ -838,8 +910,27 @@
         }
       }
     },
-    "Begin Your Journey" : {
+    "Be the person your dog thinks you are." : {
 
+    },
+    "Be yourself, but always your better self." : {
+
+    },
+    "Begin Your Journey" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始您的旅程"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始您的旅程"
+          }
+        }
+      }
     },
     "Beginner" : {
       "localizations" : {
@@ -850,6 +941,9 @@
           }
         }
       }
+    },
+    "Believe you can and you're halfway there." : {
+
     },
     "Best Habit" : {
       "localizations" : {
@@ -971,7 +1065,13 @@
         }
       }
     },
+    "Champions are made in the offseason." : {
+
+    },
     "Change" : {
+
+    },
+    "Change is inevitable. Growth is optional." : {
 
     },
     "Check in consistently to reach milestone achievements" : {
@@ -1067,8 +1167,24 @@
         }
       }
     },
-    "Choose from daily, weekly, or custom frequency patterns that fit your lifestyle perfectly." : {
+    "Chinese Proverb" : {
 
+    },
+    "Choose from daily, weekly, or custom frequency patterns that fit your lifestyle perfectly." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择完美适合您生活方式的每日、每周或自定义频率模式。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選擇完美適合您生活方式的每日、每週或自定義頻率模式。"
+          }
+        }
+      }
     },
     "Choose Theme Color" : {
       "extractionState" : "stale",
@@ -1092,7 +1208,20 @@
       }
     },
     "Choose Your Starting Habits" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择您的初始习惯"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選擇您的初始習慣"
+          }
+        }
+      }
     },
     "complete" : {
       "localizations" : {
@@ -1309,28 +1438,6 @@
         }
       }
     },
-    "Complete habits from 3 different categories" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成来自 3 个不同类别的习惯"
-          }
-        }
-      }
-    },
-    "Complete habits from all 5 categories" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成来自所有 5 个类别的习惯"
-          }
-        }
-      }
-    },
     "Complete new habits to increase your score" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1411,6 +1518,7 @@
 
     },
     "Consistency is the key to success." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1419,6 +1527,9 @@
           }
         }
       }
+    },
+    "Consistency is the mother of mastery." : {
+
     },
     "Consistency King" : {
       "localizations" : {
@@ -1436,28 +1547,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "坚持不懈"
-          }
-        }
-      }
-    },
-    "Consume a 4-6 oz portion of salmon for omega-3 fatty acids." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "食用 4-6 盎司的三文鱼以获取欧米伽-3 脂肪酸。"
-          }
-        }
-      }
-    },
-    "Consume a 4–6 oz portion of salmon for omega-3 fatty acids." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "食用 4-6 盎司的三文鱼以获取欧米伽-3 脂肪酸。"
           }
         }
       }
@@ -1623,24 +1712,18 @@
         }
       }
     },
-    "Diet Champion" : {
-      "extractionState" : "stale",
+    "Discipline is the bridge between goals and accomplishment." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "饮食冠军"
+            "value" : "自律是目标与成就之间的桥梁。"
           }
-        }
-      }
-    },
-    "Digital detox" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "数字排毒"
+            "value" : "自律是目標與成就之間的橋樑。"
           }
         }
       }
@@ -1661,21 +1744,13 @@
     "Do a kind act" : {
 
     },
-    "Do a morning stretch routine" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "进行晨间拉伸运动"
-          }
-        }
-      }
-    },
     "Do stretching exercises to improve flexibility and prevent injury." : {
 
     },
     "Doing Well" : {
+
+    },
+    "Don't break the chain. Every day counts." : {
 
     },
     "Don't break your streak - even one check-in counts" : {
@@ -1687,6 +1762,9 @@
           }
         }
       }
+    },
+    "Don't compare your chapter 1 to someone else's chapter 20." : {
+
     },
     "Don't count the days, make the days count." : {
       "localizations" : {
@@ -1708,38 +1786,18 @@
         }
       }
     },
-    "Drink 1–2 cups of green tea for polyphenols and hydration." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "饮用 1-2 杯绿茶以获取多酚和保持水分。"
-          }
-        }
-      }
-    },
     "Drink 8 glasses of water" : {
-
-    },
-    "Drink at least 8 cups of water per day to stay hydrated." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "每天至少饮用 8 杯水以保持水分。"
+            "value" : "喝8杯水"
           }
-        }
-      }
-    },
-    "Drink green tea" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "喝绿茶"
+            "value" : "喝8杯水"
           }
         }
       }
@@ -1757,74 +1815,8 @@
     "Earn achievements and climb the rating ladder to Legend status!" : {
 
     },
-    "Eat a handful of blueberries or strawberries for antioxidants." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "吃一把蓝莓或草莓以获取抗氧化剂。"
-          }
-        }
-      }
-    },
-    "Eat a small handful of nuts for healthy fats and protein." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "吃一小把坚果以获取健康脂肪和蛋白质。"
-          }
-        }
-      }
-    },
-    "Eat berries" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "吃浆果"
-          }
-        }
-      }
-    },
     "Eat fruits" : {
 
-    },
-    "Eat kale" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "吃羽衣甘蓝"
-          }
-        }
-      }
-    },
-    "Eat nuts" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "吃坚果"
-          }
-        }
-      }
-    },
-    "Eat salmon" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "吃三文鱼"
-          }
-        }
-      }
     },
     "Eat vegetables" : {
 
@@ -1865,17 +1857,6 @@
     "Engage in creative activities like drawing, writing, or crafting." : {
 
     },
-    "Engage in meaningful conversation with loved ones." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "与亲人进行有意义的对话。"
-          }
-        }
-      }
-    },
     "Engage in social activities to maintain relationships and well-being." : {
 
     },
@@ -1910,6 +1891,7 @@
       }
     },
     "Every day is a new beginning. Take a deep breath and start again." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1919,7 +1901,11 @@
         }
       }
     },
+    "Every day is a new opportunity to improve yourself." : {
+
+    },
     "Every expert was once a beginner." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1930,10 +1916,58 @@
       }
     },
     "Every expert was once a beginner. You've got this! 🌱" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每个专家都曾是初学者。你可以做到！🌱"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每個專家都曾是初學者。你可以做到！🌱"
+          }
+        }
+      }
+    },
+    "Every master was once a beginner. Every pro was once an amateur." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每个大师都曾是初学者。每个专业人士都曾是业余者。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每個大師都曾是初學者。每個專業人士都曾是業餘者。"
+          }
+        }
+      }
+    },
+    "Every moment is a fresh beginning." : {
+
+    },
+    "Excellence is a continuous process and not an accident." : {
 
     },
     "Excellent" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "优秀"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "優秀"
+          }
+        }
+      }
     },
     "Excellent! You've selected %lld habits. Focus on building these consistently, and watch your rating grow from Beginner to Legend!" : {
 
@@ -1949,6 +1983,9 @@
       }
     },
     "Expert status unlocked! You're in the top tier! 👑" : {
+
+    },
+    "Fall seven times, rise eight." : {
 
     },
     "Favorite" : {
@@ -2011,17 +2048,6 @@
         }
       }
     },
-    "Fitness Fanatic" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "健身狂热者"
-          }
-        }
-      }
-    },
     "Flexible Scheduling" : {
 
     },
@@ -2031,17 +2057,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "专注于每日打卡而不是完美表现"
-          }
-        }
-      }
-    },
-    "Focus on habits with 4-5 star anti-aging ratings" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "专注于具有 4-5 星抗衰老评分的习惯"
           }
         }
       }
@@ -2058,17 +2073,6 @@
     },
     "Follow a consistent skincare routine for healthy skin." : {
 
-    },
-    "Follow bedtime routine" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "遵循睡前例程"
-          }
-        }
-      }
     },
     "Frequency" : {
       "localizations" : {
@@ -2103,23 +2107,18 @@
         }
       }
     },
-    "Get sun exposure" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "获取阳光照射"
-          }
-        }
-      }
-    },
     "Getting Started" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "开始起步"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始起步"
           }
         }
       }
@@ -2141,6 +2140,7 @@
       }
     },
     "Good health is not something we can buy. However, it can be an extremely valuable savings account." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2160,6 +2160,9 @@
           }
         }
       }
+    },
+    "Great things never come from comfort zones." : {
+
     },
     "Green" : {
 
@@ -2218,10 +2221,36 @@
       }
     },
     "Habit Rating" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "习惯评级"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "習慣評級"
+          }
+        }
+      }
     },
     "Habit Rating System" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "习惯评级系统"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "習慣評級系統"
+          }
+        }
+      }
     },
     "Habits" : {
       "localizations" : {
@@ -2236,18 +2265,8 @@
     "Halfway there! Your dedication is paying off! 💪" : {
 
     },
-    "Health Guardian" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "健康守护者"
-          }
-        }
-      }
-    },
     "Health is a relationship between you and your body." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2258,22 +2277,12 @@
       }
     },
     "Health is not valued till sickness comes." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "健康失去后才被珍惜。"
-          }
-        }
-      }
-    },
-    "High Impact" : {
       "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "高影响力"
+            "value" : "健康失去后才被珍惜。"
           }
         }
       }
@@ -2298,44 +2307,27 @@
         }
       }
     },
+    "If you get 1% better each day for one year, you'll end up 37 times better." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果您每天进步1%，一年后您将进步37倍。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果您每天進步1%，一年後您將進步37倍。"
+          }
+        }
+      }
+    },
     "Impressive consistency! You're an inspiration! ⭐" : {
 
     },
-    "Improve flexibility and reduce stress." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "提高灵活性并减轻压力。"
-          }
-        }
-      }
-    },
-    "Improves cardiovascular health and reduces stress." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "改善心血管健康并减轻压力。"
-          }
-        }
-      }
-    },
     "Include at least 2 servings of fresh fruits in your daily diet." : {
 
-    },
-    "Include kale in meals for antioxidants and vitamins." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在餐食中加入羽衣甘蓝以获取抗氧化剂和维生素。"
-          }
-        }
-      }
     },
     "Intermediate" : {
       "localizations" : {
@@ -2356,6 +2348,12 @@
           }
         }
       }
+    },
+    "It's not what we do once in a while that shapes our lives. It's what we do consistently." : {
+
+    },
+    "Japanese Proverb" : {
+
     },
     "Keep your workspace clean and organized for better productivity." : {
 
@@ -2394,7 +2392,20 @@
       }
     },
     "LEGEND! You've achieved the ultimate level! 🚀✨" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "传奇！您已达到最高级别！🚀✨"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "傳奇！您已達到最高級別！🚀✨"
+          }
+        }
+      }
     },
     "Limit processed foods and drinks with added sugars." : {
 
@@ -2461,30 +2472,8 @@
         }
       }
     },
-    "Maintain a consistent sleep schedule with 7-9 hours of rest." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保持规律的睡眠时间，每晚休息 7-9 小时。"
-          }
-        }
-      }
-    },
     "Maintain consistent sleep schedule with 7-9 hours of quality rest." : {
 
-    },
-    "Maintain good posture to reduce back and neck strain." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保持良好姿势以减少背部和颈部压力。"
-          }
-        }
-      }
     },
     "Make bed" : {
 
@@ -2525,17 +2514,6 @@
         }
       }
     },
-    "maximum impact" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最大影响"
-          }
-        }
-      }
-    },
     "Me" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2546,27 +2524,18 @@
         }
       }
     },
-    "Meditate" : {
-      "extractionState" : "stale",
+    "Meditation" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "冥想"
           }
-        }
-      }
-    },
-    "Meditation" : {
-
-    },
-    "Mental Health Guru" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "心理健康大师"
+            "value" : "冥想"
           }
         }
       }
@@ -2663,7 +2632,20 @@
       }
     },
     "Morning walk" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晨间散步"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晨間散步"
+          }
+        }
+      }
     },
     "Most Consistent" : {
       "localizations" : {
@@ -2679,7 +2661,20 @@
 
     },
     "My Habit Rating" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我的习惯评级"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我的習慣評級"
+          }
+        }
+      }
     },
     "My Habit Rating - Loading..." : {
 
@@ -2690,17 +2685,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "我的统计"
-          }
-        }
-      }
-    },
-    "Nap 20–30 minutes to boost alertness." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "小睡 20-30 分钟以提高警觉性。"
           }
         }
       }
@@ -2885,7 +2869,20 @@
       }
     },
     "Outstanding" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "杰出"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "傑出"
+          }
+        }
+      }
     },
     "per habit" : {
       "extractionState" : "stale",
@@ -2956,17 +2953,6 @@
         }
       }
     },
-    "Posture check" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "姿势检查"
-          }
-        }
-      }
-    },
     "Practice a new language for 15-30 minutes daily." : {
 
     },
@@ -2975,28 +2961,6 @@
     },
     "Practice deep breathing for stress relief and relaxation." : {
 
-    },
-    "Practice gratitude" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "练习感恩"
-          }
-        }
-      }
-    },
-    "Practice mindfulness for calm and clarity." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "练习正念以获得平静和清晰。"
-          }
-        }
-      }
     },
     "Practice mindfulness meditation for 10-20 minutes daily." : {
 
@@ -3008,32 +2972,23 @@
 
     },
     "Practice yoga for flexibility, strength, and mental clarity." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "练习瑜伽提高柔韧性、力量和心理清晰度。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "練習瑜伽提高柔韌性、力量和心理清晰度。"
+          }
+        }
+      }
     },
     "Prepare nutritious homemade meals instead of ordering takeout." : {
 
-    },
-    "Prevent gum disease and inflammation." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "预防牙龈疾病和炎症。"
-          }
-        }
-      }
-    },
-    "Prevent sleep disruption by avoiding stimulants late in the day." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "通过避免在晚间使用刺激物来防止睡眠中断。"
-          }
-        }
-      }
     },
     "Preview" : {
       "localizations" : {
@@ -3088,6 +3043,22 @@
         }
       }
     },
+    "Progress, not perfection, is the goal." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进步，而非完美，才是目标。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "進步，而非完美，才是目標。"
+          }
+        }
+      }
+    },
     "Purple" : {
 
     },
@@ -3138,6 +3109,12 @@
             "state" : "translated",
             "value" : "评分系统"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "評分系統"
+          }
         }
       }
     },
@@ -3170,17 +3147,6 @@
     "Reflect on the week's achievements and plan for the next week." : {
 
     },
-    "Relax before bed to improve sleep quality." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "睡前放松以提高睡眠质量。"
-          }
-        }
-      }
-    },
     "Reminders" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3197,17 +3163,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "从收藏中移除"
-          }
-        }
-      }
-    },
-    "Replace low-impact habits with higher-rated ones" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "用更高评分的习惯替换低影响力习惯"
           }
         }
       }
@@ -3253,7 +3208,20 @@
       }
     },
     "Running" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跑步"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跑步"
+          }
+        }
+      }
     },
     "Sample Button" : {
       "localizations" : {
@@ -3330,17 +3298,6 @@
     },
     "Select 3-7 habits that resonate with you. Don't worry, you can always add more or modify these later!" : {
 
-    },
-    "Select habits that interest you. You can always add more later!" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择您感兴趣的习惯。您可以随时添加更多！"
-          }
-        }
-      }
     },
     "Select your preferred primary color for the app" : {
       "localizations" : {
@@ -3448,32 +3405,27 @@
         }
       }
     },
-    "Sleep 7–9 hours" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "睡眠 7-9 小时"
-          }
-        }
-      }
-    },
     "Sleep by 10 PM" : {
 
     },
-    "Sleep Specialist" : {
-      "extractionState" : "stale",
+    "Small daily improvements over time lead to stunning results." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "睡眠专家"
+            "value" : "日常的小改进随着时间积累会带来惊人的结果。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日常的小改進隨著時間積累會帶來驚人的結果。"
           }
         }
       }
     },
     "Small progress is still progress." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3561,26 +3513,17 @@
       }
     },
     "Start your day with a 20-30 minute walk to boost energy and mood." : {
-
-    },
-    "Start your day with light stretching to increase circulation and flexibility." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "以轻度拉伸开始您的一天，以增加血液循环和灵活性。"
+            "value" : "以20-30分钟的散步开始您的一天，提升精力和心情。"
           }
-        }
-      }
-    },
-    "Start Your Journey" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "开始您的旅程"
+            "value" : "以20-30分鐘的散步開始您的一天，提升精力和心情。"
           }
         }
       }
@@ -3598,19 +3541,21 @@
     "Stay connected with loved ones through regular phone calls." : {
 
     },
-    "Stay hydrated" : {
-      "extractionState" : "stale",
+    "Stay hydrated by drinking at least 8 glasses of water daily." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保持水分"
+            "value" : "每天至少喝8杯水保持水分充足。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每天至少喝8杯水保持水分充足。"
           }
         }
       }
-    },
-    "Stay hydrated by drinking at least 8 glasses of water daily." : {
-
     },
     "Streak Goal" : {
       "localizations" : {
@@ -3642,17 +3587,6 @@
         }
       }
     },
-    "Strength training" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "力量训练"
-          }
-        }
-      }
-    },
     "Strength training or cardio exercise for at least 30 minutes." : {
 
     },
@@ -3665,6 +3599,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "成功不是终点，失败也不是末日，重要的是继续前行的勇气。"
+          }
+        }
+      }
+    },
+    "Success is the sum of small efforts repeated day in and day out." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成功是日复一日重复的小努力的总和。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成功是日復一日重複的小努力的總和。"
           }
         }
       }
@@ -3702,40 +3652,8 @@
     "Swimming improves cardiovascular health and builds full-body strength." : {
 
     },
-    "Swimming improves cardiovascular health, builds muscle strength, reduces stress, enhances flexibility, and is low-impact, suitable for all ages." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "游泳改善心血管健康，增强肌肉力量，减轻压力，增加灵活性，且低冲击，适合所有年龄段。"
-          }
-        }
-      }
-    },
-    "Take a short nap" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "小睡片刻"
-          }
-        }
-      }
-    },
-    "Take a walk after meals" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "饭后散步"
-          }
-        }
-      }
-    },
     "Take care of your body. It's the only place you have to live." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3750,28 +3668,6 @@
     },
     "Take photos" : {
 
-    },
-    "Take screen breaks to reduce eye strain and stress." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "屏幕休息以减少眼睛疲劳和压力。"
-          }
-        }
-      }
-    },
-    "Take the stairs" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "走楼梯"
-          }
-        }
-      }
     },
     "Take vitamins" : {
 
@@ -3796,7 +3692,11 @@
         }
       }
     },
+    "The best time to plant a tree was 20 years ago. The second best time is now." : {
+
+    },
     "The body achieves what the mind believes." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3806,7 +3706,14 @@
         }
       }
     },
+    "The compound effect of small daily actions is extraordinary." : {
+
+    },
+    "The difference between ordinary and extraordinary is that little extra." : {
+
+    },
     "The difference between try and triumph is just a little umph!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3816,7 +3723,11 @@
         }
       }
     },
+    "The expert in anything was once a beginner." : {
+
+    },
     "The first wealth is health." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3826,7 +3737,11 @@
         }
       }
     },
+    "The greatest investment you can make is in yourself." : {
+
+    },
     "The greatest wealth is health." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3836,7 +3751,11 @@
         }
       }
     },
+    "The journey of a thousand miles begins with one step." : {
+
+    },
     "The only bad workout is the one that didn't happen." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3845,6 +3764,9 @@
           }
         }
       }
+    },
+    "The only impossible journey is the one you never begin." : {
+
     },
     "The only person you are destined to become is the person you decide to be." : {
       "localizations" : {
@@ -3865,6 +3787,15 @@
           }
         }
       }
+    },
+    "The secret of getting ahead is getting started." : {
+
+    },
+    "The successful person has the habit of doing the things failures don't like to do." : {
+
+    },
+    "The way to get started is to quit talking and begin doing." : {
+
     },
     "Theme Color" : {
       "localizations" : {
@@ -3975,6 +3906,12 @@
           }
         }
       }
+    },
+    "Today is the perfect day to start living your dreams." : {
+
+    },
+    "Today's actions become tomorrow's habits." : {
+
     },
     "total" : {
       "localizations" : {
@@ -4228,6 +4165,22 @@
         }
       }
     },
+    "We are what we repeatedly do. Excellence, then, is not an act, but a habit." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我们反复做的事情造就了我们。因此，卓越不是一种行为，而是一种习惯。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我們反覆做的事情造就了我們。因此，卓越不是一種行為，而是一種習慣。"
+          }
+        }
+      }
+    },
     "Week Start" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4271,11 +4224,40 @@
         }
       }
     },
-    "Why Habit Diary?" : {
+    "What seems impossible today will one day become your warm-up." : {
 
     },
+    "Why Habit Diary?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为什么选择习惯日记？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "為什麼選擇習慣日記？"
+          }
+        }
+      }
+    },
     "Workout" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "锻炼"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍛煉"
+          }
+        }
+      }
     },
     "Write 3 things you're grateful for daily." : {
       "extractionState" : "stale",
@@ -4292,7 +4274,20 @@
 
     },
     "Write gratitude journal" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写感恩日记"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "寫感恩日記"
+          }
+        }
+      }
     },
     "Yearly" : {
       "extractionState" : "manual",
@@ -4317,7 +4312,20 @@
       }
     },
     "Yoga practice" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "瑜伽练习"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "瑜伽練習"
+          }
+        }
+      }
     },
     "You are now Premium user!" : {
       "localizations" : {
@@ -4330,18 +4338,23 @@
       }
     },
     "You can explore our habit gallery anytime and add habits that inspire you. Start your journey whenever you're ready!" : {
-
-    },
-    "You're All Set!" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "一切就绪！"
+            "value" : "您可以随时浏览我们的习惯库，添加激励您的习惯。准备好时就开始您的旅程！"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您可以隨時瀏覽我們的習慣庫，添加激勵您的習慣。準備好時就開始您的旅程！"
           }
         }
       }
+    },
+    "You don't have to be great to get started, but you have to get started to be great." : {
+
     },
     "You're becoming a habit master! Keep pushing! 🔥" : {
 
@@ -4355,29 +4368,11 @@
     "You're Ready to Start!" : {
 
     },
-    "You've selected %lld habit. You can always add more habits or modify existing ones later." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "您已选择 %1$lld 个习惯。您可以随时添加更多习惯或修改现有习惯。"
-          }
-        }
-      }
-    },
-    "You've selected %lld habits. You can always add more habits or modify existing ones later." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "您已选择 %1$lld 个习惯。您可以随时添加更多习惯或修改现有习惯。"
-          }
-        }
-      }
+    "Your future is created by what you do today, not tomorrow." : {
+
     },
     "Your future self is watching you right now through memories." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4387,7 +4382,11 @@
         }
       }
     },
+    "Your habits shape your identity, and your identity shapes your habits." : {
+
+    },
     "Your health is an investment, not an expense." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4406,6 +4405,9 @@
           }
         }
       }
+    },
+    "Your only limit is your mind." : {
+
     },
     "Your Performance:" : {
 
