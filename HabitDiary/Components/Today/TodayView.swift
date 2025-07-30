@@ -73,22 +73,6 @@ struct TodayView: View {
                                     }
                                 )
                             }
-                            
-                            if viewModel.isEditing {
-                                Button {
-                                    viewModel.onTapAddHabit()
-                                } label: {
-                                    Image(systemName: "plus")
-                                        .font(AppFont.title)
-                                        .padding(.horizontal, AppSpacing.medium)
-                                        .frame(width: 160, height: 90)
-                                        .background(themeManager.current.primaryColor.opacity(0.1))
-                                        .foregroundColor(themeManager.current.primaryColor)
-                                        .clipShape(
-                                            RoundedRectangle(cornerRadius: 20)
-                                        )
-                                }
-                            }
                         }
                         .padding(.vertical, 8)
                     }

@@ -3,10 +3,10 @@
 // Copyright Apps Bay Limited. All rights reserved.
 //
 
-import SwiftUI
 import Dependencies
-import SharingGRDB
 import MoreApps
+import SharingGRDB
+import SwiftUI
 
 struct MeView: View {
     @Environment(\.openURL) private var openURL
@@ -24,110 +24,109 @@ struct MeView: View {
     @AppStorage("userAvatar") private var userAvatar: String = "😀"
     @State private var showPurchaseSheet = false
     @State private var showEmojiPicker = false
-    
+
     var body: some View {
         NavigationStack {
-            VStack {
-                ScrollView {
-                    VStack(spacing: AppSpacing.large) {
-                        // Me Section
-                        VStack(alignment: .leading, spacing: AppSpacing.medium) {
-                            HStack(spacing: AppSpacing.medium) {
-                                Button(action: { showEmojiPicker = true }) {
-                                    Text(userAvatar)
-                                        .font(.system(size: 40))
-                                        .frame(width: 50, height: 50)
-                                        .background(themeManager.current.card)
-                                        .clipShape(Circle())
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .sheet(isPresented: $showEmojiPicker) {
-                                    EmojiPickerView(selectedEmoji: $userAvatar, title: "Choose your avatar")
+            ScrollView {
+                VStack(spacing: AppSpacing.large) {
+                    // Me Section
+                    VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                        HStack(spacing: AppSpacing.medium) {
+                            Button(action: { showEmojiPicker = true }) {
+                                Text(userAvatar)
+                                    .font(.system(size: 40))
+                                    .frame(width: 50, height: 50)
+                                    .background(themeManager.current.card)
+                                    .clipShape(Circle())
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .sheet(isPresented: $showEmojiPicker) {
+                                EmojiPickerView(selectedEmoji: $userAvatar, title: "Choose your avatar")
                                     .presentationDetents([.medium])
                                     .presentationDragIndicator(.visible)
-                                }
-                                VStack(alignment: .leading, spacing: 4) {
-                                    TextField("Your Name", text: $userName)
-                                        .font(AppFont.headline)
-                                        .fontWeight(.bold)
-                                        .padding(AppSpacing.small)
-                                        .background(themeManager.current.background)
-                                        .cornerRadius(AppCornerRadius.button)
-                                        .lineLimit(1)
-                                }
-                                Spacer()
                             }
-                            // Stats Section
-                            HStack(spacing: AppSpacing.small) {
-                                statView(title: String(localized: "Habits"), value: "\(allHabits.filter { !$0.isArchived }.count)/\(allHabits.count)")
-                                Divider()
-                                statView(title: String(localized: "Check-ins"), value: "\(allCheckIns.count)")
-                                Divider()
-                                statView(title: String(localized: "Reminders"), value: "\(allReminders.count)")
-                                Divider()
-                                statView(title: String(localized: "Achievements"), value: "\(allAchievements.filter { $0.isUnlocked }.count)/\(allAchievements.count)")
+                            VStack(alignment: .leading, spacing: 4) {
+                                TextField("Your Name", text: $userName)
+                                    .font(AppFont.headline)
+                                    .fontWeight(.bold)
+                                    .padding(AppSpacing.small)
+                                    .background(themeManager.current.background)
+                                    .cornerRadius(AppCornerRadius.button)
+                                    .lineLimit(1)
                             }
-                            .padding(.top, AppSpacing.small)
-                            if !purchaseManager.isPremiumUserPurchased {
-                                Button(action: {
-                                    showPurchaseSheet = true
-                                }) {
-                                    Text(String(localized: "Upgrade to Premium"))
-                                        .appButtonStyle(theme: themeManager.current)
-                                }
-                            } else {
-                                HStack(spacing: 8) {
-                                    Image(systemName: "crown.fill")
-                                        .foregroundColor(.yellow)
-                                        .font(.title3)
-                                    Text(String(localized: "Welcome, Premium user!"))
-                                        .font(.headline)
-                                        .foregroundColor(themeManager.current.primaryColor)
-                                }
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 16)
-                                .background(themeManager.current.card)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: AppCornerRadius.button)
-                                        .stroke(themeManager.current.primaryColor, lineWidth: 1.5)
-                                )
-                                .cornerRadius(AppCornerRadius.button)
-                                .shadow(color: AppShadow.card.color, radius: 4, x: 0, y: 2)
-                            }
+                            Spacer()
                         }
-                        .appCardStyle(theme: themeManager.current)
-                        .padding(.horizontal)
-                        moreFeatureView
-                        othersView
-                        
-                        Spacer().frame(height: 10)
-                        
-                        VStack(spacing: 4) {
-                            Text(String(localized: "Habit Diary  |  Healthy Habits for Long Life"))
+                        // Stats Section
+                        HStack(spacing: AppSpacing.small) {
+                            statView(title: String(localized: "Habits"), value: "\(allHabits.filter { !$0.isArchived }.count)/\(allHabits.count)")
+                            Divider()
+                            statView(title: String(localized: "Check-ins"), value: "\(allCheckIns.count)")
+                            Divider()
+                            statView(title: String(localized: "Reminders"), value: "\(allReminders.count)")
+                            Divider()
+                            statView(title: String(localized: "Achievements"), value: "\(allAchievements.filter { $0.isUnlocked }.count)/\(allAchievements.count)")
+                        }
+                        .padding(.top, AppSpacing.small)
+                        if !purchaseManager.isPremiumUserPurchased {
+                            Button(action: {
+                                showPurchaseSheet = true
+                            }) {
+                                Text(String(localized: "Upgrade to Premium"))
+                                    .appButtonStyle(theme: themeManager.current)
+                            }
+                        } else {
+                            HStack(spacing: 8) {
+                                Image(systemName: "crown.fill")
+                                    .foregroundColor(.yellow)
+                                    .font(.title3)
+                                Text(String(localized: "Welcome, Premium user!"))
+                                    .font(.headline)
+                                    .foregroundColor(themeManager.current.primaryColor)
+                            }
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 16)
+                            .background(themeManager.current.card)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: AppCornerRadius.button)
+                                    .stroke(themeManager.current.primaryColor, lineWidth: 1.5)
+                            )
+                            .cornerRadius(AppCornerRadius.button)
+                            .shadow(color: AppShadow.card.color, radius: 4, x: 0, y: 2)
+                        }
+                    }
+                    .appCardStyle(theme: themeManager.current)
+                    .padding(.horizontal)
+                    moreFeatureView
+                    othersView
+
+                    Spacer().frame(height: 10)
+
+                    VStack(spacing: 4) {
+                        Text(String(localized: "Habit Diary  |  Healthy Habits for Long Life"))
+                            .font(AppFont.footnote)
+                            .fontWeight(.semibold)
+                            .foregroundColor(themeManager.current.textSecondary)
+
+                        Button {
+                            if let url = URL(string: "https://apps.apple.com/app/id\(Constants.AppID.appID)") {
+                                openURL(url)
+                            }
+                        } label: {
+                            Text("v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")  Check for Updates")
                                 .font(AppFont.footnote)
-                                .fontWeight(.semibold)
                                 .foregroundColor(themeManager.current.textSecondary)
-                            
-                            Button {
-                                if let url = URL(string: "https://apps.apple.com/app/id\(Constants.AppID.appID)") {
-                                    openURL(url)
-                                }
-                            } label: {
-                                Text("v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")  Check for Updates")
-                                    .font(AppFont.footnote)
-                                    .foregroundColor(themeManager.current.textSecondary)
-                                    .underline()
-                            }
+                                .underline()
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.bottom, 50)
-                        
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.bottom, 20)
+
+                    if !purchaseManager.isPremiumUserPurchased {
+                        BannerView()
+                            .frame(height: 50)
                     }
                 }
-                if !purchaseManager.isPremiumUserPurchased {
-                    BannerView()
-                        .frame(height: 50)
-                }
+                .padding(.bottom, 20)
             }
             .sheet(isPresented: $showPurchaseSheet) {
                 PurchaseSheet()
@@ -213,7 +212,7 @@ struct MeView: View {
         }
         .padding(.horizontal)
     }
-    
+
     private func moreItem(icon: String, title: String) -> some View {
         VStack(spacing: AppSpacing.small) {
             Image(systemName: icon)

@@ -63,12 +63,9 @@ class OnboardingViewModel {
     func completeOnboarding() async {
         await withErrorReporting {
             try await database.write { [selectedHabits] db in
-                for habitDraft in selectedHabits {
-                    _ = try Habit
-                        .upsert { habitDraft }
-                        .returning { $0 }
-                        .fetchOne(db)
-                }
+                try Habit
+                    .upsert { Array(selectedHabits) }
+                    .execute(db)
             }
         }
         

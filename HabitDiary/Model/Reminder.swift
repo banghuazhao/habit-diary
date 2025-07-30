@@ -9,8 +9,8 @@ import SharingGRDB
 @Table
 struct Reminder: Identifiable {
     let id: Int
-    var title: String = "Log Habit Diary"
-    var body: String = "Time to check in on your habit!"
+    var title: String = String(localized: "Log Habit Diary")
+    var body: String = String(localized: "Time to check in on your habit!")
     var time: Date = Date()
     var habitID: Habit.ID?
     var notificationID: String = "reminder_\(UUID().uuidString)"
