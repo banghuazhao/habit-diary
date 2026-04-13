@@ -385,7 +385,7 @@ struct HabitDetailView: View {
                     VStack(alignment: .leading, spacing: AppSpacing.small) {
                         HStack {
                             Image(systemName: "bell.fill")
-                                .foregroundColor(themeManager.current.primaryColor)
+                                .foregroundStyle(themeManager.current.primaryColor)
                             Text("Reminders")
                                 .fontWeight(.semibold)
                             Spacer()
@@ -413,7 +413,7 @@ struct HabitDetailView: View {
                     VStack(alignment: .leading, spacing: AppSpacing.small) {
                         HStack {
                             Image(systemName: "trophy.fill")
-                                .foregroundColor(themeManager.current.primaryColor)
+                                .foregroundStyle(themeManager.current.primaryColor)
                             Text("Achievements")
                                 .fontWeight(.semibold)
                             Spacer()
@@ -434,7 +434,7 @@ struct HabitDetailView: View {
         }
         .background(themeManager.current.background.ignoresSafeArea())
         .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
                     viewModel.onTapDeleteHabit()
                 } label: {
@@ -482,17 +482,17 @@ struct HabitDetailView: View {
         VStack(alignment: .leading, spacing: AppSpacing.small) {
             HStack {
                 Image(systemName: "pencil.line")
-                    .foregroundColor(themeManager.current.primaryColor)
+                    .foregroundStyle(themeManager.current.primaryColor)
                 Text(String(localized: "Diary Notes"))
                     .fontWeight(.semibold)
                 Spacer()
                 Text("\(viewModel.checkInsWithNotes.count)")
                     .font(.caption)
-                    .foregroundColor(themeManager.current.textSecondary)
+                    .foregroundStyle(themeManager.current.textSecondary)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 2)
                     .background(themeManager.current.primaryColor.opacity(0.1))
-                    .cornerRadius(8)
+                    .clipShape(.rect(cornerRadius: 8))
             }
 
             VStack(spacing: AppSpacing.small) {
@@ -502,30 +502,30 @@ struct HabitDetailView: View {
                             Text(checkIn.date.formatted(.dateTime.month(.abbreviated).day()))
                                 .font(.caption2)
                                 .fontWeight(.bold)
-                                .foregroundColor(themeManager.current.primaryColor)
+                                .foregroundStyle(themeManager.current.primaryColor)
                             Text(checkIn.date.formatted(.dateTime.year()))
                                 .font(.caption2)
-                                .foregroundColor(themeManager.current.textSecondary)
+                                .foregroundStyle(themeManager.current.textSecondary)
                         }
                         .frame(width: 36)
                         .padding(.top, 2)
 
                         Text(checkIn.note)
                             .font(.subheadline)
-                            .foregroundColor(themeManager.current.textPrimary)
+                            .foregroundStyle(themeManager.current.textPrimary)
                             .fixedSize(horizontal: false, vertical: true)
 
                         Spacer()
                     }
                     .padding(10)
                     .background(themeManager.current.primaryColor.opacity(0.05))
-                    .cornerRadius(10)
+                    .clipShape(.rect(cornerRadius: 10))
                 }
 
                 if viewModel.checkInsWithNotes.count > 5 {
                     Text(String(localized: "and \(viewModel.checkInsWithNotes.count - 5) more entries…"))
                         .font(.caption)
-                        .foregroundColor(themeManager.current.textSecondary)
+                        .foregroundStyle(themeManager.current.textSecondary)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
             }
@@ -558,7 +558,7 @@ struct HabitDetailView: View {
                     Text(symbol)
                         .font(.caption)
                         .frame(maxWidth: .infinity)
-                        .foregroundColor(themeManager.current.textSecondary)
+                        .foregroundStyle(themeManager.current.textSecondary)
                 }
             }
 
@@ -637,7 +637,7 @@ struct CalendarDayCell: View {
 
                     Text("\(Calendar.current.component(.day, from: day))")
                         .font(.body)
-                        .foregroundColor(isCurrentMonth ? (isChecked ? .white : theme.textPrimary) : theme.textSecondary)
+                        .foregroundStyle(isCurrentMonth ? (isChecked ? .white : theme.textPrimary) : theme.textSecondary)
                 }
                 .frame(maxWidth: .infinity, minHeight: 36)
             } else {
@@ -712,7 +712,7 @@ private struct FavoriteToggleWithInfo: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Once favorited, the habit will be ordered first in today's habits list.")
                         .font(.caption)
-                        .foregroundColor(themeManager.current.textPrimary)
+                        .foregroundStyle(themeManager.current.textPrimary)
                         .appInfoSection()
                 }
                 .onTapGesture { showInfo = false }
@@ -742,7 +742,7 @@ private struct ArchivedToggleWithInfo: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Once archived, the habit will be hidden from today's habits list, but its check-ins will be kept.")
                         .font(.caption)
-                        .foregroundColor(themeManager.current.textPrimary)
+                        .foregroundStyle(themeManager.current.textPrimary)
                         .appInfoSection()
                 }
                 .onTapGesture { showInfo = false }
@@ -761,7 +761,7 @@ private struct NoteSection: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(note)
                 .font(.footnote)
-                .foregroundColor(themeManager.current.textPrimary)
+                .foregroundStyle(themeManager.current.textPrimary)
                 .lineLimit(expanded ? nil : 2)
 
             if note.count > 100 {
@@ -772,7 +772,7 @@ private struct NoteSection: View {
                 } label: {
                     Text(expanded ? "Show less" : "Show more")
                         .font(.footnote)
-                        .foregroundColor(themeManager.current.primaryColor)
+                        .foregroundStyle(themeManager.current.primaryColor)
                 }
                 .buttonStyle(.plain)
             }
@@ -808,17 +808,17 @@ struct HabitAchievementRowView: View {
                 Text(achievement.title)
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundColor(themeManager.current.textPrimary)
+                    .foregroundStyle(themeManager.current.textPrimary)
                 
                 Text(achievement.description)
                     .font(.caption)
-                    .foregroundColor(themeManager.current.textSecondary)
+                    .foregroundStyle(themeManager.current.textSecondary)
                     .lineLimit(2)
                 
                 if let unlockDate = achievement.unlockedDate {
                     Text("Unlocked \(unlockDate.formatted(date: .abbreviated, time: .omitted))")
                         .font(.caption2)
-                        .foregroundColor(.green)
+                        .foregroundStyle(.green)
                 }
             }
             
@@ -832,12 +832,12 @@ struct HabitAchievementRowView: View {
                 ) {
                     Image(systemName: "square.and.arrow.up")
                         .font(.caption)
-                        .foregroundColor(themeManager.current.primaryColor)
+                        .foregroundStyle(themeManager.current.primaryColor)
                 }
                 
                 Image(systemName: "chevron.right")
                     .font(.caption)
-                    .foregroundColor(themeManager.current.textSecondary)
+                    .foregroundStyle(themeManager.current.textSecondary)
             }
         }
         .padding(.vertical, 8)

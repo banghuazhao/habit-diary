@@ -46,7 +46,7 @@ struct AchievementPopupView: View {
                 Text(String(localized: "🎉 Achievement Unlocked! 🎉"))
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.primary)
                     .multilineTextAlignment(.center)
                     .opacity(animationOpacity)
                 
@@ -55,12 +55,12 @@ struct AchievementPopupView: View {
                     Text(achievement.title)
                         .font(.title3)
                         .fontWeight(.semibold)
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.primary)
                         .multilineTextAlignment(.center)
                     
                     Text(achievement.description)
                         .font(.body)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
                 }
@@ -78,7 +78,7 @@ struct AchievementPopupView: View {
                     }
                     .font(.headline)
                     .fontWeight(.semibold)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(
@@ -88,7 +88,7 @@ struct AchievementPopupView: View {
                             endPoint: .trailing
                         )
                     )
-                    .cornerRadius(12)
+                    .clipShape(.rect(cornerRadius: 12))
                 }
                 .opacity(animationOpacity)
                 .padding(.horizontal)
@@ -98,7 +98,7 @@ struct AchievementPopupView: View {
                     Text(String(localized: "Continue"))
                         .font(.headline)
                         .fontWeight(.semibold)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(
@@ -108,7 +108,7 @@ struct AchievementPopupView: View {
                                 endPoint: .trailing
                             )
                         )
-                        .cornerRadius(12)
+                        .clipShape(.rect(cornerRadius: 12))
                 }
                 .opacity(animationOpacity)
                 .padding(.horizontal)

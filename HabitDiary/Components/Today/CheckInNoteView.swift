@@ -37,16 +37,16 @@ struct CheckInNoteView: View {
                                 .font(.headline)
                             Text(checkIn.date, style: .date)
                                 .font(.caption)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                         }
                         Spacer()
                         Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(.green)
+                            .foregroundStyle(.green)
                             .font(.title2)
                     }
                     .padding()
                     .background(themeManager.current.card)
-                    .cornerRadius(12)
+                    .clipShape(.rect(cornerRadius: 12))
                     .padding(.horizontal)
                 }
                 .padding(.top)
@@ -59,21 +59,21 @@ struct CheckInNoteView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Image(systemName: "pencil.line")
-                            .foregroundColor(themeManager.current.primaryColor)
+                            .foregroundStyle(themeManager.current.primaryColor)
                         Text(String(localized: "Diary Note"))
                             .font(.subheadline)
                             .fontWeight(.semibold)
                         Spacer()
                         Text("\(noteText.count)/\(maxNoteLength)")
                             .font(.caption2)
-                            .foregroundColor(noteText.count > maxNoteLength ? .red : .secondary)
+                            .foregroundStyle(noteText.count > maxNoteLength ? .red : .secondary)
                     }
 
                     ZStack(alignment: .topLeading) {
                         if noteText.isEmpty {
                             Text(String(localized: "How did it go? Write a quick reflection… (optional)"))
                                 .font(.body)
-                                .foregroundColor(.secondary.opacity(0.7))
+                                .foregroundStyle(.secondary.opacity(0.7))
                                 .padding(.top, 8)
                                 .padding(.leading, 4)
                         }
@@ -89,7 +89,7 @@ struct CheckInNoteView: View {
                     }
                     .padding(12)
                     .background(themeManager.current.card)
-                    .cornerRadius(12)
+                    .clipShape(.rect(cornerRadius: 12))
                 }
                 .padding()
 
@@ -103,11 +103,11 @@ struct CheckInNoteView: View {
                     } label: {
                         Text(noteText.isEmpty ? String(localized: "Skip Note") : String(localized: "Save to Journal"))
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(noteText.isEmpty ? Color.secondary : themeManager.current.primaryColor)
-                            .cornerRadius(12)
+                            .clipShape(.rect(cornerRadius: 12))
                     }
                 }
                 .padding(.horizontal)
@@ -122,7 +122,7 @@ struct CheckInNoteView: View {
                         onSave(noteText)
                         dismiss()
                     }
-                    .foregroundColor(themeManager.current.primaryColor)
+                    .foregroundStyle(themeManager.current.primaryColor)
                 }
             }
         }

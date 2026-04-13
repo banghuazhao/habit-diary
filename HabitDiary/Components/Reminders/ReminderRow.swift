@@ -16,7 +16,7 @@ struct ReminderRow: View {
         HStack {
             HStack {
                 Image(systemName: "alarm")
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
                     .font(.subheadline)
                 Spacer()
                 Text(time, format: .dateTime.hour().minute())
@@ -42,14 +42,14 @@ struct ReminderRow: View {
                         onDelete()
                     }) {
                         Image(systemName: "trash")
-                            .foregroundColor(.red)
+                            .foregroundStyle(.red)
                     }
                 }
             }
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .cornerRadius(8)
+        .clipShape(.rect(cornerRadius: 8))
     }
 }
 

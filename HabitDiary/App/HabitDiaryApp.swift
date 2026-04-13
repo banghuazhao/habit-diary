@@ -7,6 +7,14 @@ import SQLiteData
 import SwiftUI
 import GoogleMobileAds
 
+// MARK: - Tab enum for type-safe selection
+enum AppTab: String, Hashable {
+    case today
+    case habits
+    case rating
+    case me
+}
+
 @main
 struct HabitDiaryApp: App {
     @AppStorage("darkModeEnabled") private var darkModeEnabled: Bool = false
@@ -16,7 +24,8 @@ struct HabitDiaryApp: App {
     @Dependency(\.purchaseManager) private var purchaseManager
     @StateObject private var openAd = OpenAd()
     @Environment(\.scenePhase) private var scenePhase
-    
+    @State private var selectedTab: AppTab = .today
+
     init() {
         MobileAds.shared.start(completionHandler: nil)
         prepareDependencies {
@@ -43,7 +52,6 @@ struct HabitDiaryApp: App {
                     await requestNotificationPermissions()
                 }
                 .onChange(of: scenePhase) { _, newPhase in
-                    print("scenePhase: \(newPhase)")
                     if newPhase == .active {
                         if !purchaseManager.isPremiumUserPurchased {
                             openAd.tryToPresentAd()
@@ -55,94 +63,71 @@ struct HabitDiaryApp: App {
                 }
         }
     }
-    
+
     @ViewBuilder
     var content: some View {
         ZStack {
-            Group {
-                if #available(iOS 18.0, *) {
-                    tabView18
-                } else {
-                    tabView
-                }
+            if #available(iOS 18.0, *) {
+                tabViewModern
+                    .tint(themeManager.current.primaryColor)
+            } else {
+                tabViewLegacy
+                    .background(themeManager.current.background)
+                    .tint(themeManager.current.primaryColor)
             }
-            .background(themeManager.current.background)
-            .tint(themeManager.current.primaryColor)
 
-            // Onboarding overlay
             Color.clear
                 .fullScreenCover(isPresented: .constant(!hasCompletedOnboarding)) {
                     OnboardingView()
                 }
         }
     }
-    
+
     @available(iOS 18.0, *)
-    var tabView18: some View {
-        TabView {
-            Tab {
+    var tabViewModern: some View {
+        TabView(selection: $selectedTab) {
+            Tab("Today", systemImage: "calendar", value: AppTab.today) {
                 TodayView()
                     .onAppear {
                         AdManager.requestATTPermission(with: 3)
                     }
-            } label: {
-                Label("Today", systemImage: "calendar")
             }
-            
-            Tab {
+
+            Tab("Habits", systemImage: "list.bullet", value: AppTab.habits) {
                 HabitsListView()
-            } label: {
-                Label("Habits", systemImage: "list.bullet")
             }
-            
-            Tab {
+
+            Tab("Rating", systemImage: "star.fill", value: AppTab.rating) {
                 RatingView()
-            } label: {
-                Label("Rating", systemImage: "star.fill")
             }
-            
-            Tab {
+
+            Tab("Me", systemImage: "person.fill", value: AppTab.me) {
                 MeView()
                     .onAppear {
                         AdManager.requestATTPermission(with: 1)
                     }
-            } label: {
-                Label("Me", systemImage: "person.fill")
             }
         }
     }
-    
-    var tabView: some View {
+
+    var tabViewLegacy: some View {
         TabView {
             TodayView()
-                .tabItem{
-                    Label("Today", systemImage: "calendar")
-                }
-                .onAppear {
-                    AdManager.requestATTPermission(with: 3)
-                }
-            
+                .tabItem { Label("Today", systemImage: "calendar") }
+                .onAppear { AdManager.requestATTPermission(with: 3) }
+
             HabitsListView()
-                .tabItem{
-                    Label("Habits", systemImage: "list.bullet")
-                }
-            
-            
+                .tabItem { Label("Habits", systemImage: "list.bullet") }
+
             RatingView()
-                .tabItem{
-                    Label("Rating", systemImage: "star.fill")
-                }
-            
+                .tabItem { Label("Rating", systemImage: "star.fill") }
+
             MeView()
-                .tabItem{
-                    Label("Me", systemImage: "person.fill")
-                }
-                .onAppear {
-                    AdManager.requestATTPermission(with: 1)
-                }
+                .tabItem { Label("Me", systemImage: "person.fill") }
+                .onAppear { AdManager.requestATTPermission(with: 1) }
         }
     }
-    
+
     private func requestNotificationPermissions() async {
         @Dependency(\.notificationService) var notificationService
         await notificationService.requestPermission()

@@ -207,7 +207,7 @@ struct UserStatsView: View {
             Text(viewModel.userName)
                 .font(AppFont.title)
                 .fontWeight(.bold)
-                .foregroundColor(viewModel.themeManager.current.textPrimary)
+                .foregroundStyle(viewModel.themeManager.current.textPrimary)
         }
         .appCardStyle()
     }
@@ -223,22 +223,22 @@ struct UserStatsView: View {
                     VStack(spacing: AppSpacing.small) {
                         Text(viewModel.habitRating.displayName)
                             .font(.system(size: 48, weight: .bold, design: .rounded))
-                            .foregroundColor(viewModel.habitRating.color)
+                            .foregroundStyle(viewModel.habitRating.color)
                         
                         Text(viewModel.habitRating.description)
                             .font(AppFont.subheadline)
-                            .foregroundColor(viewModel.themeManager.current.textSecondary)
+                            .foregroundStyle(viewModel.themeManager.current.textSecondary)
                     }
                     .frame(maxWidth: .infinity)
                     
                     VStack(spacing: AppSpacing.small) {
                         Text("\(viewModel.totalScore)")
                             .font(.system(size: 32, weight: .bold, design: .rounded))
-                            .foregroundColor(viewModel.themeManager.current.primaryColor)
+                            .foregroundStyle(viewModel.themeManager.current.primaryColor)
                         
                         Text(String(localized: "points"))
                             .font(AppFont.caption)
-                            .foregroundColor(viewModel.themeManager.current.textSecondary)
+                            .foregroundStyle(viewModel.themeManager.current.textSecondary)
                     }
                     .frame(maxWidth: .infinity)
                 }
@@ -297,10 +297,10 @@ struct UserStatsView: View {
                     Text("\(viewModel.longestStreak)")
                         .font(AppFont.title)
                         .fontWeight(.bold)
-                        .foregroundColor(viewModel.themeManager.current.primaryColor)
+                        .foregroundStyle(viewModel.themeManager.current.primaryColor)
                     Text(String(localized: "Longest Streak"))
                         .font(AppFont.caption)
-                        .foregroundColor(viewModel.themeManager.current.textSecondary)
+                        .foregroundStyle(viewModel.themeManager.current.textSecondary)
                 }
                 .frame(maxWidth: .infinity)
                 
@@ -310,10 +310,10 @@ struct UserStatsView: View {
                     Text("\(viewModel.currentStreak)")
                         .font(AppFont.title)
                         .fontWeight(.bold)
-                        .foregroundColor(viewModel.themeManager.current.primaryColor)
+                        .foregroundStyle(viewModel.themeManager.current.primaryColor)
                     Text(String(localized: "Current Streak"))
                         .font(AppFont.caption)
-                        .foregroundColor(viewModel.themeManager.current.textSecondary)
+                        .foregroundStyle(viewModel.themeManager.current.textSecondary)
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -375,10 +375,10 @@ struct UserStatsView: View {
                         .fontWeight(.semibold)
                     Spacer()
                 }
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .padding()
                 .background(viewModel.themeManager.current.primaryColor)
-                .cornerRadius(AppCornerRadius.button)
+                .clipShape(.rect(cornerRadius: AppCornerRadius.button))
             }
         }
         .appCardStyle()
@@ -388,16 +388,16 @@ struct UserStatsView: View {
         VStack(spacing: AppSpacing.small) {
             Image(systemName: icon)
                 .font(.title2)
-                .foregroundColor(color)
+                .foregroundStyle(color)
             
             Text(value)
                 .font(AppFont.headline)
                 .fontWeight(.bold)
-                .foregroundColor(viewModel.themeManager.current.textPrimary)
+                .foregroundStyle(viewModel.themeManager.current.textPrimary)
             
             Text(title)
                 .font(AppFont.caption)
-                .foregroundColor(viewModel.themeManager.current.textSecondary)
+                .foregroundStyle(viewModel.themeManager.current.textSecondary)
                 .multilineTextAlignment(.center)
         }
         .appCardStyle()
@@ -411,16 +411,16 @@ struct UserStatsView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(AppFont.caption)
-                    .foregroundColor(viewModel.themeManager.current.textSecondary)
+                    .foregroundStyle(viewModel.themeManager.current.textSecondary)
                 
                 Text(subtitle)
                     .font(AppFont.body)
                     .fontWeight(.semibold)
-                    .foregroundColor(viewModel.themeManager.current.textPrimary)
+                    .foregroundStyle(viewModel.themeManager.current.textPrimary)
                 
                 Text(detail)
                     .font(AppFont.caption)
-                    .foregroundColor(viewModel.themeManager.current.textSecondary)
+                    .foregroundStyle(viewModel.themeManager.current.textSecondary)
             }
             
             Spacer()

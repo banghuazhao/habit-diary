@@ -196,7 +196,7 @@ struct HabitsListView: View {
             .navigationTitle("Habits")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Menu {
                         // Sort Section
                         Section("Sort By") {
@@ -248,7 +248,7 @@ struct HabitsListView: View {
                     }
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         viewModel.onTapCreateHabit()
                     }) {

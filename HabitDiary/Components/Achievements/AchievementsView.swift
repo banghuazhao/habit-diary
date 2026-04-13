@@ -177,7 +177,7 @@ struct AchievementsView: View {
                             
                             Text("\(viewModel.unlockedCount) of \(viewModel.totalAchievements) unlocked")
                                 .font(.subheadline)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                         }
                         
                         Spacer()
@@ -293,7 +293,7 @@ struct AchievementRowView: View {
                     Text(achievement.title)
                         .font(.headline)
                         .fontWeight(.semibold)
-                        .foregroundColor(achievement.isUnlocked ? .primary : .secondary)
+                        .foregroundStyle(achievement.isUnlocked ? .primary : .secondary)
                     
                     Spacer()
                     
@@ -305,12 +305,12 @@ struct AchievementRowView: View {
                                 message: Text("Check out this achievement I unlocked in Habit Diary!")
                             ) {
                                 Image(systemName: "square.and.arrow.up")
-                                    .foregroundColor(.blue)
+                                    .foregroundStyle(.blue)
                                     .font(.caption)
                             }
                             
                             Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
+                                .foregroundStyle(.green)
                                 .font(.title3)
                         }
                     }
@@ -318,7 +318,7 @@ struct AchievementRowView: View {
                 
                 Text(achievement.description)
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .lineLimit(2)
                 
                 // Progress bar for locked achievements
@@ -332,7 +332,7 @@ struct AchievementRowView: View {
                 if achievement.isUnlocked, let unlockDate = achievement.unlockedDate {
                     Text("Unlocked \(unlockDate.formatted(date: .abbreviated, time: .omitted))")
                         .font(.caption)
-                        .foregroundColor(.green)
+                        .foregroundStyle(.green)
                 }
             }
             

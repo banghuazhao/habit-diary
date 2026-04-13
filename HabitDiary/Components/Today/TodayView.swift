@@ -102,7 +102,7 @@ struct TodayView: View {
             .navigationTitle("Today")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
                         viewModel.onTapEdit()
                     }) {
@@ -130,7 +130,7 @@ struct TodayView: View {
                     .tint(ThemeManager.shared.current.primaryColor)
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         viewModel.onTapAddHabit()
                     }) {
@@ -156,10 +156,10 @@ struct TodayView: View {
                 Text(allDone ? String(localized: "All done for today! 🎉") : String(localized: "Today's Journal"))
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundColor(themeManager.current.textPrimary)
+                    .foregroundStyle(themeManager.current.textPrimary)
                 Text(String(localized: "\(completed) of \(total) habits recorded"))
                     .font(.caption)
-                    .foregroundColor(themeManager.current.textSecondary)
+                    .foregroundStyle(themeManager.current.textSecondary)
                 ProgressView(value: progress)
                     .progressViewStyle(LinearProgressViewStyle(tint: allDone ? .green : themeManager.current.primaryColor))
                     .scaleEffect(x: 1, y: 1.5, anchor: .center)
@@ -176,7 +176,7 @@ struct TodayView: View {
         }
         .padding(12)
         .background(themeManager.current.card)
-        .cornerRadius(12)
+        .clipShape(.rect(cornerRadius: 12))
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
 }

@@ -36,13 +36,13 @@ struct SettingView: View {
                     Toggle(isOn: $buttonSoundEnabled) {
                         Text(String(localized: "Checkin Sound"))
                             .font(AppFont.body)
-                            .foregroundColor(themeManager.current.textPrimary)
+                            .foregroundStyle(themeManager.current.textPrimary)
                     }
                     .toggleStyle(SwitchToggleStyle(tint: themeManager.current.primaryColor))
                     Toggle(isOn: $vibrateEnabled) {
                         Text(String(localized: "Vibrate"))
                             .font(AppFont.body)
-                            .foregroundColor(themeManager.current.textPrimary)
+                            .foregroundStyle(themeManager.current.textPrimary)
                     }
                     .toggleStyle(SwitchToggleStyle(tint: themeManager.current.primaryColor))
                 }
@@ -50,7 +50,7 @@ struct SettingView: View {
                     Toggle(isOn: $motivationalQuotesEnabled) {
                         Text(String(localized: "Daily Motivational Quotes"))
                             .font(AppFont.body)
-                            .foregroundColor(themeManager.current.textPrimary)
+                            .foregroundStyle(themeManager.current.textPrimary)
                     }
                     .toggleStyle(SwitchToggleStyle(tint: themeManager.current.primaryColor))
                     
@@ -70,7 +70,7 @@ struct SettingView: View {
                     Toggle(isOn: $darkModeEnabled) {
                         Text(String(localized: "Dark Mode"))
                             .font(AppFont.body)
-                            .foregroundColor(themeManager.current.textPrimary)
+                            .foregroundStyle(themeManager.current.textPrimary)
                     }
                     .toggleStyle(SwitchToggleStyle(tint: themeManager.current.primaryColor))
                 }
@@ -92,7 +92,7 @@ struct SettingView: View {
             }
             .padding()
             .background(themeManager.current.card)
-            .cornerRadius(AppCornerRadius.card)
+            .clipShape(.rect(cornerRadius: AppCornerRadius.card))
             .shadow(color: AppShadow.card.color, radius: AppShadow.card.radius, x: AppShadow.card.x, y: AppShadow.card.y)
         }
     }

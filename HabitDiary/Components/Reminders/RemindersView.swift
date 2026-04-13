@@ -133,11 +133,11 @@ struct RemindersView: View {
                 // 1. Top info box
                 HStack(alignment: .top, spacing: 10) {
                     Image(systemName: "bell.badge")
-                        .foregroundColor(.yellow)
+                        .foregroundStyle(.yellow)
                         .font(.title2)
                     Text("To receive timely reminders, please set notification method on your phone to \"Immediate Push.\"")
                         .font(.subheadline)
-                        .foregroundColor(.orange)
+                        .foregroundStyle(.orange)
                 }
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 10).stroke(Color.yellow))
@@ -147,7 +147,7 @@ struct RemindersView: View {
                     VStack(spacing: 10) {
                         Text("Notifications are disabled. Please enable them in Settings to receive reminders.")
                             .font(.subheadline)
-                            .foregroundColor(.red)
+                            .foregroundStyle(.red)
                             .multilineTextAlignment(.center)
                         Button("Go to Settings") {
                             viewModel.openSettings()
@@ -172,15 +172,15 @@ struct RemindersView: View {
                     VStack(spacing: 16) {
                         Image(systemName: "bell.slash")
                             .font(.system(size: 48))
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.gray)
                         
                         Text("No reminders set")
                             .font(.headline)
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.gray)
                         
                         Text("Tap Add a Reminder to get started")
                             .font(.subheadline)
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.gray)
                             .multilineTextAlignment(.center)
                         
                         Button("Create Daily Reminder") {
@@ -191,8 +191,8 @@ struct RemindersView: View {
                         .padding(.horizontal, 20)
                         .padding(.vertical, 10)
                         .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                        .foregroundStyle(.white)
+                        .clipShape(.rect(cornerRadius: 8))
                     }
                     .padding(.vertical, 40)
                 } else {
@@ -217,7 +217,7 @@ struct RemindersView: View {
                 if !viewModel.reminders.isEmpty {
                     Text("At most 64 notifications allowed. Currently \(viewModel.reminders.count) set.")
                         .font(.footnote)
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .padding()
                 }
             }

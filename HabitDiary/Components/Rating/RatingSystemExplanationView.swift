@@ -30,7 +30,7 @@ struct RatingSystemExplanationView: View {
             .navigationTitle(String(localized: "Rating System"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         dismiss()
                     } label: {
@@ -46,7 +46,7 @@ struct RatingSystemExplanationView: View {
         VStack(spacing: 16) {
             Image(systemName: "star.circle.fill")
                 .font(.system(size: 48))
-                .foregroundColor(.orange)
+                .foregroundStyle(.orange)
             
             Text(String(localized: "Habit Rating System"))
                 .font(.title)
@@ -54,7 +54,7 @@ struct RatingSystemExplanationView: View {
             
             Text(String(localized: "Your rating is calculated based on your overall health and wellness habits across multiple dimensions. Focus on building consistent habits across all categories to improve your rating!"))
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
         }
@@ -140,11 +140,11 @@ struct RatingLevelRow: View {
                 Text(rating.displayName)
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(rating.color)
+                    .foregroundStyle(rating.color)
                 
                 Text(rating.description)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
             }
             .frame(width: 80)
             
@@ -152,7 +152,7 @@ struct RatingLevelRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(String(localized: "Score Range"))
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                 
                 Text(scoreRangeText)
                     .font(.subheadline)
@@ -187,7 +187,7 @@ struct ScoreCategoryRow: View {
             // Icon
             Image(systemName: category.icon)
                 .font(.system(size: 24))
-                .foregroundColor(category.color)
+                .foregroundStyle(category.color)
                 .frame(width: 40)
             
             // Category Info
@@ -198,7 +198,7 @@ struct ScoreCategoryRow: View {
                 
                 Text(category.calculationExplanation)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .lineLimit(2)
             }
             
@@ -208,12 +208,12 @@ struct ScoreCategoryRow: View {
             VStack(alignment: .trailing, spacing: 4) {
                 Text(String(localized: "Max"))
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                 
                 Text("\(category.maxScore)")
                     .font(.subheadline)
                     .fontWeight(.bold)
-                    .foregroundColor(category.color)
+                    .foregroundStyle(category.color)
             }
         }
         .padding(16)
@@ -234,7 +234,7 @@ struct TipRow: View {
         HStack(alignment: .top, spacing: 16) {
             Image(systemName: icon)
                 .font(.system(size: 20))
-                .foregroundColor(.orange)
+                .foregroundStyle(.orange)
                 .frame(width: 24)
             
             VStack(alignment: .leading, spacing: 4) {
@@ -244,7 +244,7 @@ struct TipRow: View {
                 
                 Text(description)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
             }
             
             Spacer()

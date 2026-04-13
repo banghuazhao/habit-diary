@@ -19,21 +19,21 @@ struct MotivationalQuoteView: View {
         VStack(alignment: .leading, spacing: AppSpacing.small) {
             HStack {
                 Image(systemName: "quote.bubble.fill")
-                    .foregroundColor(themeManager.current.primaryColor)
+                    .foregroundStyle(themeManager.current.primaryColor)
                     .font(.title2)
                 
                 Spacer()
                 
                 Button(action: onDismiss) {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(themeManager.current.textSecondary)
+                        .foregroundStyle(themeManager.current.textSecondary)
                         .font(.title3)
                 }
             }
             
             Text(quote.text)
                 .font(AppFont.body)
-                .foregroundColor(themeManager.current.textPrimary)
+                .foregroundStyle(themeManager.current.textPrimary)
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
             
@@ -41,7 +41,7 @@ struct MotivationalQuoteView: View {
                 Spacer()
                 Text("— \(quote.author)")
                     .font(AppFont.caption)
-                    .foregroundColor(themeManager.current.textSecondary)
+                    .foregroundStyle(themeManager.current.textSecondary)
                     .italic()
             }
         }

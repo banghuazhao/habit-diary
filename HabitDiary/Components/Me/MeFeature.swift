@@ -51,7 +51,7 @@ struct MeView: View {
                                     .fontWeight(.bold)
                                     .padding(AppSpacing.small)
                                     .background(themeManager.current.background)
-                                    .cornerRadius(AppCornerRadius.button)
+                                    .clipShape(.rect(cornerRadius: AppCornerRadius.button))
                                     .lineLimit(1)
                             }
                             Spacer()
@@ -77,11 +77,11 @@ struct MeView: View {
                         } else {
                             HStack(spacing: 8) {
                                 Image(systemName: "crown.fill")
-                                    .foregroundColor(.yellow)
+                                    .foregroundStyle(.yellow)
                                     .font(.title3)
                                 Text(String(localized: "Welcome, Premium user!"))
                                     .font(.headline)
-                                    .foregroundColor(themeManager.current.primaryColor)
+                                    .foregroundStyle(themeManager.current.primaryColor)
                             }
                             .padding(.vertical, 8)
                             .padding(.horizontal, 16)
@@ -90,7 +90,7 @@ struct MeView: View {
                                 RoundedRectangle(cornerRadius: AppCornerRadius.button)
                                     .stroke(themeManager.current.primaryColor, lineWidth: 1.5)
                             )
-                            .cornerRadius(AppCornerRadius.button)
+                            .clipShape(.rect(cornerRadius: AppCornerRadius.button))
                             .shadow(color: AppShadow.card.color, radius: 4, x: 0, y: 2)
                         }
                     }
@@ -105,7 +105,7 @@ struct MeView: View {
                         Text(String(localized: "Habit Diary  |  Your Daily Habit Journal"))
                             .font(AppFont.footnote)
                             .fontWeight(.semibold)
-                            .foregroundColor(themeManager.current.textSecondary)
+                            .foregroundStyle(themeManager.current.textSecondary)
 
                         Button {
                             if let url = URL(string: "https://apps.apple.com/app/id\(Constants.AppID.appID)") {
@@ -114,7 +114,7 @@ struct MeView: View {
                         } label: {
                             Text("v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")  Check for Updates")
                                 .font(AppFont.footnote)
-                                .foregroundColor(themeManager.current.textSecondary)
+                                .foregroundStyle(themeManager.current.textSecondary)
                                 .underline()
                         }
                     }
@@ -143,12 +143,12 @@ struct MeView: View {
             Text(value)
                 .font(AppFont.subheadline)
                 .fontWeight(.bold)
-                .foregroundColor(themeManager.current.primaryColor)
+                .foregroundStyle(themeManager.current.primaryColor)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
             Text(title)
                 .font(AppFont.caption)
-                .foregroundColor(themeManager.current.textSecondary)
+                .foregroundStyle(themeManager.current.textSecondary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
         }
@@ -217,19 +217,19 @@ struct MeView: View {
         VStack(spacing: AppSpacing.small) {
             Image(systemName: icon)
                 .font(.title2)
-                .foregroundColor(themeManager.current.primaryColor)
+                .foregroundStyle(themeManager.current.primaryColor)
                 .frame(width: 36, height: 36)
                 .clipShape(Circle())
             Text(title)
                 .font(AppFont.caption)
-                .foregroundColor(themeManager.current.textPrimary)
+                .foregroundStyle(themeManager.current.textPrimary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
         }
         .frame(maxWidth: .infinity)
         .padding(AppSpacing.small)
         .background(themeManager.current.card)
-        .cornerRadius(AppCornerRadius.card)
+        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
         .shadow(color: AppShadow.card.color, radius: AppShadow.card.radius, x: AppShadow.card.x, y: AppShadow.card.y)
     }
 
@@ -237,19 +237,19 @@ struct MeView: View {
         VStack(spacing: AppSpacing.small) {
             Image(systemName: icon)
                 .font(.title2)
-                .foregroundColor(themeManager.current.primaryColor)
+                .foregroundStyle(themeManager.current.primaryColor)
                 .frame(width: 36, height: 36)
                 .clipShape(Circle())
             Text(title)
                 .font(AppFont.caption)
-                .foregroundColor(themeManager.current.textPrimary)
+                .foregroundStyle(themeManager.current.textPrimary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
         }
         .frame(maxWidth: .infinity)
         .padding(AppSpacing.small)
         .background(themeManager.current.card)
-        .cornerRadius(AppCornerRadius.card)
+        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
         .shadow(color: AppShadow.card.color, radius: AppShadow.card.radius, x: AppShadow.card.x, y: AppShadow.card.y)
     }
 }

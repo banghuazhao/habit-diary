@@ -26,13 +26,13 @@ struct HabitCardView: View {
 
                     if habit.isFavorite {
                         Image(systemName: "heart.fill")
-                            .foregroundColor(.red)
+                            .foregroundStyle(.red)
                             .font(.caption)
                     }
 
                     if habit.isArchived {
                         Image(systemName: "archivebox.fill")
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.gray)
                             .font(.caption)
                     }
                     Spacer()
@@ -86,7 +86,7 @@ struct HabitCardView: View {
         .background(
             Color(hex: habit.color)
         )
-        .cornerRadius(10)
+        .clipShape(.rect(cornerRadius: 10))
         .overlay(
             RoundedRectangle(cornerRadius: 10)
                 .stroke(habit.borderColor, lineWidth: 1)

@@ -283,10 +283,10 @@ struct HabitFormView: View {
                     VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
                         HStack(spacing: AppSpacing.small) {
                             Image(systemName: "list.bullet.clipboard.fill")
-                                .foregroundColor(themeManager.current.primaryColor)
+                                .foregroundStyle(themeManager.current.primaryColor)
                             TextField("New habit name", text: $viewModel.habit.name)
                                 .font(AppFont.headline)
-                                .foregroundColor(themeManager.current.textPrimary)
+                                .foregroundStyle(themeManager.current.textPrimary)
                             Button {
                                 viewModel.onTapGallery()
                             } label: {
@@ -307,10 +307,10 @@ struct HabitFormView: View {
                     VStack(alignment: .leading, spacing: AppSpacing.small) {
                         HStack {
                             Image(systemName: "clock.fill")
-                                .foregroundColor(themeManager.current.primaryColor)
+                                .foregroundStyle(themeManager.current.primaryColor)
                             Text("Frequency")
                                 .fontWeight(.semibold)
-                                .foregroundColor(themeManager.current.textPrimary)
+                                .foregroundStyle(themeManager.current.textPrimary)
                             Spacer()
                             Picker("Frequency", selection: $viewModel.habit.frequency) {
                                 ForEach(HabitFrequency.allCases, id: \ .self) { habitFrequency in
@@ -334,7 +334,7 @@ struct HabitFormView: View {
                                                 .minimumScaleFactor(0.5)
                                             if viewModel.hasSelectedWeekDay(weekDay) {
                                                 Image(systemName: "checkmark.circle.fill")
-                                                    .foregroundColor(themeManager.current.primaryColor)
+                                                    .foregroundStyle(themeManager.current.primaryColor)
                                             }
                                         }
                                         .padding(8)
@@ -345,7 +345,7 @@ struct HabitFormView: View {
                                         ? themeManager.current.primaryColor.opacity(0.12)
                                         : themeManager.current.background
                                     )
-                                    .cornerRadius(AppCornerRadius.button)
+                                    .clipShape(.rect(cornerRadius: AppCornerRadius.button))
                                     .overlay(
                                         RoundedRectangle(cornerRadius: AppCornerRadius.button)
                                             .stroke(viewModel.hasSelectedWeekDay(weekDay) ? themeManager.current.primaryColor : themeManager.current.secondaryGray.opacity(0.2), lineWidth: 1)
@@ -372,7 +372,7 @@ struct HabitFormView: View {
                                         ? themeManager.current.primaryColor.opacity(0.12)
                                         : themeManager.current.background
                                     )
-                                    .cornerRadius(AppCornerRadius.button)
+                                    .clipShape(.rect(cornerRadius: AppCornerRadius.button))
                                     .overlay(
                                         RoundedRectangle(cornerRadius: AppCornerRadius.button)
                                             .stroke(viewModel.hasSelectedMonthDay(monthDay) ? themeManager.current.primaryColor : themeManager.current.secondaryGray.opacity(0.2), lineWidth: 1)
@@ -400,15 +400,15 @@ struct HabitFormView: View {
                             }
                             HStack {
                                 Image(systemName: "info.circle.fill")
-                                    .foregroundColor(themeManager.current.secondaryGray)
+                                    .foregroundStyle(themeManager.current.secondaryGray)
                                     .font(.caption)
                                 if viewModel.habit.nDaysPerWeek == 1 {
                                     Text("After being completed on \(viewModel.habit.nDaysPerWeek) day, the habit will not show up again this week.")
-                                        .foregroundColor(themeManager.current.secondaryGray)
+                                        .foregroundStyle(themeManager.current.secondaryGray)
                                         .font(.caption)
                                 } else {
                                     Text("After being completed on \(viewModel.habit.nDaysPerWeek) days, the habit will not show up again this week.")
-                                        .foregroundColor(themeManager.current.secondaryGray)
+                                        .foregroundStyle(themeManager.current.secondaryGray)
                                         .font(.caption)
                                 }
                             }
@@ -433,15 +433,15 @@ struct HabitFormView: View {
                             }
                             HStack {
                                 Image(systemName: "info.circle.fill")
-                                    .foregroundColor(themeManager.current.secondaryGray)
+                                    .foregroundStyle(themeManager.current.secondaryGray)
                                     .font(.caption)
                                 if viewModel.habit.nDaysPerMonth == 1 {
                                     Text("After being completed on \(viewModel.habit.nDaysPerMonth) day, the habit will not show up again this month.")
-                                        .foregroundColor(themeManager.current.secondaryGray)
+                                        .foregroundStyle(themeManager.current.secondaryGray)
                                         .font(.caption)
                                 } else {
                                     Text("After being completed on \(viewModel.habit.nDaysPerMonth) days, the habit will not show up again this month.")
-                                        .foregroundColor(themeManager.current.secondaryGray)
+                                        .foregroundStyle(themeManager.current.secondaryGray)
                                         .font(.caption)
                                 }
                             }
@@ -452,16 +452,16 @@ struct HabitFormView: View {
                     VStack(alignment: .leading, spacing: AppSpacing.small) {
                         HStack {
                             Image(systemName: "text.quote")
-                                .foregroundColor(themeManager.current.primaryColor)
+                                .foregroundStyle(themeManager.current.primaryColor)
                             Text("Description")
                                 .fontWeight(.semibold)
-                                .foregroundColor(themeManager.current.textPrimary)
+                                .foregroundStyle(themeManager.current.textPrimary)
                         }
                         TextEditor(text: $viewModel.habit.note)
                             .frame(minHeight: 50)
                             .padding(8)
                             .background(themeManager.current.background)
-                            .cornerRadius(AppCornerRadius.button)
+                            .clipShape(.rect(cornerRadius: AppCornerRadius.button))
                             .overlay(
                                 RoundedRectangle(cornerRadius: AppCornerRadius.button)
                                     .stroke(themeManager.current.secondaryGray.opacity(0.3), lineWidth: 1)
@@ -472,25 +472,25 @@ struct HabitFormView: View {
                     VStack(alignment: .leading, spacing: AppSpacing.small) {
                         HStack {
                             Image(systemName: "bell.fill")
-                                .foregroundColor(themeManager.current.primaryColor)
+                                .foregroundStyle(themeManager.current.primaryColor)
                             Text("Reminders")
                                 .fontWeight(.semibold)
-                                .foregroundColor(themeManager.current.textPrimary)
+                                .foregroundStyle(themeManager.current.textPrimary)
                             Spacer()
                             Button("Add Reminder") {
                                 viewModel.onTapAddReminder()
                             }
                             .font(AppFont.subheadline)
-                            .foregroundColor(themeManager.current.primaryColor)
+                            .foregroundStyle(themeManager.current.primaryColor)
                         }
                         if viewModel.draftReminders.isEmpty {
                             Text("No reminders set for this habit")
                                 .font(AppFont.subheadline)
-                                .foregroundColor(themeManager.current.textSecondary)
+                                .foregroundStyle(themeManager.current.textSecondary)
                                 .padding()
                                 .frame(maxWidth: .infinity)
                                 .background(themeManager.current.background)
-                                .cornerRadius(AppCornerRadius.button)
+                                .clipShape(.rect(cornerRadius: AppCornerRadius.button))
                         } else {
                             VStack(spacing: AppSpacing.small) {
                                 ForEach(viewModel.draftReminders, id: \ .id) { draft in

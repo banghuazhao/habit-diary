@@ -51,7 +51,7 @@ struct PurchaseSheet: View {
                     Text("Unlock the full Habit Diary experience with exclusive benefits:")
                         .font(.body)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                         .padding(.horizontal)
                         .padding(.bottom, 12)
                     VStack(alignment: .leading, spacing: 10) {
@@ -104,8 +104,8 @@ struct PurchaseSheet: View {
                                 .padding(.vertical, 12)
                                 .padding(.horizontal, 20)
                                 .background(themeManager.current.primaryColor)
-                                .foregroundColor(.white)
-                                .cornerRadius(16)
+                                .foregroundStyle(.white)
+                                .clipShape(.rect(cornerRadius: 16))
                             }
                             .padding(.horizontal)
                             .disabled(isPurchasing)
@@ -122,21 +122,21 @@ struct PurchaseSheet: View {
                                 isPurchasing = false
                             }
                         }
-                        .foregroundColor(themeManager.current.primaryColor)
+                        .foregroundStyle(themeManager.current.primaryColor)
                         
                         Button("Contact Support") {
                             if let url = URL(string: "https://apps-bay.github.io/Apps-Bay-Website/contact/") {
                                 UIApplication.shared.open(url)
                             }
                         }
-                        .foregroundColor(themeManager.current.primaryColor)
+                        .foregroundStyle(themeManager.current.primaryColor)
                         
                         Button("Privacy Policy") {
                             if let url = URL(string: "https://apps-bay.github.io/Apps-Bay-Website/privacy/") {
                                 UIApplication.shared.open(url)
                             }
                         }
-                        .foregroundColor(themeManager.current.primaryColor)
+                        .foregroundStyle(themeManager.current.primaryColor)
                     }
                     .font(.body)
                     .padding(.bottom, 24)
@@ -198,23 +198,23 @@ struct PremiumSuccessView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 80, height: 80)
-                        .foregroundColor(.yellow)
+                        .foregroundStyle(.yellow)
                         .shadow(color: .yellow, radius: 12)
                 }
                 Text("Congratulations!")
                     .font(.system(size: 28, weight: .bold))
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.primary)
                 Text("💎 Thanks for being a Premium member!")
                     .font(.title3)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                 Divider()
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
-                        Image(systemName: "checkmark.seal.fill").foregroundColor(.green)
+                        Image(systemName: "checkmark.seal.fill").foregroundStyle(.green)
                         Text("Ad-free experience")
                     }
                     HStack {
-                        Image(systemName: "star.fill").foregroundColor(.yellow)
+                        Image(systemName: "star.fill").foregroundStyle(.yellow)
                         Text("Thank you for supporting Habit Diary!")
                     }
                 }
@@ -230,8 +230,8 @@ struct PremiumSuccessView: View {
                         .background(
                             LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing)
                         )
-                        .foregroundColor(.white)
-                        .cornerRadius(16)
+                        .foregroundStyle(.white)
+                        .clipShape(.rect(cornerRadius: 16))
                         .shadow(radius: 4)
                 }
             }

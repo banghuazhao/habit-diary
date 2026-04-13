@@ -23,7 +23,7 @@ struct AppCircularButtonStyle: ButtonStyle {
             .background(
                 (overrideColor?.opacity(0.1) ?? theme.primaryColor.opacity(0.1))
             )
-            .foregroundColor(overrideColor ?? theme.primaryColor)
+            .foregroundStyle(overrideColor ?? theme.primaryColor)
             .clipShape(Circle())
             .opacity(configuration.isPressed ? 0.7 : 1.0)
     }
@@ -37,7 +37,7 @@ struct AppWhiteCircularButtonStyle: ButtonStyle {
             .background(
                 Color.black.opacity(0.1)
             )
-            .foregroundColor(Color.white)
+            .foregroundStyle(Color.white)
             .clipShape(Circle())
             .opacity(configuration.isPressed ? 0.7 : 1.0)
     }
@@ -56,7 +56,7 @@ struct AppRectButtonStyle: ButtonStyle {
             .frame(height: 38)
             .padding(.horizontal, AppSpacing.medium)
             .background(theme.primaryColor.opacity(0.1))
-            .foregroundColor(theme.primaryColor)
+            .foregroundStyle(theme.primaryColor)
             .clipShape(
                 RoundedRectangle(cornerRadius: 18)
             )

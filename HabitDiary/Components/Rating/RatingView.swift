@@ -30,7 +30,7 @@ struct RatingView: View {
             .navigationTitle(String(localized: "Habit Rating"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     ShareLink(
                         item: viewModel.createShareText(),
                         subject: Text(String(localized: "My Habit Rating")),
@@ -65,15 +65,15 @@ struct RatingView: View {
                 VStack(spacing: 8) {
                     Text(breakdown.rating.displayName)
                         .font(.system(size: 48, weight: .bold, design: .rounded))
-                        .foregroundColor(breakdown.rating.color)
+                        .foregroundStyle(breakdown.rating.color)
                     
                     Text(breakdown.rating.description)
                         .font(.title2)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                     
                     Text(String(localized: "\(breakdown.totalScore) points"))
                         .font(.headline)
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.primary)
                 }
                 
                 // Score Progress Bar
@@ -81,11 +81,11 @@ struct RatingView: View {
                     HStack {
                         Text(String(localized: "Total Score"))
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                         Spacer()
                         Text(String(localized: "\(breakdown.totalScore)/\(breakdown.maxPossibleScore)"))
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                     }
                     
                     ProgressView(value: breakdown.overallProgress)
@@ -96,11 +96,11 @@ struct RatingView: View {
                     HStack {
                         Text(String(localized: "Progress in \(breakdown.rating.description)"))
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                         Spacer()
                         Text(String(format: "%.1f%%", breakdown.progressInCurrentRating * 100))
                             .font(.caption)
-                            .foregroundColor(breakdown.rating.color)
+                            .foregroundStyle(breakdown.rating.color)
                     }
                     
                     ProgressView(value: breakdown.progressInCurrentRating)
@@ -131,19 +131,19 @@ struct RatingView: View {
         VStack(spacing: 12) {
             HStack {
                 Image(systemName: "quote.bubble.fill")
-                    .foregroundColor(rating.color)
+                    .foregroundStyle(rating.color)
                     .font(.title3)
                 
                 Text(String(localized: "Motivation"))
                     .font(.headline)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.primary)
                 
                 Spacer()
             }
             
             Text(rating.motivationalMessage)
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -162,7 +162,7 @@ struct RatingView: View {
         VStack(spacing: 12) {
             HStack {
                 Image(systemName: "arrow.up.circle.fill")
-                    .foregroundColor(nextRating.color)
+                    .foregroundStyle(nextRating.color)
                 Text(String(localized: "Progress to \(nextRating.displayName)"))
                     .font(.headline)
                 Spacer()
@@ -173,18 +173,18 @@ struct RatingView: View {
                     HStack {
                         Text(String(localized: "\(breakdown.scoreToNextRating) points needed"))
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                         Spacer()
                         Text(nextRating.description)
                             .font(.subheadline)
-                            .foregroundColor(nextRating.color)
+                            .foregroundStyle(nextRating.color)
                     }
                     
                     // Show score range for next rating
                     HStack {
                         Text(String(localized: "Range: \(nextRating.scoreRange.lowerBound) - \(nextRating.scoreRange.upperBound == Int.max ? "∞" : "\(nextRating.scoreRange.upperBound)") points"))
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                         Spacer()
                     }
                 }
@@ -224,7 +224,7 @@ struct RatingView: View {
             VStack(spacing: 12) {
                 HStack {
                     Image(systemName: item.icon)
-                        .foregroundColor(item.color)
+                        .foregroundStyle(item.color)
                         .frame(width: 24)
                     
                     VStack(alignment: .leading, spacing: 2) {
@@ -234,14 +234,14 @@ struct RatingView: View {
                         
                         Text(item.performanceLevel.description)
                             .font(.caption)
-                            .foregroundColor(item.performanceLevel.color)
+                            .foregroundStyle(item.performanceLevel.color)
                     }
                     
                     Button(action: {
                         isInfoPresented.toggle()
                     }) {
                         Image(systemName: "info.circle")
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                             .font(.system(size: 16))
                     }
                     .buttonStyle(.borderless)
@@ -264,12 +264,12 @@ struct RatingView: View {
                                             .fontWeight(.medium)
                                         Text(item.performanceLevel.description)
                                             .font(.subheadline)
-                                            .foregroundColor(item.performanceLevel.color)
+                                            .foregroundStyle(item.performanceLevel.color)
                                     }
                                     
                                     Text(String(format: "%.1f%% of maximum possible score", item.percentage * 100))
                                         .font(.caption)
-                                        .foregroundColor(.secondary)
+                                        .foregroundStyle(.secondary)
                                 }
                                 .padding(.top, 8)
                             }
@@ -285,11 +285,11 @@ struct RatingView: View {
                         Text(String(localized: "\(item.score)/\(item.maxScore)"))
                             .font(.subheadline)
                             .fontWeight(.medium)
-                            .foregroundColor(.primary)
+                            .foregroundStyle(.primary)
                         
                         Text(String(format: "%.0f%%", item.percentage * 100))
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                     }
                 }
                 
@@ -308,7 +308,7 @@ struct RatingView: View {
                                 .frame(width: 6, height: 6)
                             Text(item.performanceLevel.description)
                                 .font(.caption2)
-                                .foregroundColor(item.performanceLevel.color)
+                                .foregroundStyle(item.performanceLevel.color)
                         }
                     }
                 }

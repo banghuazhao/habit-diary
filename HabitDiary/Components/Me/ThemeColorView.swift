@@ -26,7 +26,7 @@ struct ThemeColorView: View {
             VStack(spacing: AppSpacing.large) {
                 Text(String(localized: "Select your preferred primary color for the app"))
                     .font(AppFont.body)
-                    .foregroundColor(themeManager.current.textSecondary)
+                    .foregroundStyle(themeManager.current.textSecondary)
                     .multilineTextAlignment(.center)
 
                 // Theme Color Options
@@ -70,15 +70,15 @@ struct ThemeColorView: View {
                         VStack(alignment: .leading, spacing: AppSpacing.small) {
                             HStack {
                                 Image(systemName: "star.fill")
-                                    .foregroundColor(themeManager.current.primaryColor)
+                                    .foregroundStyle(themeManager.current.primaryColor)
                                 Text(String(localized: "Sample Card"))
                                     .font(AppFont.headline)
-                                    .foregroundColor(themeManager.current.textPrimary)
+                                    .foregroundStyle(themeManager.current.textPrimary)
                                 Spacer()
                             }
                             Text(String(localized: "This is how your selected theme color will look throughout the app."))
                                 .font(AppFont.body)
-                                .foregroundColor(themeManager.current.textSecondary)
+                                .foregroundStyle(themeManager.current.textSecondary)
                         }
                         .appCardStyle(theme: themeManager.current)
                     }
@@ -119,17 +119,17 @@ struct ThemeColorCard: View {
 
                     Image(systemName: themeOption.icon)
                         .font(.title)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                 }
 
                 Text(themeOption.themeColor.displayName)
                     .font(AppFont.headline)
-                    .foregroundColor(themeOption.color)
+                    .foregroundStyle(themeOption.color)
             }
             .frame(maxWidth: .infinity)
             .padding(AppSpacing.medium)
             .background(themeManager.current.card)
-            .cornerRadius(AppCornerRadius.card)
+            .clipShape(.rect(cornerRadius: AppCornerRadius.card))
             .overlay(
                 RoundedRectangle(cornerRadius: AppCornerRadius.card)
                     .stroke(isSelected ? themeOption.color : Color.clear, lineWidth: 3)

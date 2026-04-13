@@ -22,7 +22,7 @@ struct CategoryFilterButton: View {
                     RoundedRectangle(cornerRadius: 20)
                         .fill(isSelected ? themeManager.current.primaryColor : themeManager.current.secondaryGray.opacity(0.1))
                 )
-                .foregroundColor(isSelected ? .white : themeManager.current.textPrimary)
+                .foregroundStyle(isSelected ? .white : themeManager.current.textPrimary)
         }
         .buttonStyle(PlainButtonStyle())
     }

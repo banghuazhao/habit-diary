@@ -121,7 +121,7 @@ struct OnboardingView: View {
                     
                     Text(String(localized: "Document your daily journey, reflect on your growth, and turn your intentions into lasting habits — all in one personal diary."))
                         .font(.body)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
                 }
@@ -134,11 +134,11 @@ struct OnboardingView: View {
             }) {
                 Text(String(localized: "Get Started"))
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(themeManager.current.primaryColor)
-                    .cornerRadius(12)
+                    .clipShape(.rect(cornerRadius: 12))
             }
             .padding(.horizontal)
             .padding(.bottom)
@@ -154,7 +154,7 @@ struct OnboardingView: View {
                 
                 Text(String(localized: "More than a tracker — it's your personal journal for every habit, every day"))
                     .font(.body)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
             }
@@ -205,11 +205,11 @@ struct OnboardingView: View {
             }) {
                 Text(String(localized: "Choose Your Habits"))
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(themeManager.current.primaryColor)
-                    .cornerRadius(12)
+                    .clipShape(.rect(cornerRadius: 12))
             }
             .padding(.horizontal)
             .padding(.bottom)
@@ -226,7 +226,7 @@ struct OnboardingView: View {
                 
                 Text(String(localized: "Select 3-7 habits that resonate with you. Don't worry, you can always add more or modify these later!"))
                     .font(.body)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 
@@ -234,11 +234,11 @@ struct OnboardingView: View {
                 if !viewModel.selectedHabits.isEmpty {
                     Text("\(viewModel.selectedHabits.count) habits selected")
                         .font(.caption)
-                        .foregroundColor(themeManager.current.primaryColor)
+                        .foregroundStyle(themeManager.current.primaryColor)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 4)
                         .background(themeManager.current.primaryColor.opacity(0.1))
-                        .cornerRadius(12)
+                        .clipShape(.rect(cornerRadius: 12))
                 }
             }
             .padding()
@@ -268,11 +268,11 @@ struct OnboardingView: View {
                     } label: {
                         Text(String(localized: "Back"))
                             .font(.headline)
-                            .foregroundColor(themeManager.current.primaryColor)
+                            .foregroundStyle(themeManager.current.primaryColor)
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(Color(.systemGray6))
-                            .cornerRadius(12)
+                            .clipShape(.rect(cornerRadius: 12))
                     }
                     
                     Button {
@@ -280,11 +280,11 @@ struct OnboardingView: View {
                     } label: {
                         Text(viewModel.selectedHabits.isEmpty ? String(localized: "Skip for Now") : String(localized: "Continue"))
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(themeManager.current.primaryColor)
-                            .cornerRadius(12)
+                            .clipShape(.rect(cornerRadius: 12))
                     }
                 }
                 .padding()
@@ -306,7 +306,7 @@ struct OnboardingView: View {
                     
                     Image(systemName: "checkmark.circle.fill")
                         .font(.system(size: 64))
-                        .foregroundColor(.green)
+                        .foregroundStyle(.green)
                 }
                 
                 VStack(spacing: 16) {
@@ -318,19 +318,19 @@ struct OnboardingView: View {
                     if viewModel.selectedHabits.isEmpty {
                         Text(String(localized: "You can explore our habit gallery anytime and add habits that inspire you. Start your journey whenever you're ready!"))
                             .font(.body)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
                     } else if viewModel.selectedHabits.count == 1 {
                         Text(String(localized: "Perfect! You've selected 1 habit to get started. Remember, consistency is more important than quantity. You can always add more habits as you build momentum."))
                             .font(.body)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
                     } else {
                         Text(String(localized: "Excellent! You've selected \(viewModel.selectedHabits.count) habits. Focus on building these consistently, and watch your rating grow from Beginner to Legend!"))
                             .font(.body)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
                     }
@@ -341,26 +341,26 @@ struct OnboardingView: View {
                             Text("✍️")
                             Text(String(localized: "Add a diary note when you check in — even a few words capture your journey."))
                                 .font(.caption)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                         }
                         
                         HStack(alignment: .top) {
                             Text("📖")
                             Text(String(localized: "Browse your Journal Entries anytime to reflect on your personal growth."))
                                 .font(.caption)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                         }
                         
                         HStack(alignment: .top) {
                             Text("🏆")
                             Text(String(localized: "Earn achievements and climb the rating ladder to Legend status!"))
                                 .font(.caption)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                         }
                     }
                     .padding()
                     .background(Color(.systemGray6))
-                    .cornerRadius(12)
+                    .clipShape(.rect(cornerRadius: 12))
                 }
             }
             
@@ -374,11 +374,11 @@ struct OnboardingView: View {
             }) {
                 Text(String(localized: "Begin Your Journey"))
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(themeManager.current.primaryColor)
-                    .cornerRadius(12)
+                    .clipShape(.rect(cornerRadius: 12))
             }
             .padding(.horizontal)
             .padding(.bottom)
@@ -406,11 +406,11 @@ struct FeatureCard: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.headline)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.primary)
                 
                 Text(description)
                     .font(.body)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             
@@ -438,7 +438,7 @@ struct OnboardingHabitCard: View {
                 // Selection indicator
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                     .font(.title2)
-                    .foregroundColor(isSelected ? themeManager.current.primaryColor : .gray)
+                    .foregroundStyle(isSelected ? themeManager.current.primaryColor : .gray)
                 
                 // Habit icon and color indicator
                 ZStack {
@@ -453,22 +453,22 @@ struct OnboardingHabitCard: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(habit.name)
                         .font(.headline)
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.primary)
                     
                     Text(habit.note)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
                     
                     // Frequency indicator
                     Text(habit.toMock.frequencyDescription)
                         .font(.caption2)
-                        .foregroundColor(themeManager.current.primaryColor)
+                        .foregroundStyle(themeManager.current.primaryColor)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 2)
                         .background(themeManager.current.primaryColor.opacity(0.1))
-                        .cornerRadius(8)
+                        .clipShape(.rect(cornerRadius: 8))
                 }
                 
                 Spacer()

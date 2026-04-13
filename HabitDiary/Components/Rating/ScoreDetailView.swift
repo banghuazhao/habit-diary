@@ -26,7 +26,7 @@ struct ScoreDetailView: View {
             .navigationTitle(viewModel.category.rawValue)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button{
                         dismiss()
                     } label: {
@@ -46,7 +46,7 @@ struct ScoreDetailView: View {
             HStack {
                 Image(systemName: viewModel.category.icon)
                     .font(.system(size: 32))
-                    .foregroundColor(viewModel.category.color)
+                    .foregroundStyle(viewModel.category.color)
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(viewModel.category.rawValue)
@@ -55,7 +55,7 @@ struct ScoreDetailView: View {
                     
                     Text(String(localized: "Score: \(viewModel.currentScore)/\(viewModel.category.maxScore)"))
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
                 Spacer()
             }
@@ -64,11 +64,11 @@ struct ScoreDetailView: View {
                 HStack {
                     Text(String(localized: "Progress"))
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                     Spacer()
                     Text(String("\(Int(viewModel.percentage * 100))%"))
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
                 
                 ProgressView(value: viewModel.percentage)
@@ -87,7 +87,7 @@ struct ScoreDetailView: View {
             
             Text(viewModel.category.calculationExplanation)
                 .font(.callout)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .appInfoSection()
         }
     }
@@ -116,12 +116,12 @@ struct ScoreDetailView: View {
                 ForEach(viewModel.tips, id: \.self) { tip in
                     HStack(alignment: .top, spacing: 12) {
                         Image(systemName: "lightbulb.fill")
-                            .foregroundColor(viewModel.category.color)
+                            .foregroundStyle(viewModel.category.color)
                             .font(.system(size: 16))
                         
                         Text(tip)
                             .font(.callout)
-                            .foregroundColor(ThemeManager.shared.current.textSecondary)
+                            .foregroundStyle(ThemeManager.shared.current.textSecondary)
                         
                         Spacer()
                     }
@@ -142,17 +142,17 @@ struct StatCard: View {
         VStack(spacing: 8) {
             Text(title)
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
             
             Text(value)
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(color)
+                .foregroundStyle(color)
             
             Text(subtitle)
                 .font(.caption2)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
         }
         .padding(12)

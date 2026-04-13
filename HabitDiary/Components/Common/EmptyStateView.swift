@@ -26,12 +26,12 @@ struct EmptyStateView: View {
                 VStack(spacing: AppSpacing.small) {
                     Text(title)
                         .font(AppFont.headline)
-                        .foregroundColor(themeManager.current.textPrimary)
+                        .foregroundStyle(themeManager.current.textPrimary)
                         .multilineTextAlignment(.center)
                     
                     Text(subtitle)
                         .font(AppFont.subheadline)
-                        .foregroundColor(themeManager.current.textSecondary)
+                        .foregroundStyle(themeManager.current.textSecondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, AppSpacing.large)
                 }

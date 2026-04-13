@@ -53,10 +53,10 @@ struct CheckInHistoryView: View {
                         .font(.system(size: 56))
                     Text(String(localized: "Your journal is empty"))
                         .font(.headline)
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.primary)
                     Text(String(localized: "Check in a habit and add a diary note to start your personal journal."))
                         .font(.body)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
                 }
@@ -95,14 +95,14 @@ private struct JournalEntryRow: View {
                         .font(.headline)
                     Text(entry.checkIn.date.formatted(date: .abbreviated, time: .omitted))
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
 
                 Spacer()
 
                 Button(action: onDelete) {
                     Image(systemName: "trash")
-                        .foregroundColor(.red)
+                        .foregroundStyle(.red)
                         .font(.system(size: 14))
                 }
                 .buttonStyle(.borderless)
@@ -112,16 +112,16 @@ private struct JournalEntryRow: View {
                 HStack(alignment: .top, spacing: 6) {
                     Image(systemName: "pencil.line")
                         .font(.caption)
-                        .foregroundColor(themeManager.current.primaryColor)
+                        .foregroundStyle(themeManager.current.primaryColor)
                         .padding(.top, 1)
                     Text(entry.checkIn.note)
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(10)
                 .background(themeManager.current.primaryColor.opacity(0.06))
-                .cornerRadius(8)
+                .clipShape(.rect(cornerRadius: 8))
             }
         }
         .padding(.vertical, 4)

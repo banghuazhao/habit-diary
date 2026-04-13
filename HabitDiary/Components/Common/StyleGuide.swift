@@ -45,51 +45,51 @@ enum ThemeColor: String, CaseIterable {
     var primaryColor: Color {
         switch self {
         case .default:
-            return Color(red: 1.0, green: 0.47, blue: 0.18) // #FF772F - Orange
+            return Color(red: 1.0, green: 0.47, blue: 0.18)
         case .blue:
-            return Color(red: 0.0, green: 0.48, blue: 1.0) // #007AFF - Blue
+            return Color(red: 0.0, green: 0.48, blue: 1.0)
         case .green:
-            return Color(red: 0.20, green: 0.78, blue: 0.35) // #34C759 - Green
+            return Color(red: 0.20, green: 0.78, blue: 0.35)
         case .purple:
-            return Color(red: 0.58, green: 0.35, blue: 0.95) // #AF5CF7 - Purple
+            return Color(red: 0.58, green: 0.35, blue: 0.95)
         case .pink:
-            return Color(red: 0.91, green: 0.30, blue: 0.58) // #E84D94 - Pink
+            return Color(red: 0.91, green: 0.30, blue: 0.58)
         case .orange:
-            return Color(red: 1.0, green: 0.58, blue: 0.0) // #FF9400 - Orange
+            return Color(red: 1.0, green: 0.58, blue: 0.0)
         }
     }
     
     var accentColor: Color {
         switch self {
         case .default:
-            return Color(red: 1.0, green: 0.58, blue: 0.0) // #FF9500
+            return Color(red: 1.0, green: 0.58, blue: 0.0)
         case .blue:
-            return Color(red: 0.95, green: 0.97, blue: 1.0) // Light blue background
+            return Color(red: 0.95, green: 0.97, blue: 1.0)
         case .green:
-            return Color(red: 0.94, green: 0.98, blue: 0.95) // Light green background
+            return Color(red: 0.94, green: 0.98, blue: 0.95)
         case .purple:
-            return Color(red: 0.97, green: 0.95, blue: 1.0) // Light purple background
+            return Color(red: 0.97, green: 0.95, blue: 1.0)
         case .pink:
-            return Color(red: 0.99, green: 0.95, blue: 0.97) // Light pink background
+            return Color(red: 0.99, green: 0.95, blue: 0.97)
         case .orange:
-            return Color(red: 1.0, green: 0.97, blue: 0.94) // Light orange background
+            return Color(red: 1.0, green: 0.97, blue: 0.94)
         }
     }
     
     var backgroundColor: Color {
         switch self {
         case .default:
-            return Color(red: 0.98, green: 0.95, blue: 0.94) // Light warm background
+            return Color(red: 0.98, green: 0.95, blue: 0.94)
         case .blue:
-            return Color(red: 0.95, green: 0.97, blue: 1.0) // Light blue background
+            return Color(red: 0.95, green: 0.97, blue: 1.0)
         case .green:
-            return Color(red: 0.94, green: 0.98, blue: 0.95) // Light green background
+            return Color(red: 0.94, green: 0.98, blue: 0.95)
         case .purple:
-            return Color(red: 0.97, green: 0.95, blue: 1.0) // Light purple background
+            return Color(red: 0.97, green: 0.95, blue: 1.0)
         case .pink:
-            return Color(red: 0.99, green: 0.95, blue: 0.97) // Light pink background
+            return Color(red: 0.99, green: 0.95, blue: 0.97)
         case .orange:
-            return Color(red: 1.0, green: 0.97, blue: 0.94) // Light orange background
+            return Color(red: 1.0, green: 0.97, blue: 0.94)
         }
     }
 }
@@ -97,15 +97,15 @@ enum ThemeColor: String, CaseIterable {
 // MARK: - Base Theme
 struct BaseTheme: AppTheme {
     let primaryColor: Color
-    let secondaryGray = Color(red: 0.56, green: 0.56, blue: 0.58) // #8E8E93
+    let secondaryGray = Color(red: 0.56, green: 0.56, blue: 0.58)
     let background: Color
     let card = Color.white
     let accent: Color
-    let success = Color(red: 0.20, green: 0.78, blue: 0.35) // #34C759
-    let warning = Color(red: 1.0, green: 0.80, blue: 0.0) // #FFCC00
-    let error = Color(red: 1.0, green: 0.23, blue: 0.19) // #FF3B30
-    let textPrimary = Color(red: 0.11, green: 0.11, blue: 0.12) // #1C1C1E
-    let textSecondary = Color(red: 0.56, green: 0.56, blue: 0.58) // #8E8E93
+    let success = Color(red: 0.20, green: 0.78, blue: 0.35)
+    let warning = Color(red: 1.0, green: 0.80, blue: 0.0)
+    let error = Color(red: 1.0, green: 0.23, blue: 0.19)
+    let textPrimary = Color(red: 0.11, green: 0.11, blue: 0.12)
+    let textSecondary = Color(red: 0.56, green: 0.56, blue: 0.58)
     
     init(themeColor: ThemeColor) {
         self.primaryColor = themeColor.primaryColor
@@ -117,8 +117,8 @@ struct BaseTheme: AppTheme {
 struct DarkBaseTheme: AppTheme {
     let primaryColor: Color
     let secondaryGray = Color(red: 0.56, green: 0.56, blue: 0.58)
-    let background = Color(red: 0.10, green: 0.10, blue: 0.12) // #1A1A1F
-    let card = Color(red: 0.16, green: 0.16, blue: 0.18) // #29292E
+    let background = Color(red: 0.10, green: 0.10, blue: 0.12)
+    let card = Color(red: 0.16, green: 0.16, blue: 0.18)
     let accent: Color
     let success = Color(red: 0.20, green: 0.78, blue: 0.35)
     let warning = Color(red: 1.0, green: 0.80, blue: 0.0)
@@ -154,7 +154,7 @@ class ThemeManager: ObservableObject {
     }
     
     func updateThemeColor(_ themeColorName: String) {
-        $selectedThemeColor.withLock{
+        $selectedThemeColor.withLock {
             $0 = themeColorName
         }
     }
@@ -212,64 +212,98 @@ struct ShadowStyle {
 
 // MARK: - Reusable Modifiers
 extension View {
+    /// Card container: uses Liquid Glass on iOS 26+, white card + shadow on earlier OS.
+    @ViewBuilder
     func appCardStyle(theme: AppTheme = ThemeManager.shared.current) -> some View {
-        self
-            .padding(AppSpacing.medium)
-            .background(theme.card)
-            .cornerRadius(AppCornerRadius.card)
-            .shadow(color: AppShadow.card.color, radius: AppShadow.card.radius, x: AppShadow.card.x, y: AppShadow.card.y)
+        if #available(iOS 26, *) {
+            self
+                .padding(AppSpacing.medium)
+                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
+        } else {
+            self
+                .padding(AppSpacing.medium)
+                .background(theme.card)
+                .clipShape(.rect(cornerRadius: AppCornerRadius.card))
+                .shadow(
+                    color: AppShadow.card.color,
+                    radius: AppShadow.card.radius,
+                    x: AppShadow.card.x,
+                    y: AppShadow.card.y
+                )
+        }
     }
-    
+
     func appSectionHeader(theme: AppTheme = ThemeManager.shared.current) -> some View {
         self
             .font(AppFont.headline)
-            .foregroundColor(theme.textPrimary)
+            .foregroundStyle(theme.textPrimary)
             .padding(.vertical, AppSpacing.small)
     }
-    
+
     func appButtonStyle(theme: AppTheme = ThemeManager.shared.current, filled: Bool = true) -> some View {
         self
             .font(AppFont.headline)
             .padding(.vertical, AppSpacing.small)
             .padding(.horizontal, AppSpacing.large)
             .background(filled ? theme.primaryColor : Color.clear)
-            .foregroundColor(filled ? .white : theme.primaryColor)
-            .cornerRadius(AppCornerRadius.button)
+            .foregroundStyle(filled ? Color.white : theme.primaryColor)
+            .clipShape(.rect(cornerRadius: AppCornerRadius.button))
     }
-    
-    func appCircularButtonStyle(theme: AppTheme = ThemeManager.shared.current, overrideColor: Color? = nil) -> some View {
-        self
-            .font(AppFont.headline)
-            .frame(width: 38, height: 38)
-            .background(
-                overrideColor?.opacity(0.1) ?? theme.primaryColor.opacity(0.1)
-            )
-            .foregroundColor(overrideColor ?? theme.primaryColor)
-            .clipShape(Circle())
+
+    /// Circular toolbar / icon button: uses Liquid Glass on iOS 26+.
+    @ViewBuilder
+    func appCircularButtonStyle(
+        theme: AppTheme = ThemeManager.shared.current,
+        overrideColor: Color? = nil
+    ) -> some View {
+        if #available(iOS 26, *) {
+            self
+                .font(AppFont.headline)
+                .foregroundStyle(overrideColor ?? theme.primaryColor)
+                .background(Color.white)
+//                .frame(width: 38, height: 38)
+                .glassEffect(in: .circle)
+        } else {
+            self
+                .font(AppFont.headline)
+                .frame(width: 38, height: 38)
+                .background(overrideColor?.opacity(0.1) ?? theme.primaryColor.opacity(0.1))
+                .foregroundStyle(overrideColor ?? theme.primaryColor)
+                .clipShape(.circle)
+        }
     }
-    
+
+    /// Capsule / pill text button: uses Liquid Glass on iOS 26+.
+    @ViewBuilder
     func appRectButtonStyle(theme: AppTheme = ThemeManager.shared.current) -> some View {
-        self
-            .font(AppFont.headline)
-            .frame(height: 38)
-            .padding(.horizontal, AppSpacing.medium)
-            .background(theme.primaryColor.opacity(0.1))
-            .foregroundColor(theme.primaryColor)
-            .clipShape(
-                RoundedRectangle(cornerRadius: 18)
-            )
+        if #available(iOS 26, *) {
+            self
+                .font(AppFont.headline)
+                .foregroundStyle(theme.primaryColor)
+//                .frame(height: 38)
+                .padding(.horizontal, AppSpacing.medium)
+                .background(Color.white)
+                .glassEffect(in: .capsule)
+        } else {
+            self
+                .font(AppFont.headline)
+                .frame(height: 38)
+                .padding(.horizontal, AppSpacing.medium)
+                .background(theme.primaryColor.opacity(0.1))
+                .foregroundStyle(theme.primaryColor)
+                .clipShape(.capsule)
+        }
     }
-    
+
     func appBackground(theme: AppTheme = ThemeManager.shared.current) -> some View {
-        self
-            .background(theme.background)
+        self.background(theme.background)
     }
-    
+
     func appInfoSection(theme: AppTheme = ThemeManager.shared.current) -> some View {
         self
             .padding(.vertical, AppSpacing.small)
             .padding(.horizontal, AppSpacing.medium)
             .background(theme.secondaryGray.opacity(0.1))
-            .cornerRadius(AppCornerRadius.info)
+            .clipShape(.rect(cornerRadius: AppCornerRadius.info))
     }
 }
