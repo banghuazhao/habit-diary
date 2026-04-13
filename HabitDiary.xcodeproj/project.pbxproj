@@ -10,7 +10,7 @@
 		41449E722E166E9B00DEB393 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41449E712E166E9B00DEB393 /* StoreKit.framework */; };
 		41FFF2722E14E9FC004ACA97 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 41FFF2712E14E9FC004ACA97 /* GoogleMobileAds */; };
 		993B4CDF2E1A8BDA0027D86C /* MoreApps in Frameworks */ = {isa = PBXBuildFile; productRef = 993B4CDE2E1A8BDA0027D86C /* MoreApps */; };
-		996BA7BB2DF19E3A00A4B9FC /* SharingGRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 996BA7BA2DF19E3A00A4B9FC /* SharingGRDB */; };
+		9969F2B72F8CF44700287373 /* SQLiteData in Frameworks */ = {isa = PBXBuildFile; productRef = 9969F2B62F8CF44700287373 /* SQLiteData */; };
 		996BA8C32E0A71CA00A4B9FC /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 996BA8C22E0A71CA00A4B9FC /* SwiftUINavigation */; };
 		99774EEA2E1007C20099920F /* EasyToast in Frameworks */ = {isa = PBXBuildFile; productRef = 99774EE92E1007C20099920F /* EasyToast */; };
 /* End PBXBuildFile section */
@@ -47,12 +47,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9969F2B72F8CF44700287373 /* SQLiteData in Frameworks */,
 				41FFF2722E14E9FC004ACA97 /* GoogleMobileAds in Frameworks */,
 				99774EEA2E1007C20099920F /* EasyToast in Frameworks */,
 				41449E722E166E9B00DEB393 /* StoreKit.framework in Frameworks */,
 				993B4CDF2E1A8BDA0027D86C /* MoreApps in Frameworks */,
 				996BA8C32E0A71CA00A4B9FC /* SwiftUINavigation in Frameworks */,
-				996BA7BB2DF19E3A00A4B9FC /* SharingGRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,11 +104,11 @@
 			);
 			name = HabitDiary;
 			packageProductDependencies = (
-				996BA7BA2DF19E3A00A4B9FC /* SharingGRDB */,
 				996BA8C22E0A71CA00A4B9FC /* SwiftUINavigation */,
 				99774EE92E1007C20099920F /* EasyToast */,
 				41FFF2712E14E9FC004ACA97 /* GoogleMobileAds */,
 				993B4CDE2E1A8BDA0027D86C /* MoreApps */,
+				9969F2B62F8CF44700287373 /* SQLiteData */,
 			);
 			productName = LongevityMaster;
 			productReference = 993A34222DEB1031002CEA39 /* HabitDiary.app */;
@@ -141,11 +141,11 @@
 			mainGroup = 993A34192DEB1031002CEA39;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				996BA7B92DF19E3A00A4B9FC /* XCRemoteSwiftPackageReference "sharing-grdb" */,
 				996BA8C12E0A71CA00A4B9FC /* XCRemoteSwiftPackageReference "swift-navigation" */,
 				99774EE82E1007C20099920F /* XCRemoteSwiftPackageReference "EasyToast" */,
 				41FFF2142E14E225004ACA97 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				993B4CDD2E1A8BDA0027D86C /* XCLocalSwiftPackageReference "LongevityMaster/Modules/MoreApps" */,
+				9969F2B52F8CF44700287373 /* XCRemoteSwiftPackageReference "sqlite-data" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 993A34232DEB1031002CEA39 /* Products */;
@@ -412,12 +412,12 @@
 				minimumVersion = 12.6.0;
 			};
 		};
-		996BA7B92DF19E3A00A4B9FC /* XCRemoteSwiftPackageReference "sharing-grdb" */ = {
+		9969F2B52F8CF44700287373 /* XCRemoteSwiftPackageReference "sqlite-data" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/sharing-grdb";
+			repositoryURL = "https://github.com/pointfreeco/sqlite-data";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.1;
+				minimumVersion = 1.6.1;
 			};
 		};
 		996BA8C12E0A71CA00A4B9FC /* XCRemoteSwiftPackageReference "swift-navigation" */ = {
@@ -449,10 +449,10 @@
 			package = 993B4CDD2E1A8BDA0027D86C /* XCLocalSwiftPackageReference "LongevityMaster/Modules/MoreApps" */;
 			productName = MoreApps;
 		};
-		996BA7BA2DF19E3A00A4B9FC /* SharingGRDB */ = {
+		9969F2B62F8CF44700287373 /* SQLiteData */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 996BA7B92DF19E3A00A4B9FC /* XCRemoteSwiftPackageReference "sharing-grdb" */;
-			productName = SharingGRDB;
+			package = 9969F2B52F8CF44700287373 /* XCRemoteSwiftPackageReference "sqlite-data" */;
+			productName = SQLiteData;
 		};
 		996BA8C22E0A71CA00A4B9FC /* SwiftUINavigation */ = {
 			isa = XCSwiftPackageProductDependency;

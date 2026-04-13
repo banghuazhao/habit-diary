@@ -5,7 +5,7 @@
 
 import Dependencies
 import MoreApps
-import SharingGRDB
+import SQLiteData
 import SwiftUI
 
 struct MeView: View {
