@@ -113,6 +113,12 @@ class HabitDetailViewModel {
         }.sorted { $0.unlockedDate ?? Date() > $1.unlockedDate ?? Date() }
     }
 
+    var checkInsWithNotes: [CheckIn] {
+        checkIns
+            .filter { !$0.note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+            .sorted { $0.date > $1.date }
+    }
+
     var showFavoriteInfo: Bool = false
     var showArchivedInfo: Bool = false
 
@@ -362,6 +368,11 @@ struct HabitDetailView: View {
                     yearlyCalendarGrid
                 }
 
+                // Diary Notes Section
+                if !viewModel.checkInsWithNotes.isEmpty {
+                    diaryNotesSection
+                }
+
                 VStack(spacing: AppSpacing.medium) {
                     FavoriteToggleWithInfo(isOn: $viewModel.habit.isFavorite)
                     Divider()
@@ -467,6 +478,61 @@ struct HabitDetailView: View {
         }
     }
     
+    private var diaryNotesSection: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.small) {
+            HStack {
+                Image(systemName: "pencil.line")
+                    .foregroundColor(themeManager.current.primaryColor)
+                Text(String(localized: "Diary Notes"))
+                    .fontWeight(.semibold)
+                Spacer()
+                Text("\(viewModel.checkInsWithNotes.count)")
+                    .font(.caption)
+                    .foregroundColor(themeManager.current.textSecondary)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 2)
+                    .background(themeManager.current.primaryColor.opacity(0.1))
+                    .cornerRadius(8)
+            }
+
+            VStack(spacing: AppSpacing.small) {
+                ForEach(viewModel.checkInsWithNotes.prefix(5), id: \.id) { checkIn in
+                    HStack(alignment: .top, spacing: 10) {
+                        VStack(spacing: 2) {
+                            Text(checkIn.date.formatted(.dateTime.month(.abbreviated).day()))
+                                .font(.caption2)
+                                .fontWeight(.bold)
+                                .foregroundColor(themeManager.current.primaryColor)
+                            Text(checkIn.date.formatted(.dateTime.year()))
+                                .font(.caption2)
+                                .foregroundColor(themeManager.current.textSecondary)
+                        }
+                        .frame(width: 36)
+                        .padding(.top, 2)
+
+                        Text(checkIn.note)
+                            .font(.subheadline)
+                            .foregroundColor(themeManager.current.textPrimary)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        Spacer()
+                    }
+                    .padding(10)
+                    .background(themeManager.current.primaryColor.opacity(0.05))
+                    .cornerRadius(10)
+                }
+
+                if viewModel.checkInsWithNotes.count > 5 {
+                    Text(String(localized: "and \(viewModel.checkInsWithNotes.count - 5) more entries…"))
+                        .font(.caption)
+                        .foregroundColor(themeManager.current.textSecondary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+            }
+        }
+        .appCardStyle(theme: themeManager.current)
+    }
+
     private var monthlyCalendarGrid: some View {
         VStack(spacing: AppSpacing.medium) {
             HStack {

@@ -900,6 +900,9 @@
         }
       }
     },
+    "and %lld more entries…" : {
+
+    },
     "Apprentice" : {
       "localizations" : {
         "zh-Hans" : {
