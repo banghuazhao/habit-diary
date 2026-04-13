@@ -102,7 +102,7 @@ struct MeView: View {
                     Spacer().frame(height: 10)
 
                     VStack(spacing: 4) {
-                        Text(String(localized: "Habit Diary  |  Healthy Habits for Long Life"))
+                        Text(String(localized: "Habit Diary  |  Your Daily Habit Journal"))
                             .font(AppFont.footnote)
                             .fontWeight(.semibold)
                             .foregroundColor(themeManager.current.textSecondary)
@@ -194,7 +194,7 @@ struct MeView: View {
                     featureItem(icon: "gear", title: String(localized: "Settings"))
                 }
                 NavigationLink(destination: CheckInHistoryView()) {
-                    featureItem(icon: "clock", title: String(localized: "Checkin History"))
+                    featureItem(icon: "book.pages", title: String(localized: "Journal Entries"))
                 }
                 NavigationLink(destination: RemindersView()) {
                     featureItem(icon: "bell", title: String(localized: "Reminders"))

@@ -16,6 +16,13 @@ struct TodayView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: .zero) {
+                    // Diary-style daily progress banner
+                    if !viewModel.todayHabits.isEmpty {
+                        diaryProgressBanner
+                            .padding(.horizontal, AppSpacing.medium)
+                            .padding(.bottom, AppSpacing.medium)
+                    }
+
                     if viewModel.showMotivationalQuote, let quote = viewModel.currentQuote {
                         MotivationalQuoteView(quote: quote) {
                             viewModel.dismissMotivationalQuote()
@@ -26,9 +33,9 @@ struct TodayView: View {
 
                     if viewModel.todayHabits.isEmpty {
                         EmptyStateView(
-                            icon: "📅",
+                            icon: "📔",
                             title: "No Habits for Today",
-                            subtitle: "You don't have any habits scheduled for today. Create some habits to start your journey!",
+                            subtitle: "You don't have any habits scheduled for today. Create some habits to start writing your story!",
                             buttonTitle: "Add Habit"
                         ) {
                             viewModel.onTapAddHabit()
@@ -60,7 +67,7 @@ struct TodayView: View {
                                 .alert(
                                     item: $viewModel.route.showDeleteAlert,
                                     title: { habit in
-                                        Text(String(localized: "Delete ‘\(habit.truncatedName)’?"))
+                                        Text(String(localized: "Delete '\(habit.truncatedName)'?"))
                                     },
                                     actions: { habit in
                                         Button("Delete", role: .destructive) {
@@ -69,7 +76,7 @@ struct TodayView: View {
                                         Button("Cancel", role: .cancel) {}
                                     },
                                     message: { habit in
-                                        Text(String(localized: "This will permanently delete the habit ‘\(habit.truncatedName)’ and all its check-in history. This action cannot be undone. Are you sure you want to proceed?"))
+                                        Text(String(localized: "This will permanently delete the habit '\(habit.truncatedName)' and all its check-in history. This action cannot be undone. Are you sure you want to proceed?"))
                                     }
                                 )
                             }
@@ -81,6 +88,15 @@ struct TodayView: View {
             }
             .sheet(item: $viewModel.route.createHabit, id: \.self) { habitFormViewModel in
                 HabitFormView(viewModel: habitFormViewModel)
+            }
+            .sheet(item: $viewModel.route.addNote) { context in
+                CheckInNoteView(
+                    checkIn: context.checkIn,
+                    habitName: context.habit.name,
+                    habitIcon: context.habit.icon
+                ) { note in
+                    viewModel.saveNoteForCheckIn(context.checkIn, note: note)
+                }
             }
             .appBackground()
             .navigationTitle("Today")
@@ -127,6 +143,41 @@ struct TodayView: View {
                 viewModel.updateMotivationalQuote()
             }
         }
+    }
+
+    private var diaryProgressBanner: some View {
+        let completed = viewModel.todayHabits.filter(\.isCompleted).count
+        let total = viewModel.todayHabits.count
+        let progress = total > 0 ? Double(completed) / Double(total) : 0
+        let allDone = completed == total && total > 0
+
+        return HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(allDone ? String(localized: "All done for today! 🎉") : String(localized: "Today's Journal"))
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(themeManager.current.textPrimary)
+                Text(String(localized: "\(completed) of \(total) habits recorded"))
+                    .font(.caption)
+                    .foregroundColor(themeManager.current.textSecondary)
+                ProgressView(value: progress)
+                    .progressViewStyle(LinearProgressViewStyle(tint: allDone ? .green : themeManager.current.primaryColor))
+                    .scaleEffect(x: 1, y: 1.5, anchor: .center)
+                    .padding(.top, 2)
+            }
+            Spacer()
+            ZStack {
+                Circle()
+                    .fill((allDone ? Color.green : themeManager.current.primaryColor).opacity(0.12))
+                    .frame(width: 44, height: 44)
+                Text(allDone ? "✅" : "📔")
+                    .font(.title3)
+            }
+        }
+        .padding(12)
+        .background(themeManager.current.card)
+        .cornerRadius(12)
+        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
 }
 

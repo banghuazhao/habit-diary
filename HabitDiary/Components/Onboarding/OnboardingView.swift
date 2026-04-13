@@ -119,7 +119,7 @@ struct OnboardingView: View {
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
                     
-                    Text(String(localized: "Transform your life one habit at a time. Track your progress, earn achievements, and build the lifestyle you've always wanted."))
+                    Text(String(localized: "Document your daily journey, reflect on your growth, and turn your intentions into lasting habits — all in one personal diary."))
                         .font(.body)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -152,7 +152,7 @@ struct OnboardingView: View {
                     .font(.title2)
                     .fontWeight(.bold)
                 
-                Text(String(localized: "Discover the features that make habit building engaging and effective"))
+                Text(String(localized: "More than a tracker — it's your personal journal for every habit, every day"))
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -184,9 +184,9 @@ struct OnboardingView: View {
                     )
                     
                     FeatureCard(
-                        icon: "🎯",
-                        title: String(localized: "Comprehensive Categories"),
-                        description: String(localized: "35+ habit templates across health, productivity, learning, relationships, and personal growth."),
+                        icon: "✍️",
+                        title: String(localized: "Diary Notes"),
+                        description: String(localized: "Add personal reflections to each check-in. Look back on how you felt, what you learned, and how far you've come."),
                         color: .green
                     )
                     
@@ -338,15 +338,15 @@ struct OnboardingView: View {
                     // Quick tips
                     VStack(alignment: .leading, spacing: 8) {
                         HStack(alignment: .top) {
-                            Text("💡")
-                            Text(String(localized: "Start small and be consistent - even 1% better each day adds up!"))
+                            Text("✍️")
+                            Text(String(localized: "Add a diary note when you check in — even a few words capture your journey."))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
                         
                         HStack(alignment: .top) {
-                            Text("🎯")
-                            Text(String(localized: "Check your Today tab daily to track progress and maintain streaks."))
+                            Text("📖")
+                            Text(String(localized: "Browse your Journal Entries anytime to reflect on your personal growth."))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }

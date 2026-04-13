@@ -13,6 +13,7 @@ struct CheckIn {
     @Column(as: Date.self)
     var date: Date
     var habitID: Habit.ID
+    var note: String = ""
 }
 
 @Selection

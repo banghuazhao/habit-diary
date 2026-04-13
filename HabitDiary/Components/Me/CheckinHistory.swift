@@ -14,7 +14,7 @@ class CheckInHistoryViewModel {
     @ObservationIgnored
     @FetchAll(
         CheckIn
-            .order(by: \.date)
+            .order { $0.date.desc() }
             .leftJoin(Habit.all) {
                 $0.habitID.eq($1.id)
             }
@@ -43,54 +43,87 @@ class CheckInHistoryViewModel {
 
 struct CheckInHistoryView: View {
     @State private var viewModel = CheckInHistoryViewModel()
-    
+    @Dependency(\.themeManager) var themeManager
+
     var body: some View {
         Group {
             if viewModel.checkinHistories.isEmpty {
-                VStack(spacing: 12) {
-                    Image(systemName: "clock.arrow.circlepath")
-                        .font(.system(size: 48))
-                        .foregroundColor(.gray)
-                    Text("Start checking in to track your habits!")
+                VStack(spacing: 16) {
+                    Text("📔")
+                        .font(.system(size: 56))
+                    Text(String(localized: "Your journal is empty"))
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    Text(String(localized: "Check in a habit and add a diary note to start your personal journal."))
                         .font(.body)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 32)
                 }
                 .padding(.top, 80)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 List {
-                    ForEach(viewModel.checkinHistories, id: \.checkIn.id) { checkinHistory in
-                        HStack(spacing: 16) {
-                            // Habit Icon
-                            Text(checkinHistory.habitIcon)
-                                .font(.system(size: 32))
-
-                            // Habit Info
-                            VStack(alignment: .leading) {
-                                Text(checkinHistory.habitName)
-                                    .font(.headline)
-                                Text(checkinHistory.checkIn.date, style: .date)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                            }
-
-                            Spacer()
-
-                            // Delete Button
-                            Button(action: {
-                                viewModel.onTapDeleteCheckin(checkinHistory)
-                            }) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.red)
-                            }
-                            .buttonStyle(.borderless)
+                    ForEach(viewModel.checkinHistories, id: \.checkIn.id) { entry in
+                        JournalEntryRow(entry: entry) {
+                            viewModel.onTapDeleteCheckin(entry)
                         }
-                        .padding(.vertical, 8)
                     }
                 }
+                .listStyle(.insetGrouped)
             }
         }
-        .navigationTitle("Check-in History")
+        .navigationTitle(String(localized: "Journal Entries"))
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+private struct JournalEntryRow: View {
+    let entry: CheckInHistory
+    let onDelete: () -> Void
+
+    @Dependency(\.themeManager) var themeManager
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 12) {
+                Text(entry.habitIcon)
+                    .font(.system(size: 28))
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(entry.habitName)
+                        .font(.headline)
+                    Text(entry.checkIn.date.formatted(date: .abbreviated, time: .omitted))
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+
+                Spacer()
+
+                Button(action: onDelete) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                        .font(.system(size: 14))
+                }
+                .buttonStyle(.borderless)
+            }
+
+            if !entry.checkIn.note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                HStack(alignment: .top, spacing: 6) {
+                    Image(systemName: "pencil.line")
+                        .font(.caption)
+                        .foregroundColor(themeManager.current.primaryColor)
+                        .padding(.top, 1)
+                    Text(entry.checkIn.note)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(10)
+                .background(themeManager.current.primaryColor.opacity(0.06))
+                .cornerRadius(8)
+            }
+        }
+        .padding(.vertical, 4)
     }
 }

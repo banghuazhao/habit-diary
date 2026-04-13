@@ -27,13 +27,13 @@ struct PurchaseSheet: View {
                     // Top image
                     ZStack {
                         LinearGradient(
-                            gradient: Gradient(colors: [Color.orange, Color.yellow]),
+                            gradient: Gradient(colors: [Color.indigo, Color.purple]),
                             startPoint: .top,
                             endPoint: .bottom
                         )
                         .frame(width: 90, height: 90)
                         .mask(
-                            Image(systemName: "leaf.circle.fill")
+                            Image(systemName: "book.circle.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         )
@@ -42,13 +42,13 @@ struct PurchaseSheet: View {
                     .frame(width: 90, height: 90)
                     
                     // Title & description
-                    Text("Upgrade to Premium and build better habits!")
+                    Text("Upgrade to Premium and keep your diary distraction-free!")
                         .font(.title2)
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
                         .padding(.bottom, 12)
-                    Text("Unlock the full power of Habit Diary with exclusive benefit:")
+                    Text("Unlock the full Habit Diary experience with exclusive benefits:")
                         .font(.body)
                         .multilineTextAlignment(.center)
                         .foregroundColor(.secondary)
@@ -58,13 +58,13 @@ struct PurchaseSheet: View {
                         HStack(alignment: .top) {
                             Text("• ").font(.title3).fontWeight(.bold)
                             Text("No Ads: ")
-                                .fontWeight(.semibold) + Text("Enjoy a clean, ad-free habit tracking experience.")
+                                .fontWeight(.semibold) + Text("Write your habit journal with zero interruptions.")
                         }
-                        //HStack(alignment: .top) {
-                        //    Text("• ").font(.title3).fontWeight(.bold)
-                        //    Text("Unlimited Habits: ")
-                        //        .fontWeight(.semibold) + Text("Create and track as many healthy habits as you want—no limits.")
-                        //}
+                        HStack(alignment: .top) {
+                            Text("• ").font(.title3).fontWeight(.bold)
+                            Text("Pure Focus: ")
+                                .fontWeight(.semibold) + Text("A clean, immersive journaling experience every day.")
+                        }
                     }
                     .font(.body)
                     .padding(.horizontal)

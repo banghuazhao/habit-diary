@@ -125,6 +125,10 @@ func appDatabase() throws -> any DatabaseWriter {
         try Achievement.upsert { AchievementDefinitions.all }.execute(db)
     }
 
+    migrator.registerMigration("Add note to checkIns") { db in
+        try db.execute(sql: #"ALTER TABLE "checkIns" ADD COLUMN "note" TEXT NOT NULL DEFAULT ''"#)
+    }
+
     try migrator.migrate(database)
 
     return database

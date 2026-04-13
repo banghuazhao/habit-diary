@@ -20,10 +20,17 @@ class TodayViewModel {
 
     var selectedDate: Date = Date()
 
+    struct PendingNoteContext: Identifiable {
+        let id = UUID()
+        let checkIn: CheckIn
+        let habit: Habit
+    }
+
     @CasePathable
     enum Route {
         case createHabit(HabitFormViewModel)
         case showDeleteAlert(Habit)
+        case addNote(PendingNoteContext)
     }
 
     var route: Route?
@@ -206,12 +213,11 @@ class TodayViewModel {
                     await soundPlayer.playCancelCheckinSound()
                 }
             } else {
+                var savedCheckInRef: CheckIn?
                 try dataBase.write { [selectedDate] db in
-                    let checkIn = CheckIn.Draft(date: selectedDate, habitID: todayHabit.habit.id)
-                    let savedCheckIn = try CheckIn.upsert { checkIn }.returning(\.self).fetchOne(db)
-
-                    // Check for achievements after adding check-in
-                    if let savedCheckIn {
+                    let draft = CheckIn.Draft(date: selectedDate, habitID: todayHabit.habit.id)
+                    savedCheckInRef = try CheckIn.upsert { draft }.returning(\.self).fetchOne(db)
+                    if let savedCheckIn = savedCheckInRef {
                         Task {
                             await achievementService.checkAchievementsAndShow(for: savedCheckIn)
                         }
@@ -220,6 +226,22 @@ class TodayViewModel {
                 Task {
                     await soundPlayer.playCheckinSound()
                 }
+                if let savedCheckIn = savedCheckInRef {
+                    route = .addNote(PendingNoteContext(checkIn: savedCheckIn, habit: todayHabit.habit))
+                }
+            }
+        }
+    }
+
+    func saveNoteForCheckIn(_ checkIn: CheckIn, note: String) {
+        let trimmed = note.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        withErrorReporting {
+            try dataBase.write { db in
+                try db.execute(
+                    sql: #"UPDATE "checkIns" SET "note" = ? WHERE "id" = ?"#,
+                    arguments: [trimmed, checkIn.id]
+                )
             }
         }
     }
