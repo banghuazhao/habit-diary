@@ -6,14 +6,14 @@
 import Foundation
 
 struct HabitsDataStore {
-    // MARK: - Health & Fitness
+    // MARK: - Movement & Activity
     static let morningWalk = Habit.Draft(
         name: String(localized: "Morning walk"),
         frequency: .nDaysEachWeek,
         frequencyDetail: "7",
         icon: "🚶‍♂️",
         color: 0x4CAF5099,
-        note: String(localized: "Start your day with a 20-30 minute walk to boost energy and mood.")
+        note: String(localized: "Log in your diary how a morning walk sets the tone for your whole day.")
     )
     
     static let workout = Habit.Draft(
@@ -22,7 +22,7 @@ struct HabitsDataStore {
         frequencyDetail: "1,3,5",
         icon: "💪",
         color: 0xFF572299,
-        note: String(localized: "Strength training or cardio exercise for at least 30 minutes.")
+        note: String(localized: "Track your sessions and jot down what felt strong or challenging.")
     )
     
     static let yoga = Habit.Draft(
@@ -31,7 +31,7 @@ struct HabitsDataStore {
         frequencyDetail: "4",
         icon: "🧘‍♀️",
         color: 0x9C27B099,
-        note: String(localized: "Practice yoga for flexibility, strength, and mental clarity.")
+        note: String(localized: "Write a quick note after each session — notice how your practice evolves over time.")
     )
     
     static let swimming = Habit.Draft(
@@ -40,7 +40,7 @@ struct HabitsDataStore {
         frequencyDetail: "2,4,6",
         icon: "🏊‍♂️",
         color: 0x2196F399,
-        note: String(localized: "Swimming improves cardiovascular health and builds full-body strength.")
+        note: String(localized: "A great habit to track in your diary — watch your stamina build page by page.")
     )
     
     static let running = Habit.Draft(
@@ -49,17 +49,17 @@ struct HabitsDataStore {
         frequencyDetail: "1,3,5,7",
         icon: "🏃‍♂️",
         color: 0xFF980099,
-        note: String(localized: "Go for a run to improve cardiovascular health and endurance.")
+        note: String(localized: "Use your diary notes to spot patterns in your pace, weather, and energy.")
     )
     
-    // MARK: - Nutrition & Hydration
+    // MARK: - Nourishment
     static let drinkWater = Habit.Draft(
         name: String(localized: "Drink 8 glasses of water"),
         frequency: .nDaysEachWeek,
         frequencyDetail: "7",
         icon: "💧",
         color: 0x03A9F499,
-        note: String(localized: "Stay hydrated by drinking at least 8 glasses of water daily.")
+        note: String(localized: "A simple daily entry — keep the streak going and notice how you feel.")
     )
     
     static let eatFruits = Habit.Draft(
@@ -68,7 +68,7 @@ struct HabitsDataStore {
         frequencyDetail: "7",
         icon: "🍎",
         color: 0x8BC34A99,
-        note: String(localized: "Include at least 2 servings of fresh fruits in your daily diet.")
+        note: String(localized: "Log your daily fruit choices and notice which ones you enjoy most.")
     )
     
     static let eatVegetables = Habit.Draft(
@@ -77,7 +77,7 @@ struct HabitsDataStore {
         frequencyDetail: "7",
         icon: "🥬",
         color: 0x4CAF5099,
-        note: String(localized: "Consume at least 3 servings of vegetables for essential nutrients.")
+        note: String(localized: "Record what you're eating — building a colorful journal of good choices.")
     )
     
     static let noSugar = Habit.Draft(
@@ -86,26 +86,26 @@ struct HabitsDataStore {
         frequencyDetail: "1,2,3,4,5",
         icon: "🚫",
         color: 0xF4433699,
-        note: String(localized: "Limit processed foods and drinks with added sugars.")
+        note: String(localized: "Checking this off is proof of your commitment. Write how it went in your note.")
     )
     
     static let cookHealthy = Habit.Draft(
-        name: String(localized: "Cook healthy meal"),
+        name: String(localized: "Cook a homemade meal"),
         frequency: .nDaysEachWeek,
         frequencyDetail: "5",
         icon: "👨‍🍳",
         color: 0xFF572299,
-        note: String(localized: "Prepare nutritious homemade meals instead of ordering takeout.")
+        note: String(localized: "Jot down what you cooked — your diary becomes your personal recipe journal.")
     )
     
-    // MARK: - Sleep & Rest
+    // MARK: - Rest & Renewal
     static let sleep = Habit.Draft(
         name: String(localized: "Sleep 7-9 hours"),
         frequency: .nDaysEachWeek,
         frequencyDetail: "7",
         icon: "😴",
         color: 0x67419799,
-        note: String(localized: "Maintain consistent sleep schedule with 7-9 hours of quality rest.")
+        note: String(localized: "Track your sleep entries and see how rest shapes your next-day mood.")
     )
     
     static let noScreenBeforeBed = Habit.Draft(
@@ -114,7 +114,7 @@ struct HabitsDataStore {
         frequencyDetail: "7",
         icon: "📱",
         color: 0x795548CC,
-        note: String(localized: "Avoid electronic devices before bedtime for better sleep quality.")
+        note: String(localized: "Use that screen-free hour to write tonight's diary entry instead.")
     )
     
     static let earlyBedtime = Habit.Draft(
@@ -123,17 +123,17 @@ struct HabitsDataStore {
         frequencyDetail: "1,2,3,4,5",
         icon: "🌙",
         color: 0x3F51B599,
-        note: String(localized: "Go to bed early on weekdays to ensure adequate rest.")
+        note: String(localized: "Log it and notice how early nights change the texture of your mornings.")
     )
     
-    // MARK: - Mental Health & Mindfulness
+    // MARK: - Mind & Reflection
     static let meditation = Habit.Draft(
         name: String(localized: "Meditation"),
         frequency: .nDaysEachWeek,
         frequencyDetail: "7",
         icon: "🧘",
         color: 0x9C27B099,
-        note: String(localized: "Practice mindfulness meditation for 10-20 minutes daily.")
+        note: String(localized: "After each sit, write one thing that surfaced — a thought, feeling, or insight.")
     )
     
     static let gratitudeJournal = Habit.Draft(
@@ -142,7 +142,7 @@ struct HabitsDataStore {
         frequencyDetail: "7",
         icon: "📝",
         color: 0xFFC10799,
-        note: String(localized: "Write down 3 things you're grateful for each day.")
+        note: String(localized: "Three things you're grateful for — the simplest diary entry with the biggest impact.")
     )
     
     static let deepBreathing = Habit.Draft(
@@ -151,7 +151,7 @@ struct HabitsDataStore {
         frequencyDetail: "5",
         icon: "🫁",
         color: 0x00BCD499,
-        note: String(localized: "Practice deep breathing for stress relief and relaxation.")
+        note: String(localized: "Write a word or two about how you felt before and after — see the shift.")
     )
     
     static let noSocialMedia = Habit.Draft(
@@ -160,17 +160,17 @@ struct HabitsDataStore {
         frequencyDetail: "1,2,3,4,5,6,7",
         icon: "📵",
         color: 0x60707399,
-        note: String(localized: "Limit social media usage to reduce stress and increase focus.")
+        note: String(localized: "Reclaim that time for your diary — trade scrolling for reflecting.")
     )
     
-    // MARK: - Learning & Growth
+    // MARK: - Learning & Curiosity
     static let reading = Habit.Draft(
         name: String(localized: "Read for 30 minutes"),
         frequency: .nDaysEachWeek,
         frequencyDetail: "7",
         icon: "📚",
         color: 0x79554899,
-        note: String(localized: "Read books, articles, or educational content for personal growth.")
+        note: String(localized: "Add a note about what you read today — your diary becomes a reading log.")
     )
     
     static let learnLanguage = Habit.Draft(
@@ -179,7 +179,7 @@ struct HabitsDataStore {
         frequencyDetail: "5",
         icon: "🗣️",
         color: 0x3F51B599,
-        note: String(localized: "Practice a new language for 15-30 minutes daily.")
+        note: String(localized: "Record new words or phrases you learned — a unique entry every day.")
     )
     
     static let podcast = Habit.Draft(
@@ -188,7 +188,7 @@ struct HabitsDataStore {
         frequencyDetail: "3",
         icon: "🎧",
         color: 0xFF980099,
-        note: String(localized: "Listen to educational or inspiring podcasts during commute or exercise.")
+        note: String(localized: "Write the one idea from today's episode worth remembering.")
     )
     
     static let skillPractice = Habit.Draft(
@@ -197,17 +197,17 @@ struct HabitsDataStore {
         frequencyDetail: "1,3,5,7",
         icon: "🎯",
         color: 0x4CAF5099,
-        note: String(localized: "Dedicate time to practice a hobby or professional skill.")
+        note: String(localized: "Log your practice time and note what clicked — watch your story of mastery unfold.")
     )
     
-    // MARK: - Productivity & Organization
+    // MARK: - Focus & Flow
     static let planDay = Habit.Draft(
         name: String(localized: "Plan the day"),
         frequency: .nDaysEachWeek,
         frequencyDetail: "7",
         icon: "📅",
         color: 0x2196F399,
-        note: String(localized: "Spend 10 minutes each morning planning your day and priorities.")
+        note: String(localized: "Write your top three intentions for the day — a mini diary entry every morning.")
     )
     
     static let cleanDesk = Habit.Draft(
@@ -216,7 +216,7 @@ struct HabitsDataStore {
         frequencyDetail: "1,3,5",
         icon: "🗂️",
         color: 0x60707399,
-        note: String(localized: "Keep your workspace clean and organized for better productivity.")
+        note: String(localized: "A tidy desk is a good backdrop for journaling. Log it and feel the difference.")
     )
     
     static let reviewWeek = Habit.Draft(
@@ -225,7 +225,7 @@ struct HabitsDataStore {
         frequencyDetail: "7",
         icon: "📊",
         color: 0x795548CC,
-        note: String(localized: "Reflect on the week's achievements and plan for the next week.")
+        note: String(localized: "Your richest diary entry of the week — wins, struggles, and what comes next.")
     )
     
     static let timeBlocking = Habit.Draft(
@@ -234,17 +234,17 @@ struct HabitsDataStore {
         frequencyDetail: "1,2,3,4,5",
         icon: "⏰",
         color: 0xFF572299,
-        note: String(localized: "Schedule focused work blocks for important tasks.")
+        note: String(localized: "Note which blocks you protected today — your diary shows you where time really goes.")
     )
     
-    // MARK: - Social & Relationships
+    // MARK: - Connection
     static let callFamily = Habit.Draft(
         name: String(localized: "Call family/friends"),
         frequency: .nDaysEachWeek,
         frequencyDetail: "2",
         icon: "📞",
         color: 0x4CAF5099,
-        note: String(localized: "Stay connected with loved ones through regular phone calls.")
+        note: String(localized: "Write a line about who you spoke with and what you shared — moments worth keeping.")
     )
     
     static let socialActivity = Habit.Draft(
@@ -253,7 +253,7 @@ struct HabitsDataStore {
         frequencyDetail: "1",
         icon: "👥",
         color: 0x9C27B099,
-        note: String(localized: "Engage in social activities to maintain relationships and well-being.")
+        note: String(localized: "A diary entry about time with others is always worth reading later.")
     )
     
     static let kindnessAct = Habit.Draft(
@@ -262,17 +262,17 @@ struct HabitsDataStore {
         frequencyDetail: "3",
         icon: "❤️",
         color: 0xE91E6399,
-        note: String(localized: "Perform small acts of kindness to spread positivity.")
+        note: String(localized: "Note what you did and for whom — small kindnesses deserve a page in your story.")
     )
     
-    // MARK: - Self-Care & Wellness
+    // MARK: - Self-Care
     static let skincare = Habit.Draft(
         name: String(localized: "Skincare routine"),
         frequency: .nDaysEachWeek,
         frequencyDetail: "7",
         icon: "🧴",
         color: 0xF8BBD999,
-        note: String(localized: "Follow a consistent skincare routine for healthy skin.")
+        note: String(localized: "A daily ritual worth logging — notice the difference consistency makes.")
     )
     
     static let stretchingX = Habit.Draft(
@@ -281,7 +281,7 @@ struct HabitsDataStore {
         frequencyDetail: "7",
         icon: "🤸‍♀️",
         color: 0xFF572299,
-        note: String(localized: "Do stretching exercises to improve flexibility and prevent injury.")
+        note: String(localized: "Write how your body felt before and after — these notes become your progress story.")
     )
     
     static let vitamins = Habit.Draft(
@@ -290,7 +290,7 @@ struct HabitsDataStore {
         frequencyDetail: "7",
         icon: "💊",
         color: 0xFFC10799,
-        note: String(localized: "Take essential vitamins and supplements as recommended.")
+        note: String(localized: "A quick daily log — tick it off and keep the streak alive.")
     )
     
     static let sunlight = Habit.Draft(
@@ -299,17 +299,17 @@ struct HabitsDataStore {
         frequencyDetail: "7",
         icon: "☀️",
         color: 0xFFEB3B99,
-        note: String(localized: "Spend 10-15 minutes in morning sunlight to regulate circadian rhythm.")
+        note: String(localized: "Step outside and breathe. Write one observation about the morning sky.")
     )
     
-    // MARK: - Environment & Lifestyle
+    // MARK: - Space & Environment
     static let makeBeauty = Habit.Draft(
         name: String(localized: "Make bed"),
         frequency: .nDaysEachWeek,
         frequencyDetail: "7",
         icon: "🛏️",
         color: 0x79554899,
-        note: String(localized: "Start the day by making your bed for a sense of accomplishment.")
+        note: String(localized: "A small first win every morning — log it and start the page on a good note.")
     )
     
     static let declutter = Habit.Draft(
@@ -318,7 +318,7 @@ struct HabitsDataStore {
         frequencyDetail: "3",
         icon: "🧹",
         color: 0x607D8B99,
-        note: String(localized: "Spend 15 minutes decluttering and organizing your living space.")
+        note: String(localized: "Note what you cleared out — both your space and your thoughts become lighter.")
     )
     
     static let outdoorTime = Habit.Draft(
@@ -327,17 +327,17 @@ struct HabitsDataStore {
         frequencyDetail: "5",
         icon: "🌳",
         color: 0x4CAF5099,
-        note: String(localized: "Spend time in nature for mental health and vitamin D.")
+        note: String(localized: "Write one thing you noticed outside today — your diary becomes a nature log.")
     )
     
-    // MARK: - Creative & Hobbies
+    // MARK: - Creative Expression
     static let creative = Habit.Draft(
         name: String(localized: "Creative activity"),
         frequency: .nDaysEachWeek,
         frequencyDetail: "3",
         icon: "🎨",
         color: 0x9C27B099,
-        note: String(localized: "Engage in creative activities like drawing, writing, or crafting.")
+        note: String(localized: "Jot down what you made or explored — your diary tracks your creative journey.")
     )
     
     static let music = Habit.Draft(
@@ -346,7 +346,7 @@ struct HabitsDataStore {
         frequencyDetail: "2,4,6",
         icon: "🎸",
         color: 0xFF572299,
-        note: String(localized: "Practice playing a musical instrument for cognitive benefits.")
+        note: String(localized: "Note what you practiced and what it felt like — a musical diary unfolds over time.")
     )
     
     static let photography = Habit.Draft(
@@ -355,11 +355,39 @@ struct HabitsDataStore {
         frequencyDetail: "2",
         icon: "📸",
         color: 0x607D8B99,
-        note: String(localized: "Practice photography to capture memories and improve creativity.")
+        note: String(localized: "Capture the day. Add a note about the story behind your favorite shot.")
+    )
+    
+    // MARK: - Diary & Journaling
+    static let eveningDiary = Habit.Draft(
+        name: String(localized: "Evening diary entry"),
+        frequency: .nDaysEachWeek,
+        frequencyDetail: "7",
+        icon: "📔",
+        color: 0x5D4E3799,
+        note: String(localized: "End the day by writing — even a few sentences. Over time, these pages become your story.")
+    )
+    
+    static let morningPages = Habit.Draft(
+        name: String(localized: "Morning pages"),
+        frequency: .nDaysEachWeek,
+        frequencyDetail: "5",
+        icon: "✍️",
+        color: 0x79554899,
+        note: String(localized: "Fill three pages first thing — stream-of-consciousness writing that clears the mind.")
+    )
+    
+    static let reflectOnGoals = Habit.Draft(
+        name: String(localized: "Reflect on your goals"),
+        frequency: .fixedDaysInWeek,
+        frequencyDetail: "1,4",
+        icon: "🔭",
+        color: 0x3F51B599,
+        note: String(localized: "Write where you are vs. where you want to be. Your diary holds you accountable.")
     )
     
     static let all = [
-        // Health & Fitness
+        // Movement & Activity
         morningWalk,
         workout,
         yoga,
@@ -367,7 +395,7 @@ struct HabitsDataStore {
         running,
         stretchingX,
         
-        // Nutrition & Hydration
+        // Nourishment
         drinkWater,
         eatFruits,
         eatVegetables,
@@ -375,46 +403,51 @@ struct HabitsDataStore {
         cookHealthy,
         vitamins,
         
-        // Sleep & Rest
+        // Rest & Renewal
         sleep,
         noScreenBeforeBed,
         earlyBedtime,
         
-        // Mental Health & Mindfulness
+        // Mind & Reflection
         meditation,
         gratitudeJournal,
         deepBreathing,
         noSocialMedia,
         
-        // Learning & Growth
+        // Learning & Curiosity
         reading,
         learnLanguage,
         podcast,
         skillPractice,
         
-        // Productivity & Organization
+        // Focus & Flow
         planDay,
         cleanDesk,
         reviewWeek,
         timeBlocking,
         
-        // Social & Relationships
+        // Connection
         callFamily,
         socialActivity,
         kindnessAct,
         
-        // Self-Care & Wellness
+        // Self-Care
         skincare,
         sunlight,
         
-        // Environment & Lifestyle
+        // Space & Environment
         makeBeauty,
         declutter,
         outdoorTime,
         
-        // Creative & Hobbies
+        // Creative Expression
         creative,
         music,
-        photography
+        photography,
+        
+        // Diary & Journaling
+        eveningDiary,
+        morningPages,
+        reflectOnGoals
     ]
 }

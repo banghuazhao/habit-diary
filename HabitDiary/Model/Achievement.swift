@@ -34,14 +34,14 @@ enum AchievementType: Int, Codable, QueryBindable {
     
     var title: String {
         switch self {
-        case .streak: return String(localized: "Streak Master")
-        case .totalCheckIns: return String(localized: "Check-in Champion")
-        case .perfectWeek: return String(localized: "Perfect Week")
-        case .perfectMonth: return String(localized: "Perfect Month")
+        case .streak: return String(localized: "Daily Scribe")
+        case .totalCheckIns: return String(localized: "Prolific Journaler")
+        case .perfectWeek: return String(localized: "Full-Page Week")
+        case .perfectMonth: return String(localized: "Complete Volume")
         case .earlyBird: return String(localized: "Early Bird")
         case .nightOwl: return String(localized: "Night Owl")
-        case .consistency: return String(localized: "Consistency King")
-        case .milestone: return String(localized: "Milestone Reacher")
+        case .consistency: return String(localized: "Journal Keeper")
+        case .milestone: return String(localized: "First Entry")
         }
     }
     
@@ -88,8 +88,8 @@ struct AchievementDefinitions {
     static let all: [Achievement.Draft] = [
         // Streak achievements
         Achievement.Draft(
-            title: String(localized: "First Steps"),
-            description: String(localized: "Complete a habit 3 days in a row"),
+            title: String(localized: "Ink Is Flowing"),
+            description: String(localized: "Write diary entries 3 days running"),
             icon: "🔥",
             type: .streak,
             criteria: AchievementCriteria(targetValue: 3),
@@ -98,8 +98,8 @@ struct AchievementDefinitions {
             habitID: nil
         ),
         Achievement.Draft(
-            title: String(localized: "Week Warrior"),
-            description: String(localized: "Maintain a 7-day streak"),
+            title: String(localized: "Seven Pages"),
+            description: String(localized: "Keep a 7-day journaling streak"),
             icon: "🔥",
             type: .streak,
             criteria: AchievementCriteria(targetValue: 7),
@@ -108,8 +108,8 @@ struct AchievementDefinitions {
             habitID: nil
         ),
         Achievement.Draft(
-            title: String(localized: "Month Master"),
-            description: String(localized: "Maintain a 30-day streak"),
+            title: String(localized: "A Month of Pages"),
+            description: String(localized: "Fill your diary 30 days in a row"),
             icon: "🔥",
             type: .streak,
             criteria: AchievementCriteria(targetValue: 30),
@@ -120,9 +120,9 @@ struct AchievementDefinitions {
         
         // Total check-ins
         Achievement.Draft(
-            title: String(localized: "Getting Started"),
-            description: String(localized: "Complete 10 total check-ins"),
-            icon: "✅",
+            title: String(localized: "Opening Chapter"),
+            description: String(localized: "Log 10 diary entries"),
+            icon: "📖",
             type: .totalCheckIns,
             criteria: AchievementCriteria(targetValue: 10),
             isUnlocked: false,
@@ -130,9 +130,9 @@ struct AchievementDefinitions {
             habitID: nil
         ),
         Achievement.Draft(
-            title: String(localized: "Habit Builder"),
-            description: String(localized: "Complete 50 total check-ins"),
-            icon: "✅",
+            title: String(localized: "Page Turner"),
+            description: String(localized: "Log 50 diary entries"),
+            icon: "📖",
             type: .totalCheckIns,
             criteria: AchievementCriteria(targetValue: 50),
             isUnlocked: false,
@@ -140,9 +140,9 @@ struct AchievementDefinitions {
             habitID: nil
         ),
         Achievement.Draft(
-            title: String(localized: "Habit Master"),
-            description: String(localized: "Complete 100 total check-ins"),
-            icon: "✅",
+            title: String(localized: "Full Volume"),
+            description: String(localized: "Log 100 diary entries"),
+            icon: "📖",
             type: .totalCheckIns,
             criteria: AchievementCriteria(targetValue: 100),
             isUnlocked: false,
@@ -152,8 +152,8 @@ struct AchievementDefinitions {
         
         // Perfect week/month
         Achievement.Draft(
-            title: String(localized: "Perfect Week"),
-            description: String(localized: "Complete all scheduled habits for a week"),
+            title: String(localized: "Full-Page Week"),
+            description: String(localized: "Fill every diary page for a whole week"),
             icon: "⭐",
             type: .perfectWeek,
             criteria: AchievementCriteria(targetValue: 1),
@@ -162,8 +162,8 @@ struct AchievementDefinitions {
             habitID: nil
         ),
         Achievement.Draft(
-            title: String(localized: "Perfect Month"),
-            description: String(localized: "Complete all scheduled habits for a month"),
+            title: String(localized: "Complete Volume"),
+            description: String(localized: "Fill every diary page for a whole month"),
             icon: "🏆",
             type: .perfectMonth,
             criteria: AchievementCriteria(targetValue: 1),
@@ -175,7 +175,7 @@ struct AchievementDefinitions {
         // Time-based achievements
         Achievement.Draft(
             title: String(localized: "Early Bird"),
-            description: String(localized: "Complete a habit before 8 AM"),
+            description: String(localized: "Write your first diary entry before 8 AM"),
             icon: "🌅",
             type: .earlyBird,
             criteria: AchievementCriteria(targetValue: 1),
@@ -185,7 +185,7 @@ struct AchievementDefinitions {
         ),
         Achievement.Draft(
             title: String(localized: "Night Owl"),
-            description: String(localized: "Complete a habit after 10 PM"),
+            description: String(localized: "Write a diary entry after 10 PM"),
             icon: "🦉",
             type: .nightOwl,
             criteria: AchievementCriteria(targetValue: 1),
@@ -196,9 +196,9 @@ struct AchievementDefinitions {
         
         // Consistency achievements
         Achievement.Draft(
-            title: String(localized: "Consistent"),
-            description: String(localized: "Complete habits 5 days in a row"),
-            icon: "📈",
+            title: String(localized: "Steady Hand"),
+            description: String(localized: "Log diary entries 5 days in a row"),
+            icon: "✍️",
             type: .consistency,
             criteria: AchievementCriteria(targetValue: 5),
             isUnlocked: false,
@@ -208,9 +208,9 @@ struct AchievementDefinitions {
         
         // Milestone achievements
         Achievement.Draft(
-            title: String(localized: "First Milestone"),
-            description: String(localized: "Complete your first habit"),
-            icon: "🎯",
+            title: String(localized: "First Entry"),
+            description: String(localized: "Write your very first diary entry"),
+            icon: "📔",
             type: .milestone,
             criteria: AchievementCriteria(targetValue: 1),
             isUnlocked: false,
@@ -220,8 +220,8 @@ struct AchievementDefinitions {
         
         // Additional streak achievements
         Achievement.Draft(
-            title: String(localized: "Century Streak"),
-            description: String(localized: "Maintain a 100-day streak"),
+            title: String(localized: "Century Journal"),
+            description: String(localized: "Keep a 100-day diary streak"),
             icon: "🔥",
             type: .streak,
             criteria: AchievementCriteria(targetValue: 100),
@@ -232,9 +232,9 @@ struct AchievementDefinitions {
         
         // Additional total check-ins
         Achievement.Draft(
-            title: String(localized: "Habit Legend"),
-            description: String(localized: "Complete 500 total check-ins"),
-            icon: "✅",
+            title: String(localized: "Collector of Days"),
+            description: String(localized: "Log 500 diary entries"),
+            icon: "📖",
             type: .totalCheckIns,
             criteria: AchievementCriteria(targetValue: 500),
             isUnlocked: false,
@@ -242,9 +242,9 @@ struct AchievementDefinitions {
             habitID: nil
         ),
         Achievement.Draft(
-            title: String(localized: "Habit Grandmaster"),
-            description: String(localized: "Complete 1000 total check-ins"),
-            icon: "✅",
+            title: String(localized: "Life in Pages"),
+            description: String(localized: "Log 1000 diary entries"),
+            icon: "📖",
             type: .totalCheckIns,
             criteria: AchievementCriteria(targetValue: 1000),
             isUnlocked: false,
@@ -254,9 +254,9 @@ struct AchievementDefinitions {
         
         // Additional consistency achievements
         Achievement.Draft(
-            title: String(localized: "Super Consistent"),
-            description: String(localized: "Complete habits 10 days in a row"),
-            icon: "📈",
+            title: String(localized: "Devoted Diarist"),
+            description: String(localized: "Log diary entries 10 days in a row"),
+            icon: "✍️",
             type: .consistency,
             criteria: AchievementCriteria(targetValue: 10),
             isUnlocked: false,
@@ -264,9 +264,9 @@ struct AchievementDefinitions {
             habitID: nil
         ),
         Achievement.Draft(
-            title: String(localized: "Ultra Consistent"),
-            description: String(localized: "Complete habits 20 days in a row"),
-            icon: "📈",
+            title: String(localized: "Unbroken Thread"),
+            description: String(localized: "Log diary entries 20 days in a row"),
+            icon: "✍️",
             type: .consistency,
             criteria: AchievementCriteria(targetValue: 20),
             isUnlocked: false,

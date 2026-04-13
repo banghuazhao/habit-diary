@@ -603,6 +603,30 @@
     "A clean, immersive journaling experience every day." : {
 
     },
+    "A daily ritual worth logging — notice the difference consistency makes." : {
+
+    },
+    "A diary entry about time with others is always worth reading later." : {
+
+    },
+    "A great habit to track in your diary — watch your stamina build page by page." : {
+
+    },
+    "A Month of Pages" : {
+
+    },
+    "A quick daily log — tick it off and keep the streak alive." : {
+
+    },
+    "A simple daily entry — keep the streak going and notice how you feel." : {
+
+    },
+    "A small first win every morning — log it and start the page on a good note." : {
+
+    },
+    "A tidy desk is a good backdrop for journaling. Log it and feel the difference." : {
+
+    },
     "Achievement Unlocked!" : {
       "localizations" : {
         "zh-Hans" : {
@@ -684,6 +708,9 @@
       }
     },
     "Add a diary note when you check in — even a few words capture your journey." : {
+
+    },
+    "Add a note about what you read today — your diary becomes a reading log." : {
 
     },
     "Add a Reminder" : {
@@ -864,6 +891,9 @@
           }
         }
       }
+    },
+    "After each sit, write one thing that surfaced — a thought, feeling, or insight." : {
+
     },
     "All" : {
       "localizations" : {
@@ -1080,6 +1110,7 @@
       }
     },
     "Avoid electronic devices before bedtime for better sleep quality." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1291,6 +1322,9 @@
         }
       }
     },
+    "Capture the day. Add a note about the story behind your favorite shot." : {
+
+    },
     "Category" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1323,21 +1357,8 @@
         }
       }
     },
-    "Century Streak" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "百日连胜"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "百日連勝"
-          }
-        }
-      }
+    "Century Journal" : {
+
     },
     "Champions are made in the offseason." : {
       "localizations" : {
@@ -1471,22 +1492,6 @@
         }
       }
     },
-    "Check-in Champion" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "打卡冠军"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "打卡冠軍"
-          }
-        }
-      }
-    },
     "Check-in History" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1556,6 +1561,9 @@
         }
       }
     },
+    "Checking this off is proof of your commitment. Write how it went in your note." : {
+
+    },
     "Chinese Proverb" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1623,6 +1631,9 @@
     "Close" : {
 
     },
+    "Collector of Days" : {
+
+    },
     "complete" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1639,166 +1650,6 @@
         }
       }
     },
-    "Complete 10 total check-ins" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成 10 次总打卡"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成 10 次總打卡"
-          }
-        }
-      }
-    },
-    "Complete 50 total check-ins" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成 50 次总打卡"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成 50 次總打卡"
-          }
-        }
-      }
-    },
-    "Complete 100 total check-ins" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成 100 次总打卡"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成 100 次總打卡"
-          }
-        }
-      }
-    },
-    "Complete 500 total check-ins" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成 500 次总打卡"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成 500 次總打卡"
-          }
-        }
-      }
-    },
-    "Complete 1000 total check-ins" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成 1000 次总打卡"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成 1000 次總打卡"
-          }
-        }
-      }
-    },
-    "Complete a habit 3 days in a row" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "连续 3 天完成一个习惯"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "連續 3 天完成一個習慣"
-          }
-        }
-      }
-    },
-    "Complete a habit after 10 PM" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在晚上 10 点后完成一个习惯"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在晚上 10 點後完成一個習慣"
-          }
-        }
-      }
-    },
-    "Complete a habit before 8 AM" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在上午 8 点前完成一个习惯"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在上午 8 點前完成一個習慣"
-          }
-        }
-      }
-    },
-    "Complete all scheduled habits for a month" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成一个月的所有计划习惯"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成一個月的所有計劃習慣"
-          }
-        }
-      }
-    },
-    "Complete all scheduled habits for a week" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成一周的所有计划习惯"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成一週的所有計劃習慣"
-          }
-        }
-      }
-    },
     "Complete daily habits to unlock streak achievements" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1811,54 +1662,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "完成每日習慣以解鎖連勝成就"
-          }
-        }
-      }
-    },
-    "Complete habits 5 days in a row" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "连续 5 天完成习惯"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "連續 5 天完成習慣"
-          }
-        }
-      }
-    },
-    "Complete habits 10 days in a row" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "连续 10 天完成习惯"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "連續 10 天完成習慣"
-          }
-        }
-      }
-    },
-    "Complete habits 20 days in a row" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "连续 20 天完成习惯"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "連續 20 天完成習慣"
           }
         }
       }
@@ -1895,21 +1698,8 @@
         }
       }
     },
-    "Complete your first habit" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成您的第一个习惯"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成您的第一個習慣"
-          }
-        }
-      }
+    "Complete Volume" : {
+
     },
     "Comprehensive Categories" : {
       "extractionState" : "stale",
@@ -1992,23 +1782,8 @@
         }
       }
     },
-    "Consistency King" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "坚持之王"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "堅持之王"
-          }
-        }
-      }
-    },
     "Consistent" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2025,6 +1800,7 @@
       }
     },
     "Consume at least 3 servings of vegetables for essential nutrients." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2072,7 +1848,11 @@
         }
       }
     },
+    "Cook a homemade meal" : {
+
+    },
     "Cook healthy meal" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2171,6 +1951,9 @@
     "Daily Reflection" : {
 
     },
+    "Daily Scribe" : {
+
+    },
     "Dark Mode" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2252,6 +2035,7 @@
       }
     },
     "Dedicate time to practice a hobby or professional skill." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2367,6 +2151,9 @@
         }
       }
     },
+    "Devoted Diarist" : {
+
+    },
     "Diary Note" : {
 
     },
@@ -2439,6 +2226,7 @@
       }
     },
     "Do stretching exercises to improve flexibility and prevent injury." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2697,7 +2485,11 @@
         }
       }
     },
+    "End the day by writing — even a few sentences. Over time, these pages become your story." : {
+
+    },
     "Engage in creative activities like drawing, writing, or crafting." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2714,6 +2506,7 @@
       }
     },
     "Engage in social activities to maintain relationships and well-being." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2745,6 +2538,9 @@
           }
         }
       }
+    },
+    "Evening diary entry" : {
+
     },
     "Every %@ of month" : {
       "localizations" : {
@@ -2986,6 +2782,18 @@
         }
       }
     },
+    "Fill every diary page for a whole month" : {
+
+    },
+    "Fill every diary page for a whole week" : {
+
+    },
+    "Fill three pages first thing — stream-of-consciousness writing that clears the mind." : {
+
+    },
+    "Fill your diary 30 days in a row" : {
+
+    },
     "Filter By" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3002,37 +2810,8 @@
         }
       }
     },
-    "First Milestone" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "第一个里程碑"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "第一個里程碑"
-          }
-        }
-      }
-    },
-    "First Steps" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "第一步"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "第一步"
-          }
-        }
-      }
+    "First Entry" : {
+
     },
     "Flexible Scheduling" : {
       "localizations" : {
@@ -3083,6 +2862,7 @@
       }
     },
     "Follow a consistent skincare routine for healthy skin." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3113,6 +2893,12 @@
           }
         }
       }
+    },
+    "Full Volume" : {
+
+    },
+    "Full-Page Week" : {
+
     },
     "Gallery" : {
       "localizations" : {
@@ -3163,38 +2949,10 @@
       }
     },
     "Getting Started" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开始起步"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "開始起步"
-          }
-        }
-      }
-    },
-    "Go for a run to improve cardiovascular health and endurance." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "去跑步以改善心血管健康和耐力。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "去跑步以改善心血管健康和耐力。"
-          }
-        }
-      }
+
     },
     "Go to bed early on weekdays to ensure adequate rest." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3259,57 +3017,8 @@
         }
       }
     },
-    "Habit Builder" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "习惯建设者"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "習慣建設者"
-          }
-        }
-      }
-    },
-    "Habit Diary  |  Healthy Habits for Long Life" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "习惯日记  |  健康习惯享长寿"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "習慣日記  |  健康習慣享長壽"
-          }
-        }
-      }
-    },
     "Habit Diary  |  Your Daily Habit Journal" : {
 
-    },
-    "Habit Grandmaster" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "习惯大师"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "習慣大師"
-          }
-        }
-      }
     },
     "Habit Insights" : {
       "localizations" : {
@@ -3323,38 +3032,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "習慣洞察"
-          }
-        }
-      }
-    },
-    "Habit Legend" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "习惯传奇"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "習慣傳奇"
-          }
-        }
-      }
-    },
-    "Habit Master" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "习惯大师"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "習慣大師"
           }
         }
       }
@@ -3491,6 +3168,7 @@
       }
     },
     "Include at least 2 servings of fresh fruits in your daily diet." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3507,6 +3185,9 @@
       }
     },
     "Ink" : {
+
+    },
+    "Ink Is Flowing" : {
 
     },
     "Intermediate" : {
@@ -3573,10 +3254,26 @@
         }
       }
     },
+    "Jot down what you cooked — your diary becomes your personal recipe journal." : {
+
+    },
+    "Jot down what you made or explored — your diary tracks your creative journey." : {
+
+    },
     "Journal Entries" : {
 
     },
+    "Journal Keeper" : {
+
+    },
+    "Keep a 7-day journaling streak" : {
+
+    },
+    "Keep a 100-day diary streak" : {
+
+    },
     "Keep your workspace clean and organized for better productivity." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3672,7 +3369,11 @@
         }
       }
     },
+    "Life in Pages" : {
+
+    },
     "Limit processed foods and drinks with added sugars." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3705,6 +3406,7 @@
       }
     },
     "Limit social media usage to reduce stress and increase focus." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3721,6 +3423,7 @@
       }
     },
     "Listen to educational or inspiring podcasts during commute or exercise." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3768,6 +3471,30 @@
         }
       }
     },
+    "Log 10 diary entries" : {
+
+    },
+    "Log 50 diary entries" : {
+
+    },
+    "Log 100 diary entries" : {
+
+    },
+    "Log 500 diary entries" : {
+
+    },
+    "Log 1000 diary entries" : {
+
+    },
+    "Log diary entries 5 days in a row" : {
+
+    },
+    "Log diary entries 10 days in a row" : {
+
+    },
+    "Log diary entries 20 days in a row" : {
+
+    },
     "Log Habit Diary" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3783,6 +3510,18 @@
           }
         }
       }
+    },
+    "Log in your diary how a morning walk sets the tone for your whole day." : {
+
+    },
+    "Log it and notice how early nights change the texture of your mornings." : {
+
+    },
+    "Log your daily fruit choices and notice which ones you enjoy most." : {
+
+    },
+    "Log your practice time and note what clicked — watch your story of mastery unfold." : {
+
     },
     "Longest Streak" : {
       "localizations" : {
@@ -3800,55 +3539,8 @@
         }
       }
     },
-    "Maintain a 7-day streak" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保持 7 天连胜"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保持 7 天連勝"
-          }
-        }
-      }
-    },
-    "Maintain a 30-day streak" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保持 30 天连胜"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保持 30 天連勝"
-          }
-        }
-      }
-    },
-    "Maintain a 100-day streak" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保持 100 天连胜"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保持 100 天連勝"
-          }
-        }
-      }
-    },
     "Maintain consistent sleep schedule with 7-9 hours of quality rest." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3992,22 +3684,6 @@
         }
       }
     },
-    "Milestone Reacher" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "里程碑达成者"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "里程碑達成者"
-          }
-        }
-      }
-    },
     "Mode" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4052,22 +3728,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "监控您的連勝并庆祝小胜利"
-          }
-        }
-      }
-    },
-    "Month Master" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "月度大师"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "月度大师"
           }
         }
       }
@@ -4138,6 +3798,9 @@
       }
     },
     "More than a tracker — it's your personal journal for every habit, every day" : {
+
+    },
+    "Morning pages" : {
 
     },
     "Morning walk" : {
@@ -4412,6 +4075,18 @@
         }
       }
     },
+    "Note what you cleared out — both your space and your thoughts become lighter." : {
+
+    },
+    "Note what you did and for whom — small kindnesses deserve a page in your story." : {
+
+    },
+    "Note what you practiced and what it felt like — a musical diary unfolds over time." : {
+
+    },
+    "Note which blocks you protected today — your diary shows you where time really goes." : {
+
+    },
     "Notifications are disabled. Please enable them in Settings to receive reminders." : {
       "localizations" : {
         "zh-Hans" : {
@@ -4491,6 +4166,9 @@
           }
         }
       }
+    },
+    "Opening Chapter" : {
+
     },
     "Orange" : {
       "extractionState" : "stale",
@@ -4573,7 +4251,11 @@
         }
       }
     },
+    "Page Turner" : {
+
+    },
     "Perfect Month" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4590,6 +4272,7 @@
       }
     },
     "Perfect Week" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4622,6 +4305,7 @@
       }
     },
     "Perform small acts of kindness to spread positivity." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4735,6 +4419,7 @@
       }
     },
     "Practice a new language for 15-30 minutes daily." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4767,6 +4452,7 @@
       }
     },
     "Practice deep breathing for stress relief and relaxation." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4783,6 +4469,7 @@
       }
     },
     "Practice mindfulness meditation for 10-20 minutes daily." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4799,6 +4486,7 @@
       }
     },
     "Practice photography to capture memories and improve creativity." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4814,39 +4502,8 @@
         }
       }
     },
-    "Practice playing a musical instrument for cognitive benefits." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "练习演奏乐器以获得认知益处。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "練習演奏樂器以獲得認知益處。"
-          }
-        }
-      }
-    },
-    "Practice yoga for flexibility, strength, and mental clarity." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "练习瑜伽提高柔韧性、力量和心理清晰度。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "練習瑜伽提高柔韌性、力量和心理清晰度。"
-          }
-        }
-      }
-    },
     "Prepare nutritious homemade meals instead of ordering takeout." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4974,6 +4631,9 @@
         }
       }
     },
+    "Prolific Journaler" : {
+
+    },
     "Pure Focus: " : {
 
     },
@@ -5081,6 +4741,7 @@
       }
     },
     "Read books, articles, or educational content for personal growth." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5144,7 +4805,17 @@
         }
       }
     },
+    "Reclaim that time for your diary — trade scrolling for reflecting." : {
+
+    },
+    "Record new words or phrases you learned — a unique entry every day." : {
+
+    },
+    "Record what you're eating — building a colorful journal of good choices." : {
+
+    },
     "Reflect on the week's achievements and plan for the next week." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5159,6 +4830,9 @@
           }
         }
       }
+    },
+    "Reflect on your goals" : {
+
     },
     "Reminders" : {
       "localizations" : {
@@ -5330,6 +5004,7 @@
 
     },
     "Schedule focused work blocks for important tasks." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5475,6 +5150,9 @@
           }
         }
       }
+    },
+    "Seven Pages" : {
+
     },
     "Share Achievement" : {
       "localizations" : {
@@ -5704,6 +5382,7 @@
       }
     },
     "Spend 10 minutes each morning planning your day and priorities." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5719,23 +5398,8 @@
         }
       }
     },
-    "Spend 10-15 minutes in morning sunlight to regulate circadian rhythm." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "每天在晨光中停留10-15分钟以调节生物钟。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "每天在晨光中停留10-15分鐘以調節生物鐘。"
-          }
-        }
-      }
-    },
     "Spend 15 minutes decluttering and organizing your living space." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5747,22 +5411,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "花15分鐘整理和清潔生活空間。"
-          }
-        }
-      }
-    },
-    "Spend time in nature for mental health and vitamin D." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在大自然中度过时光，有益心理健康并补充维生素D。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在大自然中度過時光，有益心理健康並補充維生素D。"
           }
         }
       }
@@ -5834,6 +5482,7 @@
       }
     },
     "Start the day by making your bed for a sense of accomplishment." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5882,6 +5531,7 @@
       }
     },
     "Start your day with a 20-30 minute walk to boost energy and mood." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5914,6 +5564,7 @@
       }
     },
     "Stay connected with loved ones through regular phone calls." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5930,6 +5581,7 @@
       }
     },
     "Stay hydrated by drinking at least 8 glasses of water daily." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5944,6 +5596,12 @@
           }
         }
       }
+    },
+    "Steady Hand" : {
+
+    },
+    "Step outside and breathe. Write one observation about the morning sky." : {
+
     },
     "Streak Goal" : {
       "localizations" : {
@@ -5977,23 +5635,8 @@
         }
       }
     },
-    "Streak Master" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "连胜大师"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "連勝大师"
-          }
-        }
-      }
-    },
     "Strength training or cardio exercise for at least 30 minutes." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6074,6 +5717,7 @@
       }
     },
     "Super Consistent" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6105,23 +5749,8 @@
         }
       }
     },
-    "Swimming improves cardiovascular health and builds full-body strength." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "游泳能改善心血管健康并增强全身力量。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "游泳能改善心血管健康並增強全身力量。"
-          }
-        }
-      }
-    },
     "Take essential vitamins and supplements as recommended." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6492,6 +6121,9 @@
         }
       }
     },
+    "Three things you're grateful for — the simplest diary entry with the biggest impact." : {
+
+    },
     "Time" : {
       "localizations" : {
         "zh-Hans" : {
@@ -6719,6 +6351,12 @@
         }
       }
     },
+    "Track your sessions and jot down what felt strong or challenging." : {
+
+    },
+    "Track your sleep entries and see how rest shapes your next-day mood." : {
+
+    },
     "Transform your life one habit at a time. Track your progress, earn achievements, and build the lifestyle you've always wanted." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6769,6 +6407,7 @@
       }
     },
     "Ultra Consistent" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6799,6 +6438,9 @@
           }
         }
       }
+    },
+    "Unbroken Thread" : {
+
     },
     "Unknown" : {
       "localizations" : {
@@ -6968,6 +6610,9 @@
         }
       }
     },
+    "Use that screen-free hour to write tonight's diary entry instead." : {
+
+    },
     "Use time blocking" : {
       "localizations" : {
         "zh-Hans" : {
@@ -6983,6 +6628,9 @@
           }
         }
       }
+    },
+    "Use your diary notes to spot patterns in your pace, weather, and energy." : {
+
     },
     "v%@  Check for Updates" : {
       "localizations" : {
@@ -7047,22 +6695,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "一週開始"
-          }
-        }
-      }
-    },
-    "Week Warrior" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "周战士"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "週戰士"
           }
         }
       }
@@ -7163,7 +6795,23 @@
         }
       }
     },
+    "Write a diary entry after 10 PM" : {
+
+    },
+    "Write a line about who you spoke with and what you shared — moments worth keeping." : {
+
+    },
+    "Write a quick note after each session — notice how your practice evolves over time." : {
+
+    },
+    "Write a word or two about how you felt before and after — see the shift." : {
+
+    },
+    "Write diary entries 3 days running" : {
+
+    },
     "Write down 3 things you're grateful for each day." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -7195,7 +6843,28 @@
         }
       }
     },
+    "Write how your body felt before and after — these notes become your progress story." : {
+
+    },
+    "Write one thing you noticed outside today — your diary becomes a nature log." : {
+
+    },
+    "Write the one idea from today's episode worth remembering." : {
+
+    },
+    "Write where you are vs. where you want to be. Your diary holds you accountable." : {
+
+    },
+    "Write your first diary entry before 8 AM" : {
+
+    },
     "Write your habit journal with zero interruptions." : {
+
+    },
+    "Write your top three intentions for the day — a mini diary entry every morning." : {
+
+    },
+    "Write your very first diary entry" : {
 
     },
     "Yearly" : {
@@ -7441,6 +7110,9 @@
           }
         }
       }
+    },
+    "Your richest diary entry of the week — wins, struggles, and what comes next." : {
+
     },
     "Your Statistics" : {
       "localizations" : {
