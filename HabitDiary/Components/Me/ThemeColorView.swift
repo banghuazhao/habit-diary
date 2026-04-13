@@ -13,12 +13,12 @@ struct ThemeColorView: View {
     @Environment(\.dismiss) private var dismiss
 
     private let themeColors: [ThemeColorOption] = [
-        ThemeColorOption(themeColor: .default, color: Color(red: 0.914, green: 0.420, blue: 0.369), icon: "flame.fill"),
-        ThemeColorOption(themeColor: .blue, color: Color(red: 0.0, green: 0.48, blue: 1.0), icon: "drop.fill"),
-        ThemeColorOption(themeColor: .green, color: Color(red: 0.20, green: 0.78, blue: 0.35), icon: "leaf.fill"),
-        ThemeColorOption(themeColor: .purple, color: Color(red: 0.58, green: 0.35, blue: 0.95), icon: "sparkles"),
-        ThemeColorOption(themeColor: .pink, color: Color(red: 0.91, green: 0.30, blue: 0.58), icon: "heart.fill"),
-        ThemeColorOption(themeColor: .orange, color: Color(red: 1.0, green: 0.58, blue: 0.0), icon: "sun.max.fill"),
+        ThemeColorOption(themeColor: .ink,    color: Color(red: 0.12, green: 0.34, blue: 0.60), icon: "pencil.tip"),
+        ThemeColorOption(themeColor: .sepia,  color: Color(red: 0.55, green: 0.35, blue: 0.17), icon: "book.closed.fill"),
+        ThemeColorOption(themeColor: .sage,   color: Color(red: 0.24, green: 0.48, blue: 0.36), icon: "leaf.fill"),
+        ThemeColorOption(themeColor: .violet, color: Color(red: 0.42, green: 0.27, blue: 0.63), icon: "sparkles"),
+        ThemeColorOption(themeColor: .rose,   color: Color(red: 0.75, green: 0.27, blue: 0.37), icon: "heart.fill"),
+        ThemeColorOption(themeColor: .amber,  color: Color(red: 0.72, green: 0.46, blue: 0.16), icon: "flame.fill"),
     ]
 
     var body: some View {

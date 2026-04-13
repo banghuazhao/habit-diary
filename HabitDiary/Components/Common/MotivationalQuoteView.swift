@@ -12,44 +12,55 @@ import Dependencies
 struct MotivationalQuoteView: View {
     let quote: MotivationalQuote
     let onDismiss: () -> Void
-    
+
     @Dependency(\.themeManager) var themeManager
-    
+
     var body: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.small) {
-            HStack {
-                Image(systemName: "quote.bubble.fill")
-                    .foregroundStyle(themeManager.current.primaryColor)
-                    .font(.title2)
-                
-                Spacer()
-                
-                Button(action: onDismiss) {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(themeManager.current.textSecondary)
-                        .font(.title3)
+        HStack(alignment: .top, spacing: 0) {
+            // Notebook margin rule — the visual anchor that makes this feel like a diary page
+            Rectangle()
+                .fill(themeManager.current.primaryColor)
+                .frame(width: 3)
+                .clipShape(.rect(cornerRadius: 2))
+
+            VStack(alignment: .leading, spacing: AppSpacing.small) {
+                HStack(alignment: .top) {
+                    // Section label
+                    Label(String(localized: "Daily Reflection"), systemImage: "pencil.tip")
+                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .foregroundStyle(themeManager.current.primaryColor)
+
+                    Spacer()
+
+                    Button(action: onDismiss) {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(themeManager.current.textSecondary)
+                            .frame(width: 22, height: 22)
+                            .background(themeManager.current.secondaryGray.opacity(0.15))
+                            .clipShape(.circle)
+                    }
                 }
-            }
-            
-            Text(quote.text)
-                .font(AppFont.body)
-                .foregroundStyle(themeManager.current.textPrimary)
-                .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: true)
-            
-            HStack {
-                Spacer()
-                Text("— \(quote.author)")
-                    .font(AppFont.caption)
-                    .foregroundStyle(themeManager.current.textSecondary)
+
+                // Quote text — serif for that handwritten-in-a-journal feel
+                Text(quote.text)
+                    .font(.system(size: 15, weight: .regular, design: .serif))
+                    .foregroundStyle(themeManager.current.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
                     .italic()
+
+                // Attribution
+                Text("— \(quote.author)")
+                    .font(.system(size: 12, weight: .regular, design: .serif))
+                    .foregroundStyle(themeManager.current.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
+            .padding(.leading, 12)
+            .padding(.trailing, AppSpacing.medium)
+            .padding(.vertical, AppSpacing.smallMedium)
         }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: AppCornerRadius.card)
-                .fill(themeManager.current.primaryColor.opacity(0.1))
-        )
+        .background(themeManager.current.card)
+        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
         .shadow(color: AppShadow.card.color, radius: AppShadow.card.radius, x: AppShadow.card.x, y: AppShadow.card.y)
     }
 }
@@ -57,10 +68,9 @@ struct MotivationalQuoteView: View {
 #Preview {
     MotivationalQuoteView(
         quote: MotivationalQuote(
-            text: "The greatest wealth is health.",
-            author: "Ralph Waldo Emerson"
+            text: "The secret of getting ahead is getting started.",
+            author: "Mark Twain"
         )
-    ) {
-        print("Dismissed")
-    }
-} 
+    ) {}
+    .padding()
+}

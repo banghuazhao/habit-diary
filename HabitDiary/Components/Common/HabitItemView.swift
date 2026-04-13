@@ -10,57 +10,96 @@ struct HabitItemView: View {
     let todayHabit: TodayHabit
     let onTap: () -> Void
 
+    @Dependency(\.themeManager) var themeManager
+
     var body: some View {
         Button(action: {
             Haptics.shared.vibrateIfEnabled()
             onTap()
         }) {
-            VStack {
-                ZStack {
+            VStack(spacing: 6) {
+                // ── Habit icon circle ──────────────────────────
+                ZStack(alignment: .topTrailing) {
+                    // Background circle
                     Circle()
-                        .stroke(
-                            todayHabit.isCompleted ?
-                            todayHabit.habit.borderColor :
-                                Color.gray.opacity(0.5),
-                            style: StrokeStyle(lineWidth: 1, dash: [5, 5])
+                        .fill(
+                            todayHabit.isCompleted
+                                ? Color(hex: todayHabit.habit.color).opacity(0.85)
+                                : themeManager.current.card
                         )
-                        .background(
+                        .overlay(
                             Circle()
-                                .fill(todayHabit.isCompleted ? Color(hex: todayHabit.habit.color) : Color.clear)
+                                .strokeBorder(
+                                    todayHabit.isCompleted
+                                        ? todayHabit.habit.borderColor
+                                        : themeManager.current.secondaryGray.opacity(0.35),
+                                    style: StrokeStyle(
+                                        lineWidth: todayHabit.isCompleted ? 1.5 : 1,
+                                        dash: todayHabit.isCompleted ? [] : [4, 4]
+                                    )
+                                )
                         )
-                        .frame(width: 50, height: 50)
-                    
-                    HStack(spacing: 5) {
-                        Text(todayHabit.habit.icon)
-                            .font(.system(size: 32))
+                        .frame(width: 54, height: 54)
+                        .shadow(
+                            color: todayHabit.isCompleted
+                                ? Color(hex: todayHabit.habit.color).opacity(0.25)
+                                : .clear,
+                            radius: 4, x: 0, y: 2
+                        )
+
+                    // Emoji
+                    Text(todayHabit.habit.icon)
+                        .font(.system(size: 28))
+                        .frame(width: 54, height: 54)
+
+                    // ✓ ink-badge — only when written/done
+                    if todayHabit.isCompleted {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundStyle(.white, todayHabit.habit.borderColor)
+                            .background(
+                                Circle()
+                                    .fill(themeManager.current.card)
+                                    .frame(width: 14, height: 14)
+                            )
+                            .offset(x: 4, y: -4)
                     }
                 }
-                
-                VStack(alignment: .leading) {
+
+                // ── Label area ──────────────────────────────────
+                VStack(alignment: .leading, spacing: 2) {
                     Text(todayHabit.habit.name + (todayHabit.habit.isFavorite ? " ❤️" : ""))
-                        .font(.system(size: 15))
-                        .bold()
-                        .minimumScaleFactor(0.4)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(
+                            todayHabit.isCompleted
+                                ? themeManager.current.textPrimary
+                                : themeManager.current.textSecondary
+                        )
+                        .minimumScaleFactor(0.6)
                         .lineLimit(2)
-                    
-                    Spacer().frame(height: 5)
-                    
-                    if let streakDescription = todayHabit.streakDescription {
-                        Text(streakDescription)
-                            .font(.system(size: 12))
-                            .minimumScaleFactor(0.4)
+                        .multilineTextAlignment(.center)
+
+                    if let streak = todayHabit.streakDescription {
+                        Text(streak)
+                            .font(.system(size: 10))
+                            .foregroundStyle(themeManager.current.primaryColor)
+                            .minimumScaleFactor(0.7)
                             .lineLimit(1)
                     }
-                    
-                    if let frequencyDescription = todayHabit.frequencyDescription {
-                        Text(frequencyDescription)
-                            .font(.system(size: 12))
-                            .minimumScaleFactor(0.4)
+
+                    if let freq = todayHabit.frequencyDescription {
+                        Text(freq)
+                            .font(.system(size: 10))
+                            .foregroundStyle(themeManager.current.textSecondary)
+                            .minimumScaleFactor(0.7)
                             .lineLimit(1)
                     }
                 }
+                .frame(maxWidth: .infinity)
             }
             .frame(maxHeight: 160)
+            .opacity(todayHabit.isCompleted ? 1.0 : 0.72)
+            .animation(.easeInOut(duration: 0.2), value: todayHabit.isCompleted)
         }
         .buttonStyle(.plain)
     }
@@ -68,7 +107,7 @@ struct HabitItemView: View {
 
 #Preview {
     LazyVGrid(
-        columns: [GridItem(.adaptive(minimum: 150, maximum: 240))],
+        columns: [GridItem(.adaptive(minimum: 80), alignment: .top)],
         spacing: 12
     ) {
         HabitItemView(

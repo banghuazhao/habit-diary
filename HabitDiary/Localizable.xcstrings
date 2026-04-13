@@ -154,12 +154,12 @@
         }
       }
     },
-    "%lld of %lld habits recorded" : {
+    "%lld of %lld habits written today" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$lld of %2$lld habits recorded"
+            "value" : "%1$lld of %2$lld habits written today"
           }
         }
       }
@@ -881,9 +881,6 @@
         }
       }
     },
-    "All done for today! 🎉" : {
-
-    },
     "all time" : {
       "localizations" : {
         "zh-Hans" : {
@@ -899,6 +896,9 @@
           }
         }
       }
+    },
+    "Amber" : {
+
     },
     "and %lld more entries…" : {
 
@@ -1208,6 +1208,7 @@
       }
     },
     "Blue" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2167,6 +2168,9 @@
         }
       }
     },
+    "Daily Reflection" : {
+
+    },
     "Dark Mode" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2280,6 +2284,7 @@
       }
     },
     "Default" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3238,6 +3243,7 @@
       }
     },
     "Green" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3499,6 +3505,9 @@
           }
         }
       }
+    },
+    "Ink" : {
+
     },
     "Intermediate" : {
       "localizations" : {
@@ -4484,6 +4493,7 @@
       }
     },
     "Orange" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4644,6 +4654,7 @@
       }
     },
     "Pink" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4967,6 +4978,7 @@
 
     },
     "Purple" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5244,6 +5256,9 @@
         }
       }
     },
+    "Rose" : {
+
+    },
     "Running" : {
       "localizations" : {
         "zh-Hans" : {
@@ -5259,6 +5274,9 @@
           }
         }
       }
+    },
+    "Sage" : {
+
     },
     "Sample Button" : {
       "localizations" : {
@@ -5422,6 +5440,9 @@
           }
         }
       }
+    },
+    "Sepia" : {
+
     },
     "Set Realistic Goals" : {
       "localizations" : {
@@ -6599,7 +6620,7 @@
         }
       }
     },
-    "Today's Journal" : {
+    "Today's entry is complete! 🎉" : {
 
     },
     "total" : {
@@ -6994,6 +7015,9 @@
           }
         }
       }
+    },
+    "Violet" : {
+
     },
     "We are what we repeatedly do. Excellence, then, is not an act, but a habit." : {
       "localizations" : {

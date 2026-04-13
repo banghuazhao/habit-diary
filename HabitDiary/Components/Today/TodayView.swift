@@ -147,37 +147,80 @@ struct TodayView: View {
 
     private var diaryProgressBanner: some View {
         let completed = viewModel.todayHabits.filter(\.isCompleted).count
-        let total = viewModel.todayHabits.count
-        let progress = total > 0 ? Double(completed) / Double(total) : 0
-        let allDone = completed == total && total > 0
+        let total     = viewModel.todayHabits.count
+        let progress  = total > 0 ? Double(completed) / Double(total) : 0
+        let allDone   = completed == total && total > 0
+        let primary   = themeManager.current.primaryColor
 
-        return HStack(spacing: 12) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(allDone ? String(localized: "All done for today! 🎉") : String(localized: "Today's Journal"))
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(themeManager.current.textPrimary)
-                Text(String(localized: "\(completed) of \(total) habits recorded"))
-                    .font(.caption)
-                    .foregroundStyle(themeManager.current.textSecondary)
+        return VStack(spacing: 0) {
+            // ── Diary entry header ──────────────────────────────
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 2) {
+                    // Day name — large, like a chapter heading
+                    Text(viewModel.selectedDate, format: .dateTime.weekday(.wide))
+                        .font(.system(size: 28, weight: .bold, design: .serif))
+                        .foregroundStyle(primary)
+
+                    // Full date — subtitle line
+                    Text(viewModel.selectedDate, format: .dateTime.month(.wide).day().year())
+                        .font(.system(size: 13, weight: .regular, design: .serif))
+                        .foregroundStyle(themeManager.current.textSecondary)
+                        .italic()
+                }
+                Spacer()
+                // Bookmark-style completion badge
+                VStack(spacing: 2) {
+                    Text(allDone ? "✅" : "📔")
+                        .font(.title2)
+                    Text("\(completed)/\(total)")
+                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .foregroundStyle(allDone ? .green : primary)
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 14)
+            .padding(.bottom, 10)
+
+            // ── Ruled-line progress bar ──────────────────────────
+            VStack(spacing: 6) {
+                // Notebook-rule divider
+                Rectangle()
+                    .fill(primary.opacity(0.18))
+                    .frame(height: 1)
+
+                HStack {
+                    Text(allDone
+                         ? String(localized: "Today's entry is complete! 🎉")
+                         : String(localized: "\(completed) of \(total) habits written today"))
+                        .font(.caption)
+                        .foregroundStyle(allDone ? .green : themeManager.current.textSecondary)
+                    Spacer()
+                    Text(String(format: "%.0f%%", progress * 100))
+                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                        .foregroundStyle(allDone ? .green : primary)
+                }
+                .padding(.horizontal, 16)
+
                 ProgressView(value: progress)
-                    .progressViewStyle(LinearProgressViewStyle(tint: allDone ? .green : themeManager.current.primaryColor))
-                    .scaleEffect(x: 1, y: 1.5, anchor: .center)
-                    .padding(.top, 2)
+                    .progressViewStyle(LinearProgressViewStyle(
+                        tint: allDone ? .green : primary
+                    ))
+                    .scaleEffect(x: 1, y: 1.8, anchor: .center)
+                    .padding(.horizontal, 16)
             }
-            Spacer()
-            ZStack {
-                Circle()
-                    .fill((allDone ? Color.green : themeManager.current.primaryColor).opacity(0.12))
-                    .frame(width: 44, height: 44)
-                Text(allDone ? "✅" : "📔")
-                    .font(.title3)
-            }
+            .padding(.bottom, 12)
         }
-        .padding(12)
         .background(themeManager.current.card)
-        .clipShape(.rect(cornerRadius: 12))
-        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+        .clipShape(.rect(cornerRadius: 14))
+        .overlay(
+            // Left accent border — like a notebook margin rule
+            RoundedRectangle(cornerRadius: 14)
+                .fill(primary)
+                .frame(width: 4)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .clipShape(.rect(cornerRadius: 14))
+        )
+        .shadow(color: .black.opacity(0.06), radius: 6, x: 0, y: 3)
     }
 }
 
