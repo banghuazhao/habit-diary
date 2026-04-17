@@ -6,297 +6,376 @@
 //  Copyright Apps Bay Limited. All rights reserved.
 //
 
-import SwiftUI
 import Dependencies
-import Sharing
+import SwiftUI
 
 struct JournalStatsView: View {
     @State private var viewModel = JournalStatsViewModel()
-    @Environment(\.openURL) private var openURL
-    @State private var showShareSheet = false
-    
+    @Dependency(\.themeManager) private var themeManager
+
+    private var theme: AppTheme { themeManager.current }
+
     var body: some View {
         ScrollView {
             VStack(spacing: AppSpacing.large) {
-                // Header Section
                 headerSection
-                
-                // Habit Rating Section
                 habitRatingSection
-                
-                // Key Stats Section
                 keyStatsSection
-                
-                // Streak Section
                 streakSection
-                
-                // Habit Insights Section
                 habitInsightsSection
-                                
-                // Share Section
                 shareSection
             }
             .padding(.horizontal)
+            .padding(.vertical, AppSpacing.small)
+            .padding(.bottom, 24)
         }
-        .background(viewModel.themeManager.current.background)
-        .navigationTitle("My Stats")
+        .background(theme.background.ignoresSafeArea())
+        .navigationTitle(String(localized: "My Stats"))
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showShareSheet) {
-            ShareSheet(activityItems: [viewModel.generateShareText()])
-        }
     }
-    
+
+    // MARK: - Header
+
     private var headerSection: some View {
-        HStack(spacing: AppSpacing.medium) {
-            Text(viewModel.userAvatar)
-                .font(.system(size: 60))
-                .frame(width: 80, height: 80)
-                .background(viewModel.themeManager.current.card)
-                .clipShape(Circle())
-                .shadow(color: AppShadow.card.color, radius: 8, x: 0, y: 4)
-            
-            Text(viewModel.userName)
-                .font(AppFont.title)
-                .fontWeight(.bold)
-                .foregroundStyle(viewModel.themeManager.current.textPrimary)
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+                JournalSectionHeader(
+                    title: String(localized: "Your diary"),
+                    subtitle: String(localized: "Name and avatar from Settings"),
+                    systemImage: "person.crop.circle.fill",
+                    theme: theme
+                )
+
+                HStack(spacing: AppSpacing.medium) {
+                    Text(viewModel.userAvatar)
+                        .font(.system(size: 52))
+                        .frame(width: 72, height: 72)
+                        .background(theme.surface.opacity(0.85))
+                        .clipShape(Circle())
+                        .overlay {
+                            Circle()
+                                .strokeBorder(theme.textSecondary.opacity(0.12), lineWidth: 1)
+                        }
+
+                    Text(viewModel.userName)
+                        .font(.system(.title2, design: .serif))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(theme.textPrimary)
+                        .lineLimit(3)
+                }
+            }
         }
-        .appCardStyle()
     }
-    
+
+    // MARK: - Rating
+
     private var habitRatingSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.medium) {
-            Text(String(localized: "Habit Rating"))
-                .appSectionHeader(theme: viewModel.themeManager.current)
-            
-            VStack(spacing: AppSpacing.medium) {
-                // Rating Display
-                HStack(spacing: AppSpacing.large) {
-                    VStack(spacing: AppSpacing.small) {
-                        Text(viewModel.habitRating.displayName)
+        let rating = viewModel.habitRating
+        return JournalAccentPanel(theme: theme, accent: rating.color) {
+            VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                JournalSectionHeader(
+                    title: String(localized: "Habit rating"),
+                    subtitle: String(localized: "Based on your journal activity"),
+                    systemImage: "gauge.with.dots.needle.67percent",
+                    theme: theme
+                )
+
+                HStack(alignment: .center, spacing: AppSpacing.medium) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(rating.displayName)
                             .font(.system(size: 48, weight: .bold, design: .rounded))
-                            .foregroundStyle(viewModel.habitRating.color)
-                        
-                        Text(viewModel.habitRating.description)
-                            .font(AppFont.subheadline)
-                            .foregroundStyle(viewModel.themeManager.current.textSecondary)
+                            .foregroundStyle(rating.color)
+                            .minimumScaleFactor(0.6)
+                            .lineLimit(1)
+
+                        Text(rating.description)
+                            .font(.system(.subheadline, design: .serif))
+                            .foregroundStyle(theme.textSecondary)
                     }
-                    .frame(maxWidth: .infinity)
-                    
-                    VStack(spacing: AppSpacing.small) {
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    VStack(alignment: .trailing, spacing: 2) {
                         Text("\(viewModel.totalScore)")
                             .font(.system(size: 32, weight: .bold, design: .rounded))
-                            .foregroundStyle(viewModel.themeManager.current.primaryColor)
-                        
+                            .foregroundStyle(theme.primaryColor)
                         Text(String(localized: "points"))
                             .font(AppFont.caption)
-                            .foregroundStyle(viewModel.themeManager.current.textSecondary)
+                            .foregroundStyle(theme.textSecondary)
                     }
-                    .frame(maxWidth: .infinity)
+                }
+
+                if let next = viewModel.nextRating, viewModel.scoreToNextRating > 0 {
+                    Label {
+                        Text(
+                            String(
+                                localized: "\(viewModel.scoreToNextRating) points to \(next.displayName) (\(next.description))"
+                            )
+                        )
+                        .font(AppFont.caption)
+                        .foregroundStyle(theme.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    } icon: {
+                        Image(systemName: "arrow.up.circle.fill")
+                            .foregroundStyle(theme.primaryColor.opacity(0.9))
+                    }
+                    .padding(AppSpacing.smallMedium)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(theme.surface.opacity(0.55))
+                    .clipShape(.rect(cornerRadius: 10))
                 }
             }
         }
-        .appCardStyle()
     }
-    
+
+    // MARK: - Key stats
+
     private var keyStatsSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.medium) {
-            Text(String(localized: "Key Statistics"))
-                .appSectionHeader(theme: viewModel.themeManager.current)
-            
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), spacing: AppSpacing.medium) {
-                statCard(
-                    icon: "list.bullet",
-                    title: String(localized: "Total Habits"),
-                    value: "\(viewModel.totalHabits)",
-                    color: .blue
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                JournalSectionHeader(
+                    title: String(localized: "Key statistics"),
+                    subtitle: String(localized: "Totals across your journal"),
+                    systemImage: "chart.bar.fill",
+                    theme: theme
                 )
-                
-                statCard(
-                    icon: "checkmark.circle.fill",
-                    title: String(localized: "Total Check-ins"),
-                    value: "\(viewModel.totalCheckIns)",
-                    color: .green
-                )
-                
-                statCard(
-                    icon: "trophy.fill",
-                    title: String(localized: "Achievements"),
-                    value: "\(viewModel.totalAchievements)",
-                    color: .orange
-                )
-                
-                statCard(
-                    icon: "calendar",
-                    title: String(localized: "Days Active"),
-                    value: "\(viewModel.totalDaysActive)",
-                    color: .purple
-                )
+
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: AppSpacing.small), count: 2), spacing: AppSpacing.small) {
+                    statTile(
+                        icon: "list.bullet",
+                        title: String(localized: "Total habits"),
+                        value: "\(viewModel.totalHabits)",
+                        iconTint: theme.primaryColor
+                    )
+                    statTile(
+                        icon: "checkmark.circle.fill",
+                        title: String(localized: "Total entries"),
+                        value: "\(viewModel.totalCheckIns)",
+                        iconTint: theme.success
+                    )
+                    statTile(
+                        icon: "trophy.fill",
+                        title: String(localized: "Achievements"),
+                        value: "\(viewModel.totalAchievements)",
+                        iconTint: theme.warning
+                    )
+                    statTile(
+                        icon: "calendar",
+                        title: String(localized: "Days active"),
+                        value: "\(viewModel.totalDaysActive)",
+                        iconTint: theme.primaryColor.opacity(0.75)
+                    )
+                }
             }
         }
-        .appCardStyle()
     }
-    
+
+    // MARK: - Streaks
+
     private var streakSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.medium) {
-            Text(String(localized: "Streak Information"))
-                .appSectionHeader(theme: viewModel.themeManager.current)
-            
-            HStack(spacing: AppSpacing.large) {
-                VStack(spacing: AppSpacing.small) {
-                    Text("🔥")
-                        .font(.system(size: 40))
-                    Text("\(viewModel.longestStreak)")
-                        .font(AppFont.title)
-                        .fontWeight(.bold)
-                        .foregroundStyle(viewModel.themeManager.current.primaryColor)
-                    Text(String(localized: "Longest Streak"))
-                        .font(AppFont.caption)
-                        .foregroundStyle(viewModel.themeManager.current.textSecondary)
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                JournalSectionHeader(
+                    title: String(localized: "Streaks"),
+                    subtitle: String(localized: "Consecutive days with at least one entry"),
+                    systemImage: "flame.fill",
+                    theme: theme
+                )
+
+                HStack(spacing: AppSpacing.medium) {
+                    streakMiniCard(
+                        symbol: "🔥",
+                        value: viewModel.longestStreak,
+                        label: String(localized: "Longest streak")
+                    )
+                    streakMiniCard(
+                        symbol: "⚡",
+                        value: viewModel.currentStreak,
+                        label: String(localized: "Current streak")
+                    )
                 }
-                .frame(maxWidth: .infinity)
-                
-                VStack(spacing: AppSpacing.small) {
-                    Text("⚡")
-                        .font(.system(size: 40))
-                    Text("\(viewModel.currentStreak)")
-                        .font(AppFont.title)
-                        .fontWeight(.bold)
-                        .foregroundStyle(viewModel.themeManager.current.primaryColor)
-                    Text(String(localized: "Current Streak"))
-                        .font(AppFont.caption)
-                        .foregroundStyle(viewModel.themeManager.current.textSecondary)
-                }
-                .frame(maxWidth: .infinity)
             }
         }
-        .appCardStyle()
     }
-    
+
+    private func streakMiniCard(symbol: String, value: Int, label: String) -> some View {
+        VStack(spacing: AppSpacing.small) {
+            Text(symbol)
+                .font(.system(size: 36))
+            Text("\(value)")
+                .font(.system(.title, design: .rounded))
+                .fontWeight(.bold)
+                .foregroundStyle(theme.primaryColor)
+            Text(label)
+                .font(AppFont.caption)
+                .foregroundStyle(theme.textSecondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(AppSpacing.smallMedium)
+        .background(theme.surface.opacity(0.55))
+        .clipShape(.rect(cornerRadius: 12))
+        .overlay {
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
+        }
+    }
+
+    // MARK: - Insights
+
     @ViewBuilder
     private var habitInsightsSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.medium) {
-            Text(String(localized: "Habit Insights"))
-                .appSectionHeader(theme: viewModel.themeManager.current)
-            
-            VStack(spacing: AppSpacing.medium) {
-                if let bestHabit = viewModel.bestHabit {
-                    insightRow(
-                        icon: "🌟",
-                        title: String(localized: "Best Habit"),
-                        subtitle: bestHabit.name,
-                        detail: "\(allCheckInsForHabit(bestHabit.id).count) check-ins"
-                    )
-                }
-                
-                if let earliestCheckInString = viewModel.earliestCheckInString {
-                    insightRow(
-                        icon: "🕐",
-                        title: String(localized: "Started Journey"),
-                        subtitle: earliestCheckInString,
-                        detail: "First check-in"
-                    )
-                }
-                
-                if let mostFrequent = viewModel.mostFrequentHabit {
-                    insightRow(
-                        icon: "📈",
-                        title: String(localized: "Most Consistent"),
-                        subtitle: mostFrequent.name,
-                        detail: "\(allCheckInsForHabit(mostFrequent.id).count) times"
-                    )
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                JournalSectionHeader(
+                    title: String(localized: "Habit insights"),
+                    subtitle: String(localized: "Highlights from your data"),
+                    systemImage: "sparkles",
+                    theme: theme
+                )
+
+                VStack(spacing: AppSpacing.smallMedium) {
+                    if let bestHabit = viewModel.bestHabit {
+                        insightRow(
+                            systemImage: "star.fill",
+                            title: String(localized: "Top habit"),
+                            subtitle: bestHabit.name,
+                            detail: entryCountPhrase(allCheckInsForHabit(bestHabit.id).count)
+                        )
+                    }
+
+                    if let earliestCheckInString = viewModel.earliestCheckInString {
+                        insightRow(
+                            systemImage: "clock.fill",
+                            title: String(localized: "Journey began"),
+                            subtitle: earliestCheckInString,
+                            detail: String(localized: "First journal entry")
+                        )
+                    }
+
+                    if let mostFrequent = viewModel.mostFrequentHabit {
+                        insightRow(
+                            systemImage: "chart.line.uptrend.xyaxis",
+                            title: String(localized: "Most logged"),
+                            subtitle: mostFrequent.name,
+                            detail: entryCountPhrase(allCheckInsForHabit(mostFrequent.id).count)
+                        )
+                    }
                 }
             }
         }
-        .appCardStyle()
     }
-        
+
+    private func entryCountPhrase(_ count: Int) -> String {
+        String(localized: "\(count) entries")
+    }
+
+    // MARK: - Share
+
     private var shareSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.medium) {
-            Text(String(localized: "Share Your Progress"))
-                .appSectionHeader(theme: viewModel.themeManager.current)
-            
-            Button(action: {
-                showShareSheet = true
-            }) {
-                HStack {
-                    Image(systemName: "square.and.arrow.up")
-                        .font(.title2)
-                    Text(String(localized: "Share My Stats"))
-                        .font(AppFont.body)
-                        .fontWeight(.semibold)
-                    Spacer()
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                JournalSectionHeader(
+                    title: String(localized: "Share"),
+                    subtitle: String(localized: "Send a text summary of your stats"),
+                    systemImage: "square.and.arrow.up",
+                    theme: theme
+                )
+
+                ShareLink(
+                    item: viewModel.generateShareText(),
+                    subject: Text(String(localized: "My habit stats")),
+                    message: Text(String(localized: "From Habit Diary"))
+                ) {
+                    Label(String(localized: "Share my stats"), systemImage: "square.and.arrow.up")
+                        .font(AppFont.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, AppSpacing.small)
                 }
-                .foregroundStyle(.white)
-                .padding()
-                .background(viewModel.themeManager.current.primaryColor)
-                .clipShape(.rect(cornerRadius: AppCornerRadius.button))
+                .buttonStyle(.borderedProminent)
+                .tint(theme.primaryColor)
             }
         }
-        .appCardStyle()
     }
-    
-    private func statCard(icon: String, title: String, value: String, color: Color) -> some View {
+
+    // MARK: - Tiles & rows
+
+    private func statTile(icon: String, title: String, value: String, iconTint: Color) -> some View {
         VStack(spacing: AppSpacing.small) {
             Image(systemName: icon)
                 .font(.title2)
-                .foregroundStyle(color)
-            
+                .foregroundStyle(iconTint)
+
             Text(value)
-                .font(AppFont.headline)
+                .font(.system(.title3, design: .rounded))
                 .fontWeight(.bold)
-                .foregroundStyle(viewModel.themeManager.current.textPrimary)
-            
+                .foregroundStyle(theme.textPrimary)
+
             Text(title)
                 .font(AppFont.caption)
-                .foregroundStyle(viewModel.themeManager.current.textSecondary)
+                .foregroundStyle(theme.textSecondary)
                 .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
         }
-        .appCardStyle()
+        .frame(maxWidth: .infinity)
+        .padding(AppSpacing.smallMedium)
+        .background(theme.surface.opacity(0.55))
+        .clipShape(.rect(cornerRadius: 12))
+        .overlay {
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title), \(value)")
     }
-    
-    private func insightRow(icon: String, title: String, subtitle: String, detail: String) -> some View {
-        HStack(spacing: AppSpacing.medium) {
-            Text(icon)
-                .font(.title2)
-            
-            VStack(alignment: .leading, spacing: 2) {
+
+    private func insightRow(systemImage: String, title: String, subtitle: String, detail: String) -> some View {
+        HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
+            Image(systemName: systemImage)
+                .font(.title3)
+                .foregroundStyle(theme.primaryColor)
+                .frame(width: 36, height: 36)
+                .background(theme.primaryColor.opacity(0.12))
+                .clipShape(.rect(cornerRadius: 8))
+
+            VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(AppFont.caption)
-                    .foregroundStyle(viewModel.themeManager.current.textSecondary)
-                
-                Text(subtitle)
-                    .font(AppFont.body)
                     .fontWeight(.semibold)
-                    .foregroundStyle(viewModel.themeManager.current.textPrimary)
-                
+                    .foregroundStyle(theme.textSecondary)
+                    .textCase(.uppercase)
+                    .tracking(0.4)
+
+                Text(subtitle)
+                    .font(.system(.body, design: .serif))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(theme.textPrimary)
+
                 Text(detail)
                     .font(AppFont.caption)
-                    .foregroundStyle(viewModel.themeManager.current.textSecondary)
+                    .foregroundStyle(theme.textSecondary)
             }
-            
-            Spacer()
-        }
-        .padding(.vertical, 4)
-    }
-    
-    private func allCheckInsForHabit(_ habitId: Int) -> [DiaryEntry] {
-        return viewModel.allCheckIns.filter { $0.habitID == habitId }
-    }
-}
 
-struct ShareSheet: UIViewControllerRepresentable {
-    let activityItems: [Any]
-    
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-        return controller
+            Spacer(minLength: 0)
+        }
+        .padding(AppSpacing.smallMedium)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(theme.surface.opacity(0.45))
+        .clipShape(.rect(cornerRadius: AppCornerRadius.info))
+        .overlay {
+            RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                .strokeBorder(theme.textSecondary.opacity(0.08), lineWidth: 1)
+        }
+        .accessibilityElement(children: .combine)
     }
-    
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+
+    private func allCheckInsForHabit(_ habitId: Int) -> [DiaryEntry] {
+        viewModel.allCheckIns.filter { $0.habitID == habitId }
+    }
 }
 
 #Preview {
     NavigationStack {
         JournalStatsView()
     }
-} 
+}

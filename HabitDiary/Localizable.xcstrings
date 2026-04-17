@@ -163,6 +163,9 @@
         }
       }
     },
+    "%lld entries" : {
+
+    },
     "%lld habits selected" : {
       "localizations" : {
         "zh-Hans" : {
@@ -241,6 +244,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "還需 %lld 分"
+          }
+        }
+      }
+    },
+    "%lld points to %@ (%@)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld points to %2$@ (%3$@)"
           }
         }
       }
@@ -419,9 +432,6 @@
         }
       }
     },
-    "⚡" : {
-
-    },
     "✅" : {
 
     },
@@ -474,9 +484,6 @@
 
     },
     "📖" : {
-
-    },
-    "🔥" : {
 
     },
     "🔥 %lldd streak" : {
@@ -1261,6 +1268,9 @@
     "Badges reward patterns — explore them in the Badges tab." : {
 
     },
+    "Based on your journal activity" : {
+
+    },
     "Be the person your dog thinks you are." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1342,6 +1352,7 @@
       }
     },
     "Best Habit" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1883,6 +1894,9 @@
         }
       }
     },
+    "Consecutive days with at least one entry" : {
+
+    },
     "consistency" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2065,6 +2079,9 @@
         }
       }
     },
+    "Current streak" : {
+
+    },
     "Current Streak" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2148,7 +2165,11 @@
         }
       }
     },
+    "Days active" : {
+
+    },
     "Days Active" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3029,6 +3050,9 @@
     "First Entry" : {
 
     },
+    "First journal entry" : {
+
+    },
     "Flexible Scheduling" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3257,7 +3281,11 @@
     "Habit Diary — %@" : {
 
     },
+    "Habit insights" : {
+
+    },
     "Habit Insights" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3276,7 +3304,11 @@
     "Habit name" : {
 
     },
+    "Habit rating" : {
+
+    },
     "Habit Rating" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3345,6 +3377,9 @@
 
     },
     "Here’s my habit insight summary from Habit Diary." : {
+
+    },
+    "Highlights from your data" : {
 
     },
     "How %@ is calculated" : {
@@ -3567,6 +3602,9 @@
     "Journal tools" : {
 
     },
+    "Journey began" : {
+
+    },
     "Keep a 7-day journaling streak" : {
 
     },
@@ -3593,7 +3631,11 @@
         }
       }
     },
+    "Key statistics" : {
+
+    },
     "Key Statistics" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3834,6 +3876,9 @@
 
     },
     "Log your practice time and note what clicked — watch your story of mastery unfold." : {
+
+    },
+    "Longest streak" : {
 
     },
     "Longest Streak" : {
@@ -4140,6 +4185,7 @@
       }
     },
     "Most Consistent" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4154,6 +4200,9 @@
           }
         }
       }
+    },
+    "Most logged" : {
+
     },
     "Motivation" : {
       "extractionState" : "stale",
@@ -4208,6 +4257,9 @@
         }
       }
     },
+    "My habit stats" : {
+
+    },
     "My Stats" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4223,6 +4275,9 @@
           }
         }
       }
+    },
+    "Name and avatar from Settings" : {
+
     },
     "Never miss two days in a row" : {
       "localizations" : {
@@ -5580,6 +5635,9 @@
         }
       }
     },
+    "Send a text summary of your stats" : {
+
+    },
     "Send feedback" : {
 
     },
@@ -5622,6 +5680,9 @@
     "Seven Pages" : {
 
     },
+    "Share" : {
+
+    },
     "Share Achievement" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5662,7 +5723,11 @@
     "Share Habit Diary" : {
 
     },
+    "Share my stats" : {
+
+    },
     "Share My Stats" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5679,6 +5744,7 @@
       }
     },
     "Share Your Progress" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6044,6 +6110,7 @@
       }
     },
     "Started Journey" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6116,6 +6183,7 @@
       }
     },
     "Streak Information" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6130,6 +6198,9 @@
           }
         }
       }
+    },
+    "Streaks" : {
+
     },
     "Strength training or cardio exercise for at least 30 minutes." : {
       "extractionState" : "stale",
@@ -6782,6 +6853,9 @@
     "Today's entry is complete! 🎉" : {
 
     },
+    "Top habit" : {
+
+    },
     "total" : {
       "localizations" : {
         "zh-Hans" : {
@@ -6817,7 +6891,14 @@
         }
       }
     },
+    "Total entries" : {
+
+    },
+    "Total habits" : {
+
+    },
     "Total Habits" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6849,6 +6930,9 @@
           }
         }
       }
+    },
+    "Totals across your journal" : {
+
     },
     "Totals and streaks at a glance" : {
 
@@ -7585,6 +7669,9 @@
       }
     },
     "Your daily habit journal" : {
+
+    },
+    "Your diary" : {
 
     },
     "Your future is created by what you do today, not tomorrow." : {
