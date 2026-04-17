@@ -403,6 +403,7 @@
       }
     },
     "< Previous" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -443,6 +444,9 @@
           }
         }
       }
+    },
+    "🎉 Badge unlocked\n\n" : {
+
     },
     "🎉 Badge Unlocked! 🎉" : {
 
@@ -680,6 +684,9 @@
 
     },
     "A tidy desk is a good backdrop for journaling. Log it and feel the difference." : {
+
+    },
+    "About this habit" : {
 
     },
     "Achievement Unlocked!" : {
@@ -1015,7 +1022,7 @@
     "Amber" : {
 
     },
-    "and %lld more entries…" : {
+    "and %lld more…" : {
 
     },
     "Appearance" : {
@@ -1104,6 +1111,9 @@
         }
       }
     },
+    "Archived — hidden from Journal until unarchived." : {
+
+    },
     "Archived Habits" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1119,6 +1129,9 @@
           }
         }
       }
+    },
+    "Archived habits stay out of Journal; your entries are kept." : {
+
     },
     "At a glance" : {
 
@@ -1235,6 +1248,9 @@
           }
         }
       }
+    },
+    "Badge unlocked" : {
+
     },
     "Badge Unlocked!" : {
 
@@ -2276,6 +2292,7 @@
 
     },
     "Delete %@?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2290,6 +2307,9 @@
           }
         }
       }
+    },
+    "Delete habit" : {
+
     },
     "Description" : {
       "extractionState" : "stale",
@@ -2550,6 +2570,9 @@
         }
       }
     },
+    "Earned for this habit" : {
+
+    },
     "Eat fruits" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2708,6 +2731,9 @@
       }
     },
     "Entries" : {
+
+    },
+    "Entry notes" : {
 
     },
     "Entry sound" : {
@@ -2946,6 +2972,9 @@
         }
       }
     },
+    "Favorites appear first on your Journal list." : {
+
+    },
     "Feedback" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3080,6 +3109,12 @@
         }
       }
     },
+    "From Habit Diary" : {
+
+    },
+    "From your habit note" : {
+
+    },
     "Full Volume" : {
 
     },
@@ -3207,10 +3242,16 @@
         }
       }
     },
+    "Habit" : {
+
+    },
     "Habit actions" : {
 
     },
     "Habit Diary" : {
+
+    },
+    "Habit Diary — %@" : {
 
     },
     "Habit Insights" : {
@@ -3958,6 +3999,7 @@
 
     },
     "Mode" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4248,7 +4290,11 @@
         }
       }
     },
+    "Next" : {
+
+    },
     "Next >" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4443,6 +4489,7 @@
 
     },
     "Once archived, the habit will be hidden from today's habits list, but its check-ins will be kept." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4459,6 +4506,7 @@
       }
     },
     "Once favorited, the habit will be ordered first in today's habits list." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4492,6 +4540,9 @@
     "Optional nudges" : {
 
     },
+    "Options" : {
+
+    },
     "Orange" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4508,6 +4559,9 @@
           }
         }
       }
+    },
+    "Ordering and visibility" : {
+
     },
     "Organize workspace" : {
       "localizations" : {
@@ -4866,6 +4920,9 @@
           }
         }
       }
+    },
+    "Previous" : {
+
     },
     "Prioritize High-Impact Habits" : {
       "extractionState" : "stale",
@@ -5403,6 +5460,9 @@
           }
         }
       }
+    },
+    "Scheduled nudges" : {
+
     },
     "Score %lld of %lld" : {
       "localizations" : {
@@ -6228,6 +6288,9 @@
         }
       }
     },
+    "Tap a day to log or remove an entry" : {
+
+    },
     "Tap a row for details." : {
 
     },
@@ -6248,6 +6311,9 @@
       }
     },
     "Tap for category breakdown" : {
+
+    },
+    "Text you added when logging" : {
 
     },
     "Thank you for supporting Habit Diary!" : {
@@ -6509,6 +6575,9 @@
         }
       }
     },
+    "This permanently removes this habit and its journal entries. You can’t undo this." : {
+
+    },
     "This Week" : {
       "localizations" : {
         "zh-Hans" : {
@@ -6526,6 +6595,7 @@
       }
     },
     "This will permanently delete %@ and all its check-in history. This action cannot be undone. Are you sure you want to proceed?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -7002,6 +7072,9 @@
         }
       }
     },
+    "Unlocked %@\n\n" : {
+
+    },
     "Update" : {
       "localizations" : {
         "zh-Hans" : {
@@ -7128,6 +7201,9 @@
           }
         }
       }
+    },
+    "View" : {
+
     },
     "Violet" : {
 

@@ -101,9 +101,9 @@ struct HabitEditorView: View {
     // MARK: - Preview (emoji + tile)
 
     private var previewStripSection: some View {
-        HabitEditorPanel(theme: theme, accent: theme.primaryColor) {
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
             VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
-                HabitEditorSectionHeader(
+                JournalSectionHeader(
                     title: String(localized: "On your shelf"),
                     subtitle: String(localized: "How this habit will look in your journal"),
                     systemImage: "books.vertical.fill",
@@ -145,9 +145,9 @@ struct HabitEditorView: View {
     // MARK: - Name
 
     private var nameAndCatalogSection: some View {
-        HabitEditorPanel(theme: theme, accent: theme.primaryColor) {
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
             VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
-                HabitEditorSectionHeader(
+                JournalSectionHeader(
                     title: String(localized: "Title"),
                     subtitle: String(localized: "Short and memorable works best"),
                     systemImage: "character.cursor.ibeam",
@@ -172,9 +172,9 @@ struct HabitEditorView: View {
     // MARK: - Schedule
 
     private var scheduleSection: some View {
-        HabitEditorPanel(theme: theme, accent: theme.primaryColor) {
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
             VStack(alignment: .leading, spacing: AppSpacing.medium) {
-                HabitEditorSectionHeader(
+                JournalSectionHeader(
                     title: String(localized: "Schedule"),
                     subtitle: String(localized: "When this habit appears on Journal"),
                     systemImage: "calendar",
@@ -359,9 +359,9 @@ struct HabitEditorView: View {
     // MARK: - Note
 
     private var journalNoteSection: some View {
-        HabitEditorPanel(theme: theme, accent: theme.primaryColor) {
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
             VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
-                HabitEditorSectionHeader(
+                JournalSectionHeader(
                     title: String(localized: "Note"),
                     subtitle: String(localized: "Optional — why this habit matters to you"),
                     systemImage: "text.alignleft",
@@ -400,10 +400,10 @@ struct HabitEditorView: View {
     // MARK: - Reminders
 
     private var remindersSection: some View {
-        HabitEditorPanel(theme: theme, accent: theme.primaryColor) {
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
             VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
                 HStack {
-                    HabitEditorSectionHeader(
+                    JournalSectionHeader(
                         title: String(localized: "Reminders"),
                         subtitle: String(localized: "Optional nudges"),
                         systemImage: "bell.badge.fill",
@@ -444,79 +444,6 @@ struct HabitEditorView: View {
                     }
                 }
             }
-        }
-    }
-}
-
-// MARK: - Section chrome (matches Settings / Profile)
-
-private struct HabitEditorSectionHeader: View {
-    let title: String
-    let subtitle: String
-    let systemImage: String
-    let theme: AppTheme
-
-    var body: some View {
-        HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
-            Image(systemName: systemImage)
-                .font(.title3.weight(.semibold))
-                .foregroundStyle(theme.primaryColor)
-                .frame(width: 32, height: 32)
-                .background(theme.primaryColor.opacity(0.12))
-                .clipShape(.rect(cornerRadius: 8))
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.system(.headline, design: .serif))
-                    .foregroundStyle(theme.textPrimary)
-                Text(subtitle)
-                    .font(AppFont.caption)
-                    .foregroundStyle(theme.textSecondary)
-            }
-            Spacer(minLength: 0)
-        }
-    }
-}
-
-private struct HabitEditorPanel<Content: View>: View {
-    let theme: AppTheme
-    let accent: Color
-    @ViewBuilder let content: () -> Content
-
-    var body: some View {
-        HStack(alignment: .top, spacing: 0) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(
-                    LinearGradient(
-                        colors: [accent, accent.opacity(0.35)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .frame(width: 4)
-                .padding(.vertical, 8)
-
-            VStack(alignment: .leading, spacing: 0) {
-                content()
-            }
-            .padding(AppSpacing.medium)
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .background { panelBackground }
-        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
-        .overlay {
-            RoundedRectangle(cornerRadius: AppCornerRadius.card)
-                .strokeBorder(theme.textSecondary.opacity(0.12), lineWidth: 1)
-        }
-    }
-
-    @ViewBuilder
-    private var panelBackground: some View {
-        if #available(iOS 26, *) {
-            Color.clear
-                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
-        } else {
-            theme.card
         }
     }
 }

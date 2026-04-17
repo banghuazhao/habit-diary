@@ -293,3 +293,78 @@ extension View {
             .clipShape(.rect(cornerRadius: AppCornerRadius.info))
     }
 }
+
+// MARK: - Journal panel chrome (habit editor, habit detail, profile-style sections)
+
+/// Left accent bar + glass or parchment card — shared by habit editor and habit detail screens.
+struct JournalAccentPanel<Content: View>: View {
+    let theme: AppTheme
+    let accent: Color
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 0) {
+            RoundedRectangle(cornerRadius: 2)
+                .fill(
+                    LinearGradient(
+                        colors: [accent, accent.opacity(0.35)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .frame(width: 4)
+                .padding(.vertical, 8)
+
+            VStack(alignment: .leading, spacing: 0) {
+                content()
+            }
+            .padding(AppSpacing.medium)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .background { panelBackground }
+        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
+        .overlay {
+            RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                .strokeBorder(theme.textSecondary.opacity(0.12), lineWidth: 1)
+        }
+    }
+
+    @ViewBuilder
+    private var panelBackground: some View {
+        if #available(iOS 26, *) {
+            Color.clear
+                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
+        } else {
+            theme.card
+        }
+    }
+}
+
+/// Serif title + caption subtitle + tinted SF Symbol — section header for journal-style panels.
+struct JournalSectionHeader: View {
+    let title: String
+    let subtitle: String
+    let systemImage: String
+    let theme: AppTheme
+
+    var body: some View {
+        HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
+            Image(systemName: systemImage)
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(theme.primaryColor)
+                .frame(width: 32, height: 32)
+                .background(theme.primaryColor.opacity(0.12))
+                .clipShape(.rect(cornerRadius: 8))
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.system(.headline, design: .serif))
+                    .foregroundStyle(theme.textPrimary)
+                Text(subtitle)
+                    .font(AppFont.caption)
+                    .foregroundStyle(theme.textSecondary)
+            }
+            Spacer(minLength: 0)
+        }
+    }
+}
