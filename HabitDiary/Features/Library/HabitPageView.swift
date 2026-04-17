@@ -130,7 +130,7 @@ struct HabitPageView: View {
                     systemImage: "text.alignleft",
                     theme: theme
                 )
-                HabitNoteContent(note: viewModel.habit.note, theme: theme, accent: habitTint)
+                HabitNoteContent(note: viewModel.habit.note, theme: theme)
             }
         }
     }
@@ -370,41 +370,28 @@ struct HabitPageView: View {
 private struct HabitNoteContent: View {
     let note: String
     let theme: AppTheme
-    let accent: Color
     @State private var expanded = false
 
     var body: some View {
-        HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
-            Rectangle()
-                .fill(
-                    LinearGradient(
-                        colors: [accent.opacity(0.55), accent.opacity(0.2)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .frame(width: 3)
-                .clipShape(.rect(cornerRadius: 1.5))
+        VStack(alignment: .leading, spacing: 6) {
+            Text(note)
+                .font(.system(.body, design: .serif))
+                .foregroundStyle(theme.textPrimary)
+                .lineLimit(expanded ? nil : 4)
 
-            VStack(alignment: .leading, spacing: 6) {
-                Text(note)
-                    .font(.system(.body, design: .serif))
-                    .foregroundStyle(theme.textPrimary)
-                    .lineLimit(expanded ? nil : 4)
-
-                if note.count > 160 {
-                    Button {
-                        withAnimation(.easeInOut(duration: 0.2)) { expanded.toggle() }
-                    } label: {
-                        Text(expanded ? String(localized: "Show less") : String(localized: "Show more"))
-                            .font(AppFont.footnote.weight(.semibold))
-                            .foregroundStyle(theme.primaryColor)
-                    }
-                    .buttonStyle(.plain)
+            if note.count > 160 {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) { expanded.toggle() }
+                } label: {
+                    Text(expanded ? String(localized: "Show less") : String(localized: "Show more"))
+                        .font(AppFont.footnote.weight(.semibold))
+                        .foregroundStyle(theme.primaryColor)
                 }
+                .buttonStyle(.plain)
             }
         }
         .padding(AppSpacing.smallMedium)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(theme.surface.opacity(0.45))
         .clipShape(.rect(cornerRadius: AppCornerRadius.info))
     }
@@ -567,59 +554,47 @@ struct HabitBadgeRowView: View {
     private var theme: AppTheme { themeManager.current }
 
     var body: some View {
-        HStack(alignment: .center, spacing: AppSpacing.smallMedium) {
-            ZStack {
-                Circle()
-                    .fill(accent.opacity(0.2))
-                    .frame(width: 44, height: 44)
-                Text(achievement.icon)
-                    .font(.title3)
-            }
+        JournalAccentPanel(theme: theme, accent: accent) {
+            HStack(alignment: .center, spacing: AppSpacing.smallMedium) {
+                ZStack {
+                    Circle()
+                        .fill(accent.opacity(0.2))
+                        .frame(width: 44, height: 44)
+                    Text(achievement.icon)
+                        .font(.title3)
+                }
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text(achievement.title)
-                    .font(AppFont.subheadline.weight(.semibold))
-                    .foregroundStyle(theme.textPrimary)
-                Text(achievement.description)
-                    .font(AppFont.caption)
-                    .foregroundStyle(theme.textSecondary)
-                    .lineLimit(2)
-                if let unlockDate = achievement.unlockedDate {
-                    Text(unlockDate.formatted(date: .abbreviated, time: .omitted))
-                        .font(AppFont.footnote)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(achievement.title)
+                        .font(AppFont.subheadline.weight(.semibold))
+                        .foregroundStyle(theme.textPrimary)
+                    Text(achievement.description)
+                        .font(AppFont.caption)
+                        .foregroundStyle(theme.textSecondary)
+                        .lineLimit(2)
+                    if let unlockDate = achievement.unlockedDate {
+                        Text(unlockDate.formatted(date: .abbreviated, time: .omitted))
+                            .font(AppFont.footnote)
+                            .foregroundStyle(theme.primaryColor)
+                    }
+                }
+
+                Spacer(minLength: 8)
+
+                ShareLink(
+                    item: createAchievementShareText(achievement),
+                    subject: Text(String(localized: "Badge unlocked")),
+                    message: Text(String(localized: "From Habit Diary"))
+                ) {
+                    Image(systemName: "square.and.arrow.up.circle.fill")
+                        .symbolRenderingMode(.hierarchical)
+                        .font(.title3)
                         .foregroundStyle(theme.primaryColor)
                 }
-            }
 
-            Spacer(minLength: 8)
-
-            ShareLink(
-                item: createAchievementShareText(achievement),
-                subject: Text(String(localized: "Badge unlocked")),
-                message: Text(String(localized: "From Habit Diary"))
-            ) {
-                Image(systemName: "square.and.arrow.up.circle.fill")
-                    .symbolRenderingMode(.hierarchical)
-                    .font(.title3)
-                    .foregroundStyle(theme.primaryColor)
-            }
-
-            Image(systemName: "chevron.right")
-                .font(AppFont.caption.weight(.semibold))
-                .foregroundStyle(theme.textSecondary.opacity(0.8))
-        }
-        .padding(AppSpacing.smallMedium)
-        .background {
-            if #available(iOS 26, *) {
-                Color.clear
-                    .glassEffect(in: .rect(cornerRadius: AppCornerRadius.info))
-            } else {
-                ZStack {
-                    RoundedRectangle(cornerRadius: AppCornerRadius.info)
-                        .fill(theme.card)
-                    RoundedRectangle(cornerRadius: AppCornerRadius.info)
-                        .strokeBorder(accent.opacity(0.2), lineWidth: 1)
-                }
+                Image(systemName: "chevron.right")
+                    .font(AppFont.caption.weight(.semibold))
+                    .foregroundStyle(theme.textSecondary.opacity(0.8))
             }
         }
     }

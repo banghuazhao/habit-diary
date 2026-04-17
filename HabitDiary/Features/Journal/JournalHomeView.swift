@@ -22,7 +22,6 @@ struct JournalHomeView: View {
                     // Diary-style daily progress banner
                     if !viewModel.todayHabits.isEmpty {
                         diaryProgressBanner
-                            .padding(.horizontal, AppSpacing.medium)
                             .padding(.bottom, AppSpacing.medium)
                     }
 
@@ -31,7 +30,6 @@ struct JournalHomeView: View {
                             viewModel.dismissMotivationalQuote()
                         }
                         .padding(.bottom, AppSpacing.medium)
-                        .padding(.horizontal, AppSpacing.medium)
                     }
 
                     if viewModel.todayHabits.isEmpty {
@@ -160,81 +158,64 @@ struct JournalHomeView: View {
 
     private var diaryProgressBanner: some View {
         let completed = viewModel.todayHabits.filter(\.isCompleted).count
-        let total     = viewModel.todayHabits.count
-        let progress  = total > 0 ? Double(completed) / Double(total) : 0
-        let allDone   = completed == total && total > 0
-        let primary = themeManager.current.primaryColor
-        let success = themeManager.current.success
+        let total = viewModel.todayHabits.count
+        let progress = total > 0 ? Double(completed) / Double(total) : 0
+        let allDone = completed == total && total > 0
+        let primary = theme.primaryColor
+        let success = theme.success
 
-        return VStack(spacing: 0) {
-            // ── Diary entry header ──────────────────────────────
-            HStack(alignment: .firstTextBaseline) {
-                VStack(alignment: .leading, spacing: 2) {
-                    // Day name — large, like a chapter heading
-                    Text(viewModel.selectedDate, format: .dateTime.weekday(.wide))
-                        .font(.system(size: 28, weight: .bold, design: .serif))
-                        .foregroundStyle(primary)
+        return JournalAccentPanel(theme: theme, accent: primary) {
+            VStack(spacing: 0) {
+                HStack(alignment: .firstTextBaseline) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(viewModel.selectedDate, format: .dateTime.weekday(.wide))
+                            .font(.system(size: 28, weight: .bold, design: .serif))
+                            .foregroundStyle(primary)
 
-                    // Full date — subtitle line
-                    Text(viewModel.selectedDate, format: .dateTime.month(.wide).day().year())
-                        .font(.system(size: 13, weight: .regular, design: .serif))
-                        .foregroundStyle(themeManager.current.textSecondary)
-                        .italic()
-                }
-                Spacer()
-                // Bookmark-style completion badge
-                VStack(spacing: 2) {
-                    Text(allDone ? "✅" : "📔")
-                        .font(.title2)
-                    Text("\(completed)/\(total)")
-                        .font(.system(size: 11, weight: .semibold, design: .rounded))
-                        .foregroundStyle(allDone ? success : primary)
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.top, 14)
-            .padding(.bottom, 10)
-
-            // ── Ruled-line progress bar ──────────────────────────
-            VStack(spacing: 6) {
-                // Notebook-rule divider
-                Rectangle()
-                    .fill(primary.opacity(0.18))
-                    .frame(height: 1)
-
-                HStack {
-                    Text(allDone
-                         ? String(localized: "Today's entry is complete! 🎉")
-                         : String(localized: "\(completed) of \(total) habits written today"))
-                        .font(.caption)
-                        .foregroundStyle(allDone ? success : themeManager.current.textSecondary)
+                        Text(viewModel.selectedDate, format: .dateTime.month(.wide).day().year())
+                            .font(.system(size: 13, weight: .regular, design: .serif))
+                            .foregroundStyle(theme.textSecondary)
+                            .italic()
+                    }
                     Spacer()
-                    Text(String(format: "%.0f%%", progress * 100))
-                        .font(.system(size: 11, weight: .bold, design: .rounded))
-                        .foregroundStyle(allDone ? success : primary)
+                    VStack(spacing: 2) {
+                        Text(allDone ? "✅" : "📔")
+                            .font(.title2)
+                        Text("\(completed)/\(total)")
+                            .font(.system(size: 11, weight: .semibold, design: .rounded))
+                            .foregroundStyle(allDone ? success : primary)
+                    }
                 }
-                .padding(.horizontal, 16)
+                .padding(.bottom, 10)
 
-                ProgressView(value: progress)
-                    .progressViewStyle(LinearProgressViewStyle(
-                        tint: allDone ? success : primary
-                    ))
-                    .scaleEffect(x: 1, y: 1.8, anchor: .center)
-                    .padding(.horizontal, 16)
+                VStack(spacing: 6) {
+                    Rectangle()
+                        .fill(primary.opacity(0.18))
+                        .frame(height: 1)
+
+                    HStack {
+                        Text(
+                            allDone
+                                ? String(localized: "Today's entry is complete! 🎉")
+                                : String(localized: "\(completed) of \(total) habits written today")
+                        )
+                        .font(.caption)
+                        .foregroundStyle(allDone ? success : theme.textSecondary)
+                        Spacer()
+                        Text(String(format: "%.0f%%", progress * 100))
+                            .font(.system(size: 11, weight: .bold, design: .rounded))
+                            .foregroundStyle(allDone ? success : primary)
+                    }
+
+                    ProgressView(value: progress)
+                        .progressViewStyle(LinearProgressViewStyle(
+                            tint: allDone ? success : primary
+                        ))
+                        .scaleEffect(x: 1, y: 1.8, anchor: .center)
+                }
             }
-            .padding(.bottom, 12)
         }
-        .background(themeManager.current.card)
-        .clipShape(.rect(cornerRadius: 14))
-        .overlay(
-            // Left accent border — like a notebook margin rule
-            RoundedRectangle(cornerRadius: 14)
-                .fill(primary)
-                .frame(width: 4)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .clipShape(.rect(cornerRadius: 14))
-        )
-        .shadow(color: .black.opacity(0.06), radius: 6, x: 0, y: 3)
+        .shadow(color: AppShadow.card.color, radius: AppShadow.card.radius, x: AppShadow.card.x, y: AppShadow.card.y)
     }
 }
 

@@ -15,52 +15,40 @@ struct DailyReflectionCard: View {
 
     @Dependency(\.themeManager) var themeManager
 
-    var body: some View {
-        HStack(alignment: .top, spacing: 0) {
-            // Notebook margin rule — the visual anchor that makes this feel like a diary page
-            Rectangle()
-                .fill(themeManager.current.primaryColor)
-                .frame(width: 3)
-                .clipShape(.rect(cornerRadius: 2))
+    private var theme: AppTheme { themeManager.current }
 
+    var body: some View {
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
             VStack(alignment: .leading, spacing: AppSpacing.small) {
                 HStack(alignment: .top) {
-                    // Section label
                     Label(String(localized: "Daily Reflection"), systemImage: "pencil.tip")
                         .font(.system(size: 11, weight: .semibold, design: .rounded))
-                        .foregroundStyle(themeManager.current.primaryColor)
+                        .foregroundStyle(theme.primaryColor)
 
                     Spacer()
 
                     Button(action: onDismiss) {
                         Image(systemName: "xmark")
                             .font(.system(size: 11, weight: .semibold))
-                            .foregroundStyle(themeManager.current.textSecondary)
+                            .foregroundStyle(theme.textSecondary)
                             .frame(width: 22, height: 22)
-                            .background(themeManager.current.secondaryGray.opacity(0.15))
+                            .background(theme.secondaryGray.opacity(0.15))
                             .clipShape(.circle)
                     }
                 }
 
-                // Quote text — serif for that handwritten-in-a-journal feel
                 Text(quote.text)
                     .font(.system(size: 15, weight: .regular, design: .serif))
-                    .foregroundStyle(themeManager.current.textPrimary)
+                    .foregroundStyle(theme.textPrimary)
                     .fixedSize(horizontal: false, vertical: true)
                     .italic()
 
-                // Attribution
                 Text("— \(quote.author)")
                     .font(.system(size: 12, weight: .regular, design: .serif))
-                    .foregroundStyle(themeManager.current.textSecondary)
+                    .foregroundStyle(theme.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .padding(.leading, 12)
-            .padding(.trailing, AppSpacing.medium)
-            .padding(.vertical, AppSpacing.smallMedium)
         }
-        .background(themeManager.current.card)
-        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
         .shadow(color: AppShadow.card.color, radius: AppShadow.card.radius, x: AppShadow.card.x, y: AppShadow.card.y)
     }
 }
