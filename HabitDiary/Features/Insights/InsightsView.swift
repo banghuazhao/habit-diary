@@ -66,18 +66,7 @@ struct InsightsView: View {
         Group {
             if let breakdown = viewModel.scoreBreakdown {
                 let rating = breakdown.rating
-                HStack(alignment: .top, spacing: 0) {
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(
-                            LinearGradient(
-                                colors: [rating.color, rating.color.opacity(0.35)],
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-                        )
-                        .frame(width: 5)
-                        .padding(.vertical, 10)
-
+                JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
                     VStack(alignment: .leading, spacing: AppSpacing.medium) {
                         Text(String(localized: "Insight snapshot"))
                             .font(AppFont.caption)
@@ -85,16 +74,16 @@ struct InsightsView: View {
                             .foregroundStyle(theme.textSecondary)
                             .textCase(.uppercase)
                             .tracking(0.75)
-
+                        
                         HStack(alignment: .center, spacing: AppSpacing.medium) {
                             Text(rating.displayName)
                                 .font(.system(size: 52, weight: .bold, design: .rounded))
                                 .foregroundStyle(rating.color)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
-
+                            
                             Spacer(minLength: 0)
-
+                            
                             VStack(alignment: .trailing, spacing: 2) {
                                 Text(String(localized: "Total"))
                                     .font(AppFont.caption)
@@ -108,12 +97,12 @@ struct InsightsView: View {
                                     .foregroundStyle(theme.textSecondary)
                             }
                         }
-
+                        
                         Text(rating.description)
                             .font(.system(.title3, design: .serif))
                             .foregroundStyle(theme.textPrimary)
                             .fixedSize(horizontal: false, vertical: true)
-
+                        
                         VStack(spacing: 10) {
                             HStack {
                                 Text(String(localized: "Overall progress"))
@@ -124,11 +113,11 @@ struct InsightsView: View {
                                     .font(AppFont.subheadline.weight(.semibold))
                                     .foregroundStyle(theme.textPrimary)
                             }
-
+                            
                             ProgressView(value: breakdown.overallProgress)
                                 .tint(rating.color)
                                 .scaleEffect(x: 1, y: 1.8, anchor: .center)
-
+                            
                             HStack {
                                 Text(
                                     String(
@@ -142,7 +131,7 @@ struct InsightsView: View {
                                     .font(AppFont.caption.weight(.semibold))
                                     .foregroundStyle(rating.color)
                             }
-
+                            
                             ProgressView(value: breakdown.progressInCurrentRating)
                                 .tint(rating.color.opacity(0.85))
                                 .scaleEffect(x: 1, y: 1.4, anchor: .center)
@@ -150,11 +139,11 @@ struct InsightsView: View {
                         .padding(AppSpacing.smallMedium)
                         .background(theme.surface.opacity(0.65))
                         .clipShape(.rect(cornerRadius: AppCornerRadius.info))
-
+                        
                         if let nextRating = viewModel.scoreBreakdown?.nextRating {
                             progressToNextBlock(nextRating: nextRating)
                         }
-
+                        
                         HStack(spacing: 6) {
                             Image(systemName: "hand.tap.fill")
                                 .font(.caption2)
@@ -163,15 +152,7 @@ struct InsightsView: View {
                         }
                         .foregroundStyle(theme.textSecondary.opacity(0.9))
                     }
-                    .padding(AppSpacing.medium)
                 }
-                .background { insightCardBackground }
-                .clipShape(.rect(cornerRadius: AppCornerRadius.card))
-                .overlay {
-                    RoundedRectangle(cornerRadius: AppCornerRadius.card)
-                        .strokeBorder(theme.textSecondary.opacity(0.12), lineWidth: 1)
-                }
-                .contentShape(.rect(cornerRadius: AppCornerRadius.card))
                 .onTapGesture {
                     viewModel.onTapRatingCard()
                 }
@@ -201,19 +182,7 @@ struct InsightsView: View {
     }
 
     private func motivationalCard(rating: HabitRating) -> some View {
-        HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
-            Rectangle()
-                .fill(
-                    LinearGradient(
-                        colors: [rating.color, rating.color.opacity(0.3)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .frame(width: 4)
-                .clipShape(.rect(cornerRadius: 2))
-                .padding(.vertical, 4)
-
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
             VStack(alignment: .leading, spacing: AppSpacing.small) {
                 Label {
                     Text(String(localized: "Reflection"))

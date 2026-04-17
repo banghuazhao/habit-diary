@@ -129,18 +129,7 @@ private struct JournalEntryRow: View {
     }
 
     var body: some View {
-        HStack(alignment: .top, spacing: 0) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(
-                    LinearGradient(
-                        colors: [habitTint, habitTint.opacity(0.35)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .frame(width: 4)
-                .padding(.vertical, 10)
-
+        JournalAccentPanel(theme: theme, accent: habitTint) {
             VStack(alignment: .leading, spacing: AppSpacing.small) {
                 HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
                     Text(entry.habitIcon)
@@ -168,14 +157,6 @@ private struct JournalEntryRow: View {
                     }
                 }
             }
-            .padding(AppSpacing.smallMedium)
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .background { rowBackground }
-        .clipShape(.rect(cornerRadius: AppCornerRadius.info))
-        .overlay {
-            RoundedRectangle(cornerRadius: AppCornerRadius.info)
-                .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityLabelText)
@@ -199,17 +180,6 @@ private struct JournalEntryRow: View {
         .overlay {
             RoundedRectangle(cornerRadius: 10)
                 .strokeBorder(habitTint.opacity(0.2), lineWidth: 1)
-        }
-    }
-
-    @ViewBuilder
-    private var rowBackground: some View {
-        if #available(iOS 26, *) {
-            Color.clear
-                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.info))
-        } else {
-            RoundedRectangle(cornerRadius: AppCornerRadius.info)
-                .fill(theme.card)
         }
     }
 

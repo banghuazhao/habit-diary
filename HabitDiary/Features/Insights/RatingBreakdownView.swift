@@ -48,18 +48,7 @@ struct RatingBreakdownView: View {
 
     private var headerCard: some View {
         let c = viewModel.category.color
-        return HStack(alignment: .top, spacing: 0) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(
-                    LinearGradient(
-                        colors: [c, c.opacity(0.35)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .frame(width: 5)
-                .padding(.vertical, 10)
-
+        return JournalAccentPanel(theme: theme, accent: c) {
             VStack(alignment: .leading, spacing: AppSpacing.medium) {
                 Text(String(localized: "Category detail"))
                     .font(AppFont.caption)
@@ -112,20 +101,6 @@ struct RatingBreakdownView: View {
                 .background(theme.surface.opacity(0.65))
                 .clipShape(.rect(cornerRadius: AppCornerRadius.info))
             }
-            .padding(AppSpacing.medium)
-        }
-        .background {
-            if #available(iOS 26, *) {
-                Color.clear
-                    .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
-            } else {
-                theme.card
-            }
-        }
-        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
-        .overlay {
-            RoundedRectangle(cornerRadius: AppCornerRadius.card)
-                .strokeBorder(theme.textSecondary.opacity(0.12), lineWidth: 1)
         }
     }
 

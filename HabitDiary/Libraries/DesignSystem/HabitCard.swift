@@ -21,17 +21,8 @@ struct HabitCard: View {
     private var habitTint: Color { Color(hex: habit.color) }
 
     var body: some View {
-        HStack(alignment: .center, spacing: AppSpacing.smallMedium) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(
-                    LinearGradient(
-                        colors: [habitTint, habitTint.opacity(0.45)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .frame(width: 4, height: 56)
-
+        JournalAccentPanel(theme: theme, accent: habitTint) {
+            HStack(alignment: .center, spacing: AppSpacing.smallMedium) {
             Text(habit.icon)
                 .font(.system(size: 28))
                 .frame(width: 52, height: 52)
@@ -126,12 +117,8 @@ struct HabitCard: View {
             }
             .buttonStyle(.plain)
             .accessibilityLabel(String(localized: "Habit actions"))
+            }
         }
-        .padding(.vertical, 12)
-        .padding(.leading, 12)
-        .padding(.trailing, 10)
-        .background { cardBackground }
-        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
         .overlay {
             RoundedRectangle(cornerRadius: AppCornerRadius.card)
                 .strokeBorder(
@@ -160,16 +147,6 @@ struct HabitCard: View {
                 )
             }
         )
-    }
-
-    @ViewBuilder
-    private var cardBackground: some View {
-        if #available(iOS 26, *) {
-            Color.clear
-                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
-        } else {
-            theme.card
-        }
     }
 }
 

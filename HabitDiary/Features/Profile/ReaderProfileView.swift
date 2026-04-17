@@ -229,10 +229,11 @@ struct ReaderProfileView: View {
     /// In-app tools as a vertical “table of contents” (not a 3×N icon grid).
     private var journalToolsSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
-            profileSectionChrome(
+            JournalSectionHeader(
                 title: String(localized: "Journal tools"),
                 subtitle: String(localized: "Shortcuts inside Habit Diary"),
-                systemImage: "rectangle.and.pencil.and.ellipsis"
+                systemImage: "rectangle.and.pencil.and.ellipsis",
+                theme: theme
             )
 
             VStack(spacing: AppSpacing.small) {
@@ -321,10 +322,11 @@ struct ReaderProfileView: View {
     /// App Store / social actions — same row language, different trailing icons.
     private var discoverAndShareSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
-            profileSectionChrome(
+            JournalSectionHeader(
                 title: String(localized: "Beyond the page"),
                 subtitle: String(localized: "Reviews, mail, and sharing"),
-                systemImage: "sparkles"
+                systemImage: "sparkles",
+                theme: theme
             )
 
             VStack(spacing: AppSpacing.small) {
@@ -440,28 +442,6 @@ struct ReaderProfileView: View {
         .padding(.horizontal)
     }
 
-    private func profileSectionChrome(title: String, subtitle: String, systemImage: String) -> some View {
-        let theme = themeManager.current
-        return HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
-            Image(systemName: systemImage)
-                .font(.title2.weight(.semibold))
-                .foregroundStyle(theme.primaryColor)
-                .frame(width: 36, height: 36)
-                .background(theme.primaryColor.opacity(0.12))
-                .clipShape(.rect(cornerRadius: 10))
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.system(.headline, design: .serif))
-                    .foregroundStyle(theme.textPrimary)
-                Text(subtitle)
-                    .font(AppFont.caption)
-                    .foregroundStyle(theme.textSecondary)
-            }
-            Spacer(minLength: 0)
-        }
-        .padding(.bottom, AppSpacing.small)
-    }
 }
 
 // MARK: - Shelf row (replaces icon-grid `featureItem` / `moreItem`)
@@ -480,44 +460,32 @@ private struct ProfileShelfRow: View {
     let trailing: ProfileShelfAccessory
 
     var body: some View {
-        HStack(alignment: .center, spacing: AppSpacing.smallMedium) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(
-                    LinearGradient(
-                        colors: [theme.primaryColor, theme.primaryColor.opacity(0.4)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .frame(width: 4)
-                .padding(.vertical, 4)
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+            HStack(alignment: .center, spacing: AppSpacing.smallMedium) {
+                Image(systemName: icon)
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(theme.primaryColor)
+                    .frame(width: 40, height: 40)
+                    .background(theme.primaryColor.opacity(0.1))
+                    .clipShape(.rect(cornerRadius: 12))
 
-            Image(systemName: icon)
-                .font(.body.weight(.semibold))
-                .foregroundStyle(theme.primaryColor)
-                .frame(width: 40, height: 40)
-                .background(theme.primaryColor.opacity(0.1))
-                .clipShape(.rect(cornerRadius: 12))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title)
+                        .font(AppFont.subheadline.weight(.semibold))
+                        .foregroundStyle(theme.textPrimary)
+                        .multilineTextAlignment(.leading)
+                    Text(subtitle)
+                        .font(AppFont.caption)
+                        .foregroundStyle(theme.textSecondary)
+                        .multilineTextAlignment(.leading)
+                }
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(AppFont.subheadline.weight(.semibold))
-                    .foregroundStyle(theme.textPrimary)
-                    .multilineTextAlignment(.leading)
-                Text(subtitle)
-                    .font(AppFont.caption)
-                    .foregroundStyle(theme.textSecondary)
-                    .multilineTextAlignment(.leading)
+                Spacer(minLength: 8)
+
+                trailingView
+                    .foregroundStyle(theme.textSecondary.opacity(0.85))
             }
-
-            Spacer(minLength: 8)
-
-            trailingView
-                .foregroundStyle(theme.textSecondary.opacity(0.85))
         }
-        .padding(AppSpacing.smallMedium)
-        .background { rowBackground }
-        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
         .contentShape(.rect(cornerRadius: AppCornerRadius.card))
     }
 
@@ -533,21 +501,6 @@ private struct ProfileShelfRow: View {
         case .share:
             Image(systemName: "square.and.arrow.up")
                 .font(.caption.weight(.semibold))
-        }
-    }
-
-    @ViewBuilder
-    private var rowBackground: some View {
-        if #available(iOS 26, *) {
-            Color.clear
-                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
-        } else {
-            ZStack {
-                RoundedRectangle(cornerRadius: AppCornerRadius.card)
-                    .fill(theme.card)
-                RoundedRectangle(cornerRadius: AppCornerRadius.card)
-                    .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
-            }
         }
     }
 }

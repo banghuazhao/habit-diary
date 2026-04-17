@@ -151,18 +151,7 @@ struct BadgeRowView: View {
     let theme: AppTheme
 
     var body: some View {
-        HStack(alignment: .top, spacing: 0) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(
-                    LinearGradient(
-                        colors: accentBarColors,
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .frame(width: 4)
-                .padding(.vertical, 10)
-
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
             HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
                 badgeIcon
 
@@ -224,24 +213,8 @@ struct BadgeRowView: View {
                     }
                 }
             }
-            .padding(AppSpacing.smallMedium)
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .background { rowBackground }
-        .clipShape(.rect(cornerRadius: AppCornerRadius.info))
-        .overlay {
-            RoundedRectangle(cornerRadius: AppCornerRadius.info)
-                .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
         }
         .accessibilityElement(children: .combine)
-    }
-
-    private var accentBarColors: [Color] {
-        if achievement.isUnlocked {
-            [theme.warning, theme.primaryColor.opacity(0.45)]
-        } else {
-            [theme.secondaryGray.opacity(0.55), theme.secondaryGray.opacity(0.25)]
-        }
     }
 
     private var badgeIcon: some View {
@@ -273,16 +246,6 @@ struct BadgeRowView: View {
         }
     }
 
-    @ViewBuilder
-    private var rowBackground: some View {
-        if #available(iOS 26, *) {
-            Color.clear
-                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.info))
-        } else {
-            RoundedRectangle(cornerRadius: AppCornerRadius.info)
-                .fill(theme.card)
-        }
-    }
 }
 
 #Preview {

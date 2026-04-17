@@ -265,63 +265,18 @@ private struct LedgerSettingsSection<Content: View>: View {
     @ViewBuilder let content: () -> Content
 
     var body: some View {
-        HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(
-                    LinearGradient(
-                        colors: [theme.primaryColor, theme.primaryColor.opacity(0.45)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .frame(width: 4)
-                .padding(.vertical, 4)
-
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
             VStack(alignment: .leading, spacing: 0) {
-                HStack(alignment: .firstTextBaseline, spacing: AppSpacing.smallMedium) {
-                    Image(systemName: systemImage)
-                        .font(.title3.weight(.semibold))
-                        .foregroundStyle(theme.primaryColor)
-                        .frame(width: 28)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(title)
-                            .font(AppFont.headline)
-                            .foregroundStyle(theme.textPrimary)
-                        Text(subtitle)
-                            .font(AppFont.caption)
-                            .foregroundStyle(theme.textSecondary)
-                    }
-                    Spacer(minLength: 0)
-                }
+                JournalSectionHeader(
+                    title: title,
+                    subtitle: subtitle,
+                    systemImage: systemImage,
+                    theme: theme
+                )
                 .padding(.bottom, AppSpacing.smallMedium)
 
                 content()
             }
-        }
-        .padding(AppSpacing.medium)
-        .modifier(LedgerPanelChrome(theme: theme))
-    }
-}
-
-/// Glass on iOS 26+, parchment card on earlier systems (matches app diary aesthetic).
-private struct LedgerPanelChrome: ViewModifier {
-    let theme: AppTheme
-
-    func body(content: Content) -> some View {
-        if #available(iOS 26, *) {
-            content
-                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
-        } else {
-            content
-                .background {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: AppCornerRadius.card)
-                            .fill(theme.surface.opacity(0.55))
-                        RoundedRectangle(cornerRadius: AppCornerRadius.card)
-                            .strokeBorder(theme.textSecondary.opacity(0.12), lineWidth: 1)
-                    }
-                }
         }
     }
 }
