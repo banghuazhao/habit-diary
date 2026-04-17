@@ -3,86 +3,20 @@
 // Copyright Apps Bay Limited. All rights reserved.
 //
 
-import SwiftUI
+import Dependencies
 import SQLiteData
-
-@Observable
-@MainActor
-class WelcomeFlowViewModel {
-    @ObservationIgnored
-    @Dependency(\.defaultDatabase) var database
-    
-    var selectedHabits: Set<Habit.Draft> = []
-    var currentStep: OnboardingStep = .welcome
-    
-    enum OnboardingStep: Int, CaseIterable {
-        case welcome = 0
-        case features = 1
-        case selectHabits = 2
-        case complete = 3
-    }
-    
-    var predefinedHabits: [Habit.Draft] {
-        DiaryHabitLibrary.all
-    }
-    
-    var filteredHabits: [Habit.Draft] {
-        predefinedHabits
-    }
-    
-    func toggleHabitSelection(_ habit: Habit.Draft) {
-        if selectedHabits.contains(habit) {
-            selectedHabits.remove(habit)
-        } else {
-            selectedHabits.insert(habit)
-        }
-    }
-    
-    func isHabitSelected(_ habit: Habit.Draft) -> Bool {
-        selectedHabits.contains(habit)
-    }
-    
-    func nextStep() {
-        withAnimation {
-            if let currentIndex = OnboardingStep.allCases.firstIndex(of: currentStep),
-               currentIndex + 1 < OnboardingStep.allCases.count {
-                currentStep = OnboardingStep.allCases[currentIndex + 1]
-            }
-        }
-    }
-    
-    func previousStep() {
-        withAnimation {
-            if let currentIndex = OnboardingStep.allCases.firstIndex(of: currentStep),
-               currentIndex > 0 {
-                currentStep = OnboardingStep.allCases[currentIndex - 1]
-            }
-        }
-    }
-    
-    func completeOnboarding() async {
-        await withErrorReporting {
-            try await database.write { [selectedHabits] db in
-                try Habit
-                    .upsert { Array(selectedHabits) }
-                    .execute(db)
-            }
-        }
-        
-        // Mark onboarding as completed
-        UserDefaults.standard.set(true, forKey: "hasCompletedOnboarding")
-    }
-}
+import SwiftUI
 
 struct WelcomeFlowView: View {
     @State private var viewModel = WelcomeFlowViewModel()
     @Environment(\.dismiss) private var dismiss
-    
-    @Dependency(\.themeManager) var themeManager
-    
+    @Dependency(\.themeManager) private var themeManager
+
+    private var theme: AppTheme { themeManager.current }
+
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {                
+            Group {
                 switch viewModel.currentStep {
                 case .welcome:
                     welcomeView
@@ -94,158 +28,159 @@ struct WelcomeFlowView: View {
                     completeView
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(theme.background.ignoresSafeArea())
             .navigationBarHidden(true)
         }
     }
-    
+
+    // MARK: - Welcome
+
     private var welcomeView: some View {
-        VStack(spacing: 32) {
-            Spacer()
-            
-            VStack(spacing: 24) {
-                // App icon representation
-                ZStack {
-                    Circle()
-                        .fill(themeManager.current.primaryColor.opacity(0.1))
-                        .frame(width: 120, height: 120)
-                    
-                    Text("📔")
-                        .font(.system(size: 64))
-                }
-                
-                VStack(spacing: 16) {
-                    Text(String(localized: "Welcome to Habit Diary"))
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .multilineTextAlignment(.center)
-                    
-                    Text(String(localized: "Document your daily journey, reflect on your growth, and turn your intentions into lasting habits — all in one personal diary."))
-                        .font(.body)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                }
-            }
-            
-            Spacer()
-            
-            Button(action: {
-                viewModel.nextStep()
-            }) {
-                Text(String(localized: "Get Started"))
-                    .font(.headline)
-                    .foregroundStyle(.white)
+        VStack(spacing: AppSpacing.large) {
+            Spacer(minLength: 0)
+
+            JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+                VStack(spacing: AppSpacing.medium) {
+                    ZStack {
+                        Circle()
+                            .fill(theme.primaryColor.opacity(0.12))
+                            .frame(width: 112, height: 112)
+                        Text("📔")
+                            .font(.system(size: 56))
+                    }
                     .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(themeManager.current.primaryColor)
-                    .clipShape(.rect(cornerRadius: 12))
+
+                    JournalSectionHeader(
+                        title: String(localized: "Welcome to Habit Diary"),
+                        subtitle: String(localized: "Your habits, your journal"),
+                        systemImage: "book.pages.fill",
+                        theme: theme
+                    )
+
+                    Text(
+                        String(
+                            localized: "Document your daily journey, reflect on your growth, and turn your intentions into lasting habits — all in one personal diary."
+                        )
+                    )
+                    .font(.system(.body, design: .serif))
+                    .foregroundStyle(theme.textSecondary)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                }
             }
             .padding(.horizontal)
-            .padding(.bottom)
+
+            Spacer(minLength: 0)
+
+            primaryButton(title: String(localized: "Get Started")) {
+                viewModel.nextStep()
+            }
         }
     }
-    
+
+    // MARK: - Features
+
     private var featuresView: some View {
-        VStack(spacing: 24) {
-            VStack(spacing: 16) {
-                Text(String(localized: "Why Habit Diary?"))
-                    .font(.title2)
-                    .fontWeight(.bold)
-                
-                Text(String(localized: "More than a tracker — it's your personal journal for every habit, every day"))
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-            }
-            .padding(.top)
-            
+        VStack(spacing: 0) {
             ScrollView {
-                VStack(spacing: 20) {
-                    WelcomeFeatureCard(
-                        icon: "📊",
-                        title: String(localized: "Rating System"),
-                        description: String(localized: "Advance through 12 levels from Beginner (F) to Legend (SSS) based on your habit consistency and achievements."),
-                        color: themeManager.current.primaryColor
-                    )
-                    
-                    WelcomeFeatureCard(
-                        icon: "🏆",
-                        title: String(localized: "Achievements"),
-                        description: String(localized: "Unlock exciting achievements for streaks, consistency, and milestones. Celebrate your progress!"),
-                        color: .yellow
-                    )
-                    
-                    WelcomeFeatureCard(
-                        icon: "📅",
-                        title: String(localized: "Flexible Scheduling"),
-                        description: String(localized: "Choose from daily, weekly, or custom frequency patterns that fit your lifestyle perfectly."),
-                        color: .blue
-                    )
-                    
-                    WelcomeFeatureCard(
-                        icon: "✍️",
-                        title: String(localized: "Diary Notes"),
-                        description: String(localized: "Add personal reflections to each check-in. Look back on how you felt, what you learned, and how far you've come."),
-                        color: .green
-                    )
-                    
-                    WelcomeFeatureCard(
-                        icon: "🔔",
-                        title: String(localized: "Smart Reminders"),
-                        description: String(localized: "Personalized notifications to keep you on track without being overwhelming."),
-                        color: .orange
+                JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+                    JournalSectionHeader(
+                        title: String(localized: "Why Habit Diary?"),
+                        subtitle: String(localized: "More than a tracker — a journal for every habit"),
+                        systemImage: "sparkles",
+                        theme: theme
                     )
                 }
                 .padding(.horizontal)
+                .padding(.top, AppSpacing.small)
+
+                VStack(spacing: AppSpacing.smallMedium) {
+                    WelcomeFeatureCard(
+                        theme: theme,
+                        icon: "📊",
+                        title: String(localized: "Rating system"),
+                        description: String(
+                            localized: "Advance through 12 levels from Beginner (F) to Legend (SSS) based on your habit consistency and achievements."
+                        ),
+                        accent: theme.primaryColor
+                    )
+                    WelcomeFeatureCard(
+                        theme: theme,
+                        icon: "🏆",
+                        title: String(localized: "Achievements"),
+                        description: String(
+                            localized: "Unlock badges for streaks, consistency, and milestones. Celebrate your progress."
+                        ),
+                        accent: theme.warning
+                    )
+                    WelcomeFeatureCard(
+                        theme: theme,
+                        icon: "📅",
+                        title: String(localized: "Flexible scheduling"),
+                        description: String(
+                            localized: "Choose daily, weekly, or custom frequency patterns that fit your life."
+                        ),
+                        accent: theme.success
+                    )
+                    WelcomeFeatureCard(
+                        theme: theme,
+                        icon: "✍️",
+                        title: String(localized: "Diary notes"),
+                        description: String(
+                            localized: "Add reflections to each entry. Look back on how you felt and how far you’ve come."
+                        ),
+                        accent: theme.accent
+                    )
+                    WelcomeFeatureCard(
+                        theme: theme,
+                        icon: "🔔",
+                        title: String(localized: "Smart reminders"),
+                        description: String(
+                            localized: "Personalized notifications to keep you on track without being overwhelming."
+                        ),
+                        accent: theme.primaryColor.opacity(0.85)
+                    )
+                }
+                .padding(.horizontal)
+                .padding(.vertical, AppSpacing.small)
             }
-            
-            Button(action: {
+
+            primaryButton(title: String(localized: "Choose your habits")) {
                 viewModel.nextStep()
-            }) {
-                Text(String(localized: "Choose Your Habits"))
-                    .font(.headline)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(themeManager.current.primaryColor)
-                    .clipShape(.rect(cornerRadius: 12))
             }
-            .padding(.horizontal)
-            .padding(.bottom)
         }
     }
-    
+
+    // MARK: - Select habits
+
     private var selectHabitsView: some View {
         VStack(spacing: 0) {
-            // Header
-            VStack(spacing: 16) {
-                Text(String(localized: "Choose Your Starting Habits"))
-                    .font(.title2)
-                    .fontWeight(.bold)
-                
-                Text(String(localized: "Select 3-7 habits that resonate with you. Don't worry, you can always add more or modify these later!"))
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-                
-                // Selected count indicator
-                if !viewModel.selectedHabits.isEmpty {
-                    Text("\(viewModel.selectedHabits.count) habits selected")
-                        .font(.caption)
-                        .foregroundStyle(themeManager.current.primaryColor)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 4)
-                        .background(themeManager.current.primaryColor.opacity(0.1))
-                        .clipShape(.rect(cornerRadius: 12))
-                }
-            }
-            .padding()
-            
-            // Habits list
             ScrollView {
-                LazyVStack(spacing: 12) {
+                JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+                    VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+                        JournalSectionHeader(
+                            title: String(localized: "Choose your starting habits"),
+                            subtitle: String(localized: "Pick 3–7 that resonate — you can change these anytime"),
+                            systemImage: "leaf.fill",
+                            theme: theme
+                        )
+
+                        if !viewModel.selectedHabits.isEmpty {
+                            Text(selectedCountPhrase)
+                                .font(AppFont.caption.weight(.semibold))
+                                .foregroundStyle(theme.primaryColor)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(theme.primaryColor.opacity(0.12))
+                                .clipShape(.capsule)
+                        }
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.top, AppSpacing.small)
+
+                LazyVStack(spacing: AppSpacing.smallMedium) {
                     ForEach(viewModel.filteredHabits, id: \.self) { habit in
                         WelcomeHabitCard(
                             habit: habit,
@@ -255,241 +190,278 @@ struct WelcomeFlowView: View {
                     }
                 }
                 .padding(.horizontal)
-                .padding(.bottom, 100) // Space for floating button
+                .padding(.bottom, 100)
             }
-            
-            // Floating bottom button
-            VStack {
+
+            VStack(spacing: 0) {
                 Divider()
-                
-                HStack(spacing: 16) {
+                    .background(theme.textSecondary.opacity(0.15))
+                HStack(spacing: AppSpacing.smallMedium) {
                     Button {
                         viewModel.previousStep()
                     } label: {
                         Text(String(localized: "Back"))
-                            .font(.headline)
-                            .foregroundStyle(themeManager.current.primaryColor)
+                            .font(AppFont.headline)
                             .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color(.systemGray6))
-                            .clipShape(.rect(cornerRadius: 12))
+                            .padding(.vertical, AppSpacing.smallMedium)
                     }
-                    
+                    .buttonStyle(.bordered)
+                    .tint(theme.primaryColor)
+
                     Button {
                         viewModel.nextStep()
                     } label: {
-                        Text(viewModel.selectedHabits.isEmpty ? String(localized: "Skip for Now") : String(localized: "Continue"))
-                            .font(.headline)
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(themeManager.current.primaryColor)
-                            .clipShape(.rect(cornerRadius: 12))
+                        Text(
+                            viewModel.selectedHabits.isEmpty
+                                ? String(localized: "Skip for now")
+                                : String(localized: "Continue")
+                        )
+                        .font(AppFont.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, AppSpacing.smallMedium)
                     }
+                    .buttonStyle(.borderedProminent)
+                    .tint(theme.primaryColor)
                 }
-                .padding()
+                .padding(AppSpacing.medium)
+                .background(theme.card.opacity(0.95))
             }
-            .background(Color(.systemBackground))
         }
     }
-    
+
+    private var selectedCountPhrase: String {
+        let n = viewModel.selectedHabits.count
+        if n == 1 {
+            return String(localized: "1 habit selected")
+        }
+        return String(localized: "\(n) habits selected")
+    }
+
+    // MARK: - Complete
+
     private var completeView: some View {
-        VStack(spacing: 32) {
-            Spacer()
-            
-            VStack(spacing: 24) {
-                // Success animation placeholder
-                ZStack {
-                    Circle()
-                        .fill(Color.green.opacity(0.1))
-                        .frame(width: 120, height: 120)
-                    
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 64))
-                        .foregroundStyle(.green)
-                }
-                
-                VStack(spacing: 16) {
-                    Text(String(localized: "You're Ready to Start!"))
-                        .font(.largeTitle)
+        VStack(spacing: AppSpacing.large) {
+            Spacer(minLength: 0)
+
+            JournalAccentPanel(theme: theme, accent: theme.success) {
+                VStack(spacing: AppSpacing.medium) {
+                    ZStack {
+                        Circle()
+                            .fill(theme.success.opacity(0.15))
+                            .frame(width: 112, height: 112)
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 56))
+                            .foregroundStyle(theme.success)
+                            .symbolRenderingMode(.hierarchical)
+                    }
+
+                    Text(String(localized: "You’re ready to start"))
+                        .font(.system(.largeTitle, design: .serif))
                         .fontWeight(.bold)
+                        .foregroundStyle(theme.textPrimary)
                         .multilineTextAlignment(.center)
-                    
-                    if viewModel.selectedHabits.isEmpty {
-                        Text(String(localized: "You can explore our habit gallery anytime and add habits that inspire you. Start your journey whenever you're ready!"))
-                            .font(.body)
-                            .foregroundStyle(.secondary)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                    } else if viewModel.selectedHabits.count == 1 {
-                        Text(String(localized: "Perfect! You've selected 1 habit to get started. Remember, consistency is more important than quantity. You can always add more habits as you build momentum."))
-                            .font(.body)
-                            .foregroundStyle(.secondary)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                    } else {
-                        Text(String(localized: "Excellent! You've selected \(viewModel.selectedHabits.count) habits. Focus on building these consistently, and watch your rating grow from Beginner to Legend!"))
-                            .font(.body)
-                            .foregroundStyle(.secondary)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
+
+                    Text(completeMessage)
+                        .font(.system(.body, design: .serif))
+                        .foregroundStyle(theme.textSecondary)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    VStack(alignment: .leading, spacing: AppSpacing.small) {
+                        tipRow(emoji: "✍️", text: String(localized: "Add a diary note when you log — even a few words capture your journey."))
+                        tipRow(emoji: "📖", text: String(localized: "Browse journal entries anytime to reflect on your growth."))
+                        tipRow(emoji: "🏆", text: String(localized: "Earn badges and climb the rating ladder toward Legend."))
                     }
-                    
-                    // Quick tips
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack(alignment: .top) {
-                            Text("✍️")
-                            Text(String(localized: "Add a diary note when you check in — even a few words capture your journey."))
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                        
-                        HStack(alignment: .top) {
-                            Text("📖")
-                            Text(String(localized: "Browse your Journal Entries anytime to reflect on your personal growth."))
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                        
-                        HStack(alignment: .top) {
-                            Text("🏆")
-                            Text(String(localized: "Earn achievements and climb the rating ladder to Legend status!"))
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    .padding()
-                    .background(Color(.systemGray6))
+                    .padding(AppSpacing.smallMedium)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(theme.surface.opacity(0.55))
                     .clipShape(.rect(cornerRadius: 12))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 12)
+                            .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
+                    }
                 }
             }
-            
-            Spacer()
-            
-            Button(action: {
+            .padding(.horizontal)
+
+            Spacer(minLength: 0)
+
+            primaryButton(title: String(localized: "Begin your journey")) {
                 Task {
                     await viewModel.completeOnboarding()
                     dismiss()
                 }
-            }) {
-                Text(String(localized: "Begin Your Journey"))
-                    .font(.headline)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(themeManager.current.primaryColor)
-                    .clipShape(.rect(cornerRadius: 12))
             }
-            .padding(.horizontal)
-            .padding(.bottom)
+        }
+    }
+
+    private var completeMessage: String {
+        let count = viewModel.selectedHabits.count
+        if count == 0 {
+            return String(
+                localized: "You can explore the habit gallery anytime and add habits that inspire you. Start whenever you’re ready."
+            )
+        }
+        if count == 1 {
+            return String(
+                localized: "Perfect! You’ve selected 1 habit to get started. Consistency is more important than quantity — you can add more as you build momentum."
+            )
+        }
+        return String(
+            localized: "Excellent! You’ve selected \(count) habits. Focus on building these consistently, and watch your rating grow from Beginner to Legend!"
+        )
+    }
+
+    private func tipRow(emoji: String, text: String) -> some View {
+        HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
+            Text(emoji)
+                .font(.body)
+            Text(text)
+                .font(AppFont.caption)
+                .foregroundStyle(theme.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    // MARK: - Buttons
+
+    private func primaryButton(title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(AppFont.headline)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, AppSpacing.smallMedium)
+        }
+        .buttonStyle(.borderedProminent)
+        .tint(theme.primaryColor)
+        .padding(.horizontal)
+        .padding(.bottom, AppSpacing.medium)
+    }
+}
+
+// MARK: - Feature card
+
+struct WelcomeFeatureCard: View {
+    let theme: AppTheme
+    let icon: String
+    let title: String
+    let description: String
+    let accent: Color
+
+    var body: some View {
+        HStack(alignment: .top, spacing: AppSpacing.medium) {
+            ZStack {
+                Circle()
+                    .fill(accent.opacity(0.18))
+                    .frame(width: 52, height: 52)
+                Text(icon)
+                    .font(.title2)
+            }
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.system(.headline, design: .serif))
+                    .foregroundStyle(theme.textPrimary)
+
+                Text(description)
+                    .font(AppFont.subheadline)
+                    .foregroundStyle(theme.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Spacer(minLength: 0)
+        }
+        .padding(AppSpacing.smallMedium)
+        .background {
+            if #available(iOS 26, *) {
+                Color.clear
+                    .glassEffect(in: .rect(cornerRadius: AppCornerRadius.info))
+            } else {
+                RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                    .fill(theme.card)
+            }
+        }
+        .overlay {
+            RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
         }
     }
 }
 
-struct WelcomeFeatureCard: View {
-    let icon: String
-    let title: String
-    let description: String
-    let color: Color
-    
-    var body: some View {
-        HStack(alignment: .top, spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(color.opacity(0.1))
-                    .frame(width: 50, height: 50)
-                
-                Text(icon)
-                    .font(.title2)
-            }
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-                
-                Text(description)
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            
-            Spacer()
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.systemBackground))
-                .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
-        )
-    }
-}
+// MARK: - Habit card
 
 struct WelcomeHabitCard: View {
     let habit: Habit.Draft
     let isSelected: Bool
     let onToggle: () -> Void
-    
-    @Dependency(\.themeManager) var themeManager
-    
+
+    @Dependency(\.themeManager) private var themeManager
+
+    private var theme: AppTheme { themeManager.current }
+
     var body: some View {
         Button(action: onToggle) {
-            HStack(spacing: 16) {
-                // Selection indicator
+            HStack(spacing: AppSpacing.smallMedium) {
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                     .font(.title2)
-                    .foregroundStyle(isSelected ? themeManager.current.primaryColor : .gray)
-                
-                // Habit icon and color indicator
+                    .foregroundStyle(isSelected ? theme.primaryColor : theme.secondaryGray)
+
                 ZStack {
                     Circle()
-                        .fill(Color(hex: habit.color).opacity(0.3))
-                        .frame(width: 40, height: 40)
-                    
+                        .fill(Color(hex: habit.color).opacity(0.28))
+                        .frame(width: 44, height: 44)
                     Text(habit.icon)
                         .font(.title3)
                 }
-                
+
                 VStack(alignment: .leading, spacing: 4) {
                     Text(habit.name)
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                    
-                    Text(habit.note)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(2)
+                        .font(.system(.headline, design: .serif))
+                        .foregroundStyle(theme.textPrimary)
                         .multilineTextAlignment(.leading)
-                    
-                    // Frequency indicator
+
+                    if !habit.note.isEmpty {
+                        Text(habit.note)
+                            .font(AppFont.caption)
+                            .foregroundStyle(theme.textSecondary)
+                            .lineLimit(2)
+                            .multilineTextAlignment(.leading)
+                    }
+
                     Text(habit.toMock.frequencyDescription)
-                        .font(.caption2)
-                        .foregroundStyle(themeManager.current.primaryColor)
+                        .font(AppFont.footnote)
+                        .foregroundStyle(theme.primaryColor)
                         .padding(.horizontal, 8)
-                        .padding(.vertical, 2)
-                        .background(themeManager.current.primaryColor.opacity(0.1))
+                        .padding(.vertical, 3)
+                        .background(theme.primaryColor.opacity(0.1))
                         .clipShape(.rect(cornerRadius: 8))
                 }
-                
-                Spacer()
+
+                Spacer(minLength: 0)
             }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color(.systemBackground))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(isSelected ? themeManager.current.primaryColor : Color(.systemGray4), lineWidth: isSelected ? 2 : 1)
+            .padding(AppSpacing.smallMedium)
+            .background {
+                if #available(iOS 26, *) {
+                    Color.clear
+                        .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
+                } else {
+                    RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                        .fill(theme.card)
+                }
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                    .strokeBorder(
+                        isSelected ? theme.primaryColor : theme.textSecondary.opacity(0.15),
+                        lineWidth: isSelected ? 2 : 1
                     )
-                    .shadow(color: .black.opacity(isSelected ? 0.1 : 0.05), radius: isSelected ? 4 : 2, x: 0, y: 1)
-            )
+            }
         }
-        .buttonStyle(PlainButtonStyle())
-        .scaleEffect(isSelected ? 1.02 : 1.0)
+        .buttonStyle(.plain)
         .animation(.easeInOut(duration: 0.2), value: isSelected)
     }
 }
 
 #Preview {
     WelcomeFlowView()
-} 
+}

@@ -438,9 +438,6 @@
     "✅" : {
 
     },
-    "✍️" : {
-
-    },
     "🎉 Achievement Unlocked! 🎉" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -464,9 +461,6 @@
     "🎉 Badge Unlocked! 🎉" : {
 
     },
-    "🏆" : {
-
-    },
     "💎 Thanks for being a Premium member!" : {
       "localizations" : {
         "zh-Hans" : {
@@ -484,9 +478,6 @@
       }
     },
     "📔" : {
-
-    },
-    "📖" : {
 
     },
     "🔥 %lldd streak" : {
@@ -552,6 +543,9 @@
           }
         }
       }
+    },
+    "1 habit selected" : {
+
     },
     "1 point per check-in across all habits. Every completed habit counts toward your total score." : {
       "localizations" : {
@@ -783,7 +777,7 @@
     "Add" : {
 
     },
-    "Add a diary note when you check in — even a few words capture your journey." : {
+    "Add a diary note when you log — even a few words capture your journey." : {
 
     },
     "Add a habit" : {
@@ -815,7 +809,7 @@
     "Add habits you want to track — they’ll appear here like titles on a shelf." : {
 
     },
-    "Add personal reflections to each check-in. Look back on how you felt, what you learned, and how far you've come." : {
+    "Add reflections to each entry. Look back on how you felt and how far you’ve come." : {
 
     },
     "Add Reminder" : {
@@ -1314,7 +1308,11 @@
         }
       }
     },
+    "Begin your journey" : {
+
+    },
     "Begin Your Journey" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1402,7 +1400,7 @@
     "Browse catalog" : {
 
     },
-    "Browse your Journal Entries anytime to reflect on your personal growth." : {
+    "Browse journal entries anytime to reflect on your growth." : {
 
     },
     "Build Consistency" : {
@@ -1738,7 +1736,11 @@
         }
       }
     },
+    "Choose daily, weekly, or custom frequency patterns that fit your life." : {
+
+    },
     "Choose from daily, weekly, or custom frequency patterns that fit your lifestyle perfectly." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1757,7 +1759,11 @@
     "Choose your avatar" : {
 
     },
+    "Choose your habits" : {
+
+    },
     "Choose Your Habits" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1773,7 +1779,11 @@
         }
       }
     },
+    "Choose your starting habits" : {
+
+    },
     "Choose Your Starting Habits" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2376,7 +2386,7 @@
     "Diary Note" : {
 
     },
-    "Diary Notes" : {
+    "Diary notes" : {
 
     },
     "Discipline is the bridge between goals and accomplishment." : {
@@ -2594,6 +2604,7 @@
       }
     },
     "Earn achievements and climb the rating ladder to Legend status!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2608,6 +2619,9 @@
           }
         }
       }
+    },
+    "Earn badges and climb the rating ladder toward Legend." : {
+
     },
     "Earned for this habit" : {
 
@@ -2919,6 +2933,7 @@
       }
     },
     "Excellent! You've selected %lld habits. Focus on building these consistently, and watch your rating grow from Beginner to Legend!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2933,6 +2948,9 @@
           }
         }
       }
+    },
+    "Excellent! You’ve selected %lld habits. Focus on building these consistently, and watch your rating grow from Beginner to Legend!" : {
+
     },
     "Expert" : {
       "localizations" : {
@@ -3074,7 +3092,11 @@
     "First journal entry" : {
 
     },
+    "Flexible scheduling" : {
+
+    },
     "Flexible Scheduling" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4196,7 +4218,7 @@
         }
       }
     },
-    "More than a tracker — it's your personal journal for every habit, every day" : {
+    "More than a tracker — a journal for every habit" : {
 
     },
     "Morning pages" : {
@@ -4774,7 +4796,11 @@
         }
       }
     },
+    "Perfect! You’ve selected 1 habit to get started. Consistency is more important than quantity — you can add more as you build momentum." : {
+
+    },
     "Perfect! You've selected 1 habit to get started. Remember, consistency is more important than quantity. You can always add more habits as you build momentum." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4825,6 +4851,9 @@
           }
         }
       }
+    },
+    "Pick 3–7 that resonate — you can change these anytime" : {
+
     },
     "Pink" : {
       "extractionState" : "stale",
@@ -5245,7 +5274,11 @@
         }
       }
     },
+    "Rating system" : {
+
+    },
     "Rating System" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5649,6 +5682,7 @@
       }
     },
     "Select 3-7 habits that resonate with you. Don't worry, you can always add more or modify these later!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5868,7 +5902,11 @@
         }
       }
     },
+    "Skip for now" : {
+
+    },
     "Skip for Now" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5935,7 +5973,11 @@
         }
       }
     },
+    "Smart reminders" : {
+
+    },
     "Smart Reminders" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -7153,7 +7195,11 @@
     "Unlock badges by journaling and building streaks" : {
 
     },
+    "Unlock badges for streaks, consistency, and milestones. Celebrate your progress." : {
+
+    },
     "Unlock exciting achievements for streaks, consistency, and milestones. Celebrate your progress!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -7641,6 +7687,7 @@
       }
     },
     "You can explore our habit gallery anytime and add habits that inspire you. Start your journey whenever you're ready!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -7655,6 +7702,9 @@
           }
         }
       }
+    },
+    "You can explore the habit gallery anytime and add habits that inspire you. Start whenever you’re ready." : {
+
     },
     "You don't have to be great to get started, but you have to get started to be great." : {
       "localizations" : {
@@ -7720,7 +7770,11 @@
         }
       }
     },
+    "You’re ready to start" : {
+
+    },
     "You're Ready to Start!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -7773,6 +7827,9 @@
           }
         }
       }
+    },
+    "Your habits, your journal" : {
+
     },
     "Your journal" : {
 
