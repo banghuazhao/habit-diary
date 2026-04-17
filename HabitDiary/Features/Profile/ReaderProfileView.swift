@@ -29,44 +29,8 @@ struct ReaderProfileView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: AppSpacing.large) {
-                    // Me Section
                     VStack(alignment: .leading, spacing: AppSpacing.medium) {
-                        HStack(spacing: AppSpacing.medium) {
-                            Button(action: { showEmojiPicker = true }) {
-                                Text(userAvatar)
-                                    .font(.system(size: 40))
-                                    .frame(width: 50, height: 50)
-                                    .background(themeManager.current.card)
-                                    .clipShape(Circle())
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .sheet(isPresented: $showEmojiPicker) {
-                                IconEmojiPicker(selectedEmoji: $userAvatar, title: "Choose your avatar")
-                                    .presentationDetents([.medium])
-                                    .presentationDragIndicator(.visible)
-                            }
-                            VStack(alignment: .leading, spacing: 4) {
-                                TextField("Your Name", text: $userName)
-                                    .font(AppFont.headline)
-                                    .fontWeight(.bold)
-                                    .padding(AppSpacing.small)
-                                    .background(themeManager.current.background)
-                                    .clipShape(.rect(cornerRadius: AppCornerRadius.button))
-                                    .lineLimit(1)
-                            }
-                            Spacer()
-                        }
-                        // Stats Section
-                        HStack(spacing: AppSpacing.small) {
-                            statView(title: String(localized: "Habits"), value: "\(allHabits.filter { !$0.isArchived }.count)/\(allHabits.count)")
-                            Divider()
-                            statView(title: String(localized: "Check-ins"), value: "\(allCheckIns.count)")
-                            Divider()
-                            statView(title: String(localized: "Reminders"), value: "\(allReminders.count)")
-                            Divider()
-                            statView(title: String(localized: "Achievements"), value: "\(allAchievements.filter { $0.isUnlocked }.count)/\(allAchievements.count)")
-                        }
-                        .padding(.top, AppSpacing.small)
+                        readerIdentitySection
                         if !premiumAccessManager.isPremiumUserPurchased {
                             Button(action: {
                                 showPurchaseSheet = true
@@ -96,30 +60,13 @@ struct ReaderProfileView: View {
                     }
                     .appCardStyle(theme: themeManager.current)
                     .padding(.horizontal)
-                    moreFeatureView
-                    othersView
+                    journalToolsSection
+                    discoverAndShareSection
 
-                    Spacer().frame(height: 10)
+                    Spacer().frame(height: AppSpacing.small)
 
-                    VStack(spacing: 4) {
-                        Text(String(localized: "Habit Diary  |  Your Daily Habit Journal"))
-                            .font(AppFont.footnote)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(themeManager.current.textSecondary)
-
-                        Button {
-                            if let url = URL(string: "https://apps.apple.com/app/id\(Constants.AppID.appID)") {
-                                openURL(url)
-                            }
-                        } label: {
-                            Text("v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")  Check for Updates")
-                                .font(AppFont.footnote)
-                                .foregroundStyle(themeManager.current.textSecondary)
-                                .underline()
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.bottom, 20)
+                    profileFooter
+                        .padding(.bottom, 20)
 
                     if !premiumAccessManager.isPremiumUserPurchased {
                         BannerView()
@@ -133,124 +80,469 @@ struct ReaderProfileView: View {
             }
             .background(themeManager.current.background)
             .scrollDismissesKeyboard(.immediately)
-            .navigationTitle("Me")
+            .navigationTitle(String(localized: "Profile"))
             .navigationBarTitleDisplayMode(.inline)
         }
     }
 
-    private func statView(title: String, value: String) -> some View {
-        VStack {
-            Text(value)
-                .font(AppFont.subheadline)
-                .fontWeight(.bold)
-                .foregroundStyle(themeManager.current.primaryColor)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-            Text(title)
-                .font(AppFont.caption)
-                .foregroundStyle(themeManager.current.textSecondary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
+    /// Journal-style identity header + 2×2 stat tiles (replaces flat HStack + Dividers).
+    private var readerIdentitySection: some View {
+        let theme = themeManager.current
+        let activeHabits = allHabits.filter { !$0.isArchived }.count
+        let totalHabits = allHabits.count
+        let unlockedBadges = allAchievements.filter { $0.isUnlocked }.count
+        let totalBadges = allAchievements.count
+
+        return VStack(alignment: .leading, spacing: AppSpacing.medium) {
+            HStack(alignment: .center, spacing: AppSpacing.medium) {
+                Button(action: { showEmojiPicker = true }) {
+                    ZStack {
+                        Circle()
+                            .strokeBorder(
+                                LinearGradient(
+                                    colors: [theme.primaryColor, theme.primaryColor.opacity(0.35)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 3
+                            )
+                        Text(userAvatar)
+                            .font(.system(size: 44))
+                    }
+                    .frame(width: 76, height: 76)
+                    .background(theme.surface.opacity(0.9))
+                    .clipShape(Circle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(String(localized: "Change avatar"))
+                .sheet(isPresented: $showEmojiPicker) {
+                    IconEmojiPicker(selectedEmoji: $userAvatar, title: String(localized: "Choose your avatar"))
+                        .presentationDetents([.medium])
+                        .presentationDragIndicator(.visible)
+                }
+
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(String(localized: "Reader"))
+                        .font(AppFont.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(theme.textSecondary)
+                        .textCase(.uppercase)
+                        .tracking(0.8)
+
+                    TextField(String(localized: "Your Name"), text: $userName)
+                        .font(.system(.title3, design: .serif))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(theme.textPrimary)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 12)
+                        .background(theme.background.opacity(0.85))
+                        .clipShape(.rect(cornerRadius: 10))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .strokeBorder(theme.textSecondary.opacity(0.15), lineWidth: 1)
+                        )
+                        .lineLimit(1)
+                }
+                Spacer(minLength: 0)
+            }
+
+            Text(String(localized: "At a glance"))
+                .font(AppFont.subheadline.weight(.semibold))
+                .foregroundStyle(theme.textSecondary)
+                .padding(.top, AppSpacing.small)
+
+            LazyVGrid(
+                columns: [GridItem(.flexible(), spacing: AppSpacing.smallMedium), GridItem(.flexible(), spacing: AppSpacing.smallMedium)],
+                spacing: AppSpacing.smallMedium
+            ) {
+                profileStatTile(
+                    icon: "books.vertical.fill",
+                    title: String(localized: "Habits"),
+                    value: "\(activeHabits)/\(totalHabits)"
+                )
+                profileStatTile(
+                    icon: "pencil.line",
+                    title: String(localized: "Entries"),
+                    value: "\(allCheckIns.count)"
+                )
+                profileStatTile(
+                    icon: "bell.fill",
+                    title: String(localized: "Reminders"),
+                    value: "\(allReminders.count)"
+                )
+                profileStatTile(
+                    icon: "rosette",
+                    title: String(localized: "Badges"),
+                    value: "\(unlockedBadges)/\(totalBadges)"
+                )
+            }
         }
     }
 
-    private var othersView: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.medium) {
-            Text(String(localized: "Others"))
-                .appSectionHeader(theme: themeManager.current)
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: AppSpacing.large) {
-                NavigationLink(destination: MoreAppsView()) {
-                    moreItem(icon: "storefront", title: String(localized: "More Apps"))
+    private func profileStatTile(icon: String, title: String, value: String) -> some View {
+        let theme = themeManager.current
+        return VStack(alignment: .leading, spacing: 8) {
+            Image(systemName: icon)
+                .font(.body.weight(.semibold))
+                .foregroundStyle(theme.primaryColor)
+                .frame(width: 32, height: 32)
+                .background(theme.primaryColor.opacity(0.12))
+                .clipShape(.rect(cornerRadius: 8))
+
+            Text(value)
+                .font(.system(.title3, design: .rounded))
+                .fontWeight(.bold)
+                .foregroundStyle(theme.textPrimary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+
+            Text(title)
+                .font(AppFont.caption)
+                .foregroundStyle(theme.textSecondary)
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(AppSpacing.smallMedium)
+        .background {
+            if #available(iOS 26, *) {
+                Color.clear
+                    .glassEffect(in: .rect(cornerRadius: AppCornerRadius.info))
+            } else {
+                ZStack {
+                    RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                        .fill(theme.surface.opacity(0.7))
+                    RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                        .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
                 }
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title), \(value)")
+    }
+
+    /// In-app tools as a vertical “table of contents” (not a 3×N icon grid).
+    private var journalToolsSection: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+            profileSectionChrome(
+                title: String(localized: "Journal tools"),
+                subtitle: String(localized: "Shortcuts inside Habit Diary"),
+                systemImage: "rectangle.and.pencil.and.ellipsis"
+            )
+
+            VStack(spacing: AppSpacing.small) {
+                NavigationLink {
+                    DiarySettingsView()
+                } label: {
+                    ProfileShelfRow(
+                        theme: themeManager.current,
+                        icon: "gearshape.fill",
+                        title: String(localized: "Settings"),
+                        subtitle: String(localized: "Diary behavior & appearance"),
+                        trailing: .chevron
+                    )
+                }
+                .buttonStyle(.plain)
+
+                NavigationLink {
+                    JournalTimelineView()
+                } label: {
+                    ProfileShelfRow(
+                        theme: themeManager.current,
+                        icon: "book.pages.fill",
+                        title: String(localized: "Journal Entries"),
+                        subtitle: String(localized: "Every note you’ve logged"),
+                        trailing: .chevron
+                    )
+                }
+                .buttonStyle(.plain)
+
+                NavigationLink {
+                    DiaryRemindersView()
+                } label: {
+                    ProfileShelfRow(
+                        theme: themeManager.current,
+                        icon: "bell.badge.fill",
+                        title: String(localized: "Reminders"),
+                        subtitle: String(localized: "Nudges for your habits"),
+                        trailing: .chevron
+                    )
+                }
+                .buttonStyle(.plain)
+
+                NavigationLink {
+                    BadgesView()
+                } label: {
+                    ProfileShelfRow(
+                        theme: themeManager.current,
+                        icon: "rosette",
+                        title: String(localized: "Badges"),
+                        subtitle: String(localized: "Milestones & rewards"),
+                        trailing: .chevron
+                    )
+                }
+                .buttonStyle(.plain)
+
+                NavigationLink {
+                    PaletteView()
+                } label: {
+                    ProfileShelfRow(
+                        theme: themeManager.current,
+                        icon: "paintpalette.fill",
+                        title: String(localized: "Ink & paper"),
+                        subtitle: String(localized: "Theme and accent colors"),
+                        trailing: .chevron
+                    )
+                }
+                .buttonStyle(.plain)
+
+                NavigationLink {
+                    JournalStatsView()
+                } label: {
+                    ProfileShelfRow(
+                        theme: themeManager.current,
+                        icon: "chart.xyaxis.line",
+                        title: String(localized: "My Stats"),
+                        subtitle: String(localized: "Totals and streaks at a glance"),
+                        trailing: .chevron
+                    )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(.horizontal)
+    }
+
+    /// App Store / social actions — same row language, different trailing icons.
+    private var discoverAndShareSection: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+            profileSectionChrome(
+                title: String(localized: "Beyond the page"),
+                subtitle: String(localized: "Reviews, mail, and sharing"),
+                systemImage: "sparkles"
+            )
+
+            VStack(spacing: AppSpacing.small) {
+                NavigationLink {
+                    MoreAppsView()
+                } label: {
+                    ProfileShelfRow(
+                        theme: themeManager.current,
+                        icon: "square.grid.2x2.fill",
+                        title: String(localized: "More Apps"),
+                        subtitle: String(localized: "Other titles from the studio"),
+                        trailing: .chevron
+                    )
+                }
+                .buttonStyle(.plain)
+
                 if let url = URL(string: "https://itunes.apple.com/app/id\(Constants.AppID.appID)?action=write-review") {
                     Button {
                         openURL(url)
                     } label: {
-                        moreItem(icon: "star.fill", title: String(localized: "Rate Us"))
+                        ProfileShelfRow(
+                            theme: themeManager.current,
+                            icon: "star.circle.fill",
+                            title: String(localized: "Rate on the App Store"),
+                            subtitle: String(localized: "Opens App Store review"),
+                            trailing: .external
+                        )
                     }
+                    .buttonStyle(.plain)
                 }
+
                 Button {
-                    let email = SupportEmail()
-                    email.send(openURL: openURL)
+                    SupportEmail().send(openURL: openURL)
                 } label: {
-                    moreItem(icon: "envelope.fill", title: String(localized: "Feedback"))
+                    ProfileShelfRow(
+                        theme: themeManager.current,
+                        icon: "envelope.open.fill",
+                        title: String(localized: "Send feedback"),
+                        subtitle: String(localized: "Email the developer"),
+                        trailing: .external
+                    )
                 }
+                .buttonStyle(.plain)
+
                 if let appURL = URL(string: "https://itunes.apple.com/app/id\(Constants.AppID.appID)") {
                     ShareLink(item: appURL) {
-                        moreItem(icon: "square.and.arrow.up", title: String(localized: "Share App"))
+                        ProfileShelfRow(
+                            theme: themeManager.current,
+                            icon: "square.and.arrow.up.circle.fill",
+                            title: String(localized: "Share Habit Diary"),
+                            subtitle: String(localized: "Link to the App Store"),
+                            trailing: .share
+                        )
                     }
+                    .buttonStyle(.plain)
                 }
             }
         }
         .padding(.horizontal)
     }
 
-    private var moreFeatureView: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.medium) {
-            Text(String(localized: "More Features"))
-                .appSectionHeader(theme: themeManager.current)
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: AppSpacing.large) {
-                NavigationLink(destination: DiarySettingsView()) {
-                    featureItem(icon: "gear", title: String(localized: "Settings"))
+    private var profileFooter: some View {
+        let theme = themeManager.current
+        return VStack(spacing: AppSpacing.small) {
+            HStack(spacing: 8) {
+                Rectangle()
+                    .fill(theme.primaryColor.opacity(0.35))
+                    .frame(width: 3, height: 14)
+                Text(String(localized: "Habit Diary"))
+                    .font(.system(.footnote, design: .serif))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(theme.textPrimary)
+            }
+
+            Text(String(localized: "Your daily habit journal"))
+                .font(AppFont.caption)
+                .foregroundStyle(theme.textSecondary)
+
+            Button {
+                if let url = URL(string: "https://apps.apple.com/app/id\(Constants.AppID.appID)") {
+                    openURL(url)
                 }
-                NavigationLink(destination: JournalTimelineView()) {
-                    featureItem(icon: "book.pages", title: String(localized: "Journal Entries"))
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "arrow.clockwise.circle")
+                        .font(.caption)
+                    Text(
+                        String(
+                            localized: "Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "—") · Check for updates"
+                        )
+                    )
                 }
-                NavigationLink(destination: DiaryRemindersView()) {
-                    featureItem(icon: "bell", title: String(localized: "Reminders"))
-                }
-                NavigationLink(destination: BadgesView()) {
-                    featureItem(icon: "trophy", title: String(localized: "Achievements"))
-                }
-                NavigationLink(destination: PaletteView()) {
-                    featureItem(icon: "paintbrush.fill", title: String(localized: "Theme Color"))
-                }
-                NavigationLink(destination: JournalStatsView()) {
-                    featureItem(icon: "chart.bar.fill", title: String(localized: "My Stats"))
+                .font(AppFont.footnote)
+                .foregroundStyle(theme.primaryColor)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, AppSpacing.medium)
+        .padding(.horizontal, AppSpacing.large)
+        .background {
+            if #available(iOS 26, *) {
+                Color.clear
+                    .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
+            } else {
+                ZStack {
+                    RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                        .fill(theme.surface.opacity(0.45))
+                    RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                        .strokeBorder(theme.textSecondary.opacity(0.12), lineWidth: 1)
                 }
             }
         }
         .padding(.horizontal)
     }
 
-    private func moreItem(icon: String, title: String) -> some View {
-        VStack(spacing: AppSpacing.small) {
-            Image(systemName: icon)
-                .font(.title2)
-                .foregroundStyle(themeManager.current.primaryColor)
+    private func profileSectionChrome(title: String, subtitle: String, systemImage: String) -> some View {
+        let theme = themeManager.current
+        return HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
+            Image(systemName: systemImage)
+                .font(.title2.weight(.semibold))
+                .foregroundStyle(theme.primaryColor)
                 .frame(width: 36, height: 36)
-                .clipShape(Circle())
-            Text(title)
-                .font(AppFont.caption)
-                .foregroundStyle(themeManager.current.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
+                .background(theme.primaryColor.opacity(0.12))
+                .clipShape(.rect(cornerRadius: 10))
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.system(.headline, design: .serif))
+                    .foregroundStyle(theme.textPrimary)
+                Text(subtitle)
+                    .font(AppFont.caption)
+                    .foregroundStyle(theme.textSecondary)
+            }
+            Spacer(minLength: 0)
         }
-        .frame(maxWidth: .infinity)
-        .padding(AppSpacing.small)
-        .background(themeManager.current.card)
+        .padding(.bottom, AppSpacing.small)
+    }
+}
+
+// MARK: - Shelf row (replaces icon-grid `featureItem` / `moreItem`)
+
+private enum ProfileShelfAccessory {
+    case chevron
+    case external
+    case share
+}
+
+private struct ProfileShelfRow: View {
+    let theme: AppTheme
+    let icon: String
+    let title: String
+    let subtitle: String
+    let trailing: ProfileShelfAccessory
+
+    var body: some View {
+        HStack(alignment: .center, spacing: AppSpacing.smallMedium) {
+            RoundedRectangle(cornerRadius: 2)
+                .fill(
+                    LinearGradient(
+                        colors: [theme.primaryColor, theme.primaryColor.opacity(0.4)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .frame(width: 4)
+                .padding(.vertical, 4)
+
+            Image(systemName: icon)
+                .font(.body.weight(.semibold))
+                .foregroundStyle(theme.primaryColor)
+                .frame(width: 40, height: 40)
+                .background(theme.primaryColor.opacity(0.1))
+                .clipShape(.rect(cornerRadius: 12))
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(AppFont.subheadline.weight(.semibold))
+                    .foregroundStyle(theme.textPrimary)
+                    .multilineTextAlignment(.leading)
+                Text(subtitle)
+                    .font(AppFont.caption)
+                    .foregroundStyle(theme.textSecondary)
+                    .multilineTextAlignment(.leading)
+            }
+
+            Spacer(minLength: 8)
+
+            trailingView
+                .foregroundStyle(theme.textSecondary.opacity(0.85))
+        }
+        .padding(AppSpacing.smallMedium)
+        .background { rowBackground }
         .clipShape(.rect(cornerRadius: AppCornerRadius.card))
-        .shadow(color: AppShadow.card.color, radius: AppShadow.card.radius, x: AppShadow.card.x, y: AppShadow.card.y)
+        .contentShape(.rect(cornerRadius: AppCornerRadius.card))
     }
 
-    private func featureItem(icon: String, title: String) -> some View {
-        VStack(spacing: AppSpacing.small) {
-            Image(systemName: icon)
-                .font(.title2)
-                .foregroundStyle(themeManager.current.primaryColor)
-                .frame(width: 36, height: 36)
-                .clipShape(Circle())
-            Text(title)
-                .font(AppFont.caption)
-                .foregroundStyle(themeManager.current.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
+    @ViewBuilder
+    private var trailingView: some View {
+        switch trailing {
+        case .chevron:
+            Image(systemName: "chevron.right")
+                .font(.caption.weight(.semibold))
+        case .external:
+            Image(systemName: "arrow.up.right")
+                .font(.caption.weight(.semibold))
+        case .share:
+            Image(systemName: "square.and.arrow.up")
+                .font(.caption.weight(.semibold))
         }
-        .frame(maxWidth: .infinity)
-        .padding(AppSpacing.small)
-        .background(themeManager.current.card)
-        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
-        .shadow(color: AppShadow.card.color, radius: AppShadow.card.radius, x: AppShadow.card.x, y: AppShadow.card.y)
+    }
+
+    @ViewBuilder
+    private var rowBackground: some View {
+        if #available(iOS 26, *) {
+            Color.clear
+                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
+        } else {
+            ZStack {
+                RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                    .fill(theme.card)
+                RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                    .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
+            }
+        }
     }
 }
 

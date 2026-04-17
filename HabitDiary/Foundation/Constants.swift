@@ -17,15 +17,6 @@ struct Constants {
     }
 }
 
-extension String {
-    struct Symbol {
-        static let route = "🧭"
-        static let place = "📍"
-        static let accommodation = "🏨"
-        static let restaurant = "🍔"
-    }
-}
-
 let decimalFormatter: NumberFormatter = {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal

@@ -58,6 +58,16 @@
         }
       }
     },
+    "%@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
     "%lld" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1040,6 +1050,9 @@
         }
       }
     },
+    "At a glance" : {
+
+    },
     "At most 64 notifications allowed. Currently %lld set." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1156,6 +1169,9 @@
     "Badge Unlocked!" : {
 
     },
+    "Badges" : {
+
+    },
     "Be the person your dog thinks you are." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1251,6 +1267,9 @@
           }
         }
       }
+    },
+    "Beyond the page" : {
+
     },
     "Blue" : {
       "extractionState" : "stale",
@@ -1409,6 +1428,9 @@
         }
       }
     },
+    "Change avatar" : {
+
+    },
     "Change is inevitable. Growth is optional." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1527,6 +1549,7 @@
       }
     },
     "Check-ins" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1613,6 +1636,9 @@
           }
         }
       }
+    },
+    "Choose your avatar" : {
+
     },
     "Choose Your Habits" : {
       "localizations" : {
@@ -2182,6 +2208,9 @@
     "Devoted Diarist" : {
 
     },
+    "Diary behavior & appearance" : {
+
+    },
     "Diary Note" : {
 
     },
@@ -2513,6 +2542,9 @@
         }
       }
     },
+    "Email the developer" : {
+
+    },
     "End the day by writing — even a few sentences. Over time, these pages become your story." : {
 
     },
@@ -2566,6 +2598,9 @@
           }
         }
       }
+    },
+    "Entries" : {
+
     },
     "Entry sound" : {
 
@@ -2668,6 +2703,9 @@
           }
         }
       }
+    },
+    "Every note you’ve logged" : {
+
     },
     "Excellence is a continuous process and not an accident." : {
       "localizations" : {
@@ -3048,7 +3086,7 @@
         }
       }
     },
-    "Habit Diary  |  Your Daily Habit Journal" : {
+    "Habit Diary" : {
 
     },
     "Habit Insights" : {
@@ -3224,6 +3262,9 @@
     "Ink" : {
 
     },
+    "Ink & paper" : {
+
+    },
     "Ink Is Flowing" : {
 
     },
@@ -3310,6 +3351,9 @@
 
     },
     "Journal preferences" : {
+
+    },
+    "Journal tools" : {
 
     },
     "Keep a 7-day journaling streak" : {
@@ -3473,6 +3517,9 @@
           }
         }
       }
+    },
+    "Link to the App Store" : {
+
     },
     "Listen to educational or inspiring podcasts during commute or exercise." : {
       "extractionState" : "stale",
@@ -3705,6 +3752,7 @@
       }
     },
     "Me" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3735,6 +3783,9 @@
           }
         }
       }
+    },
+    "Milestones & rewards" : {
+
     },
     "Mode" : {
       "localizations" : {
@@ -3834,6 +3885,7 @@
       }
     },
     "More Features" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4187,6 +4239,9 @@
         }
       }
     },
+    "Nudges for your habits" : {
+
+    },
     "Once archived, the habit will be hidden from today's habits list, but its check-ins will be kept." : {
       "localizations" : {
         "zh-Hans" : {
@@ -4222,6 +4277,9 @@
     "Opening Chapter" : {
 
     },
+    "Opens App Store review" : {
+
+    },
     "Orange" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4255,7 +4313,11 @@
         }
       }
     },
+    "Other titles from the studio" : {
+
+    },
     "Others" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4731,7 +4793,11 @@
         }
       }
     },
+    "Rate on the App Store" : {
+
+    },
     "Rate Us" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4828,6 +4894,9 @@
           }
         }
       }
+    },
+    "Reader" : {
+
     },
     "Recent" : {
       "localizations" : {
@@ -4989,6 +5058,9 @@
           }
         }
       }
+    },
+    "Reviews, mail, and sharing" : {
+
     },
     "Rose" : {
 
@@ -5179,6 +5251,9 @@
         }
       }
     },
+    "Send feedback" : {
+
+    },
     "Sepia" : {
 
     },
@@ -5235,6 +5310,7 @@
       }
     },
     "Share App" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5251,6 +5327,9 @@
       }
     },
     "Share Badge" : {
+
+    },
+    "Share Habit Diary" : {
 
     },
     "Share My Stats" : {
@@ -5284,6 +5363,9 @@
           }
         }
       }
+    },
+    "Shortcuts inside Habit Diary" : {
+
     },
     "Show less" : {
       "localizations" : {
@@ -6095,6 +6177,9 @@
         }
       }
     },
+    "Theme and accent colors" : {
+
+    },
     "Theme Color" : {
       "localizations" : {
         "zh-Hans" : {
@@ -6391,6 +6476,9 @@
           }
         }
       }
+    },
+    "Totals and streaks at a glance" : {
+
     },
     "Track Progress" : {
       "localizations" : {
@@ -6706,6 +6794,7 @@
 
     },
     "v%@  Check for Updates" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6720,6 +6809,9 @@
           }
         }
       }
+    },
+    "Version %@ · Check for updates" : {
+
     },
     "Vibrate" : {
       "extractionState" : "stale",
@@ -7086,6 +7178,9 @@
           }
         }
       }
+    },
+    "Your daily habit journal" : {
+
     },
     "Your future is created by what you do today, not tomorrow." : {
       "localizations" : {
