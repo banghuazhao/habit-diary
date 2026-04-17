@@ -21,4 +21,6 @@ struct JournalEntrySummary {
     let checkIn: DiaryEntry
     let habitName: String
     let habitIcon: String
+    /// Habit accent color (ARGB) for timeline chrome; defaults when the habit row is missing.
+    let habitColor: Int
 }

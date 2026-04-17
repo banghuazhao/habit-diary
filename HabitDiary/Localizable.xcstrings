@@ -1544,9 +1544,6 @@
         }
       }
     },
-    "Check in a habit and add a diary note to start your personal journal." : {
-
-    },
     "Check in consistently to reach milestone achievements" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1797,6 +1794,9 @@
           }
         }
       }
+    },
+    "Complete a habit on Journal and add a note when prompted — your entries will show up in chronological order." : {
+
     },
     "Complete daily habits to unlock streak achievements" : {
       "localizations" : {
@@ -2842,6 +2842,9 @@
       }
     },
     "Every note you’ve logged" : {
+
+    },
+    "Every note you’ve logged appears here" : {
 
     },
     "Excellence is a continuous process and not an accident." : {
@@ -4426,6 +4429,9 @@
 
     },
     "Note which blocks you protected today — your diary shows you where time really goes." : {
+
+    },
+    "Nothing logged yet" : {
 
     },
     "Notifications are disabled. Please enable them in Settings to receive reminders." : {
@@ -7447,6 +7453,9 @@
         }
       }
     },
+    "Yesterday" : {
+
+    },
     "Yoga practice" : {
       "localizations" : {
         "zh-Hans" : {
@@ -7610,7 +7619,7 @@
         }
       }
     },
-    "Your journal is empty" : {
+    "Your journal" : {
 
     },
     "Your Name" : {

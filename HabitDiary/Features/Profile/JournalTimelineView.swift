@@ -1,129 +1,226 @@
 //
-//  CheckinHistoryView.swift
+//  JournalTimelineView.swift
 //  Habit Diary
 //
 //  Created by Lulin Yang on 2025/6/30.
 //
 
+import Dependencies
 import SwiftUI
-import SQLiteData
-
-@MainActor
-@Observable
-class JournalTimelineViewModel {
-    @ObservationIgnored
-    @FetchAll(
-        DiaryEntry
-            .order { $0.date.desc() }
-            .leftJoin(Habit.all) {
-                $0.habitID.eq($1.id)
-            }
-            .select {
-                JournalEntrySummary.Columns(
-                    checkIn: $0,
-                    habitName: $1.name ?? "",
-                    habitIcon: $1.icon ?? ""
-                )
-            },
-        animation: .default
-    )
-    var checkinHistories
-    
-    @ObservationIgnored
-    @Dependency(\.defaultDatabase) var database
-    
-    func onTapDeleteCheckin(_ checkin: JournalEntrySummary) {
-        withErrorReporting {
-            try database.write { db in
-                try DiaryEntry.delete(checkin.checkIn).execute(db)
-            }
-        }
-    }
-}
 
 struct JournalTimelineView: View {
     @State private var viewModel = JournalTimelineViewModel()
-    @Dependency(\.themeManager) var themeManager
+    @Dependency(\.themeManager) private var themeManager
+
+    private var theme: AppTheme { themeManager.current }
 
     var body: some View {
         Group {
             if viewModel.checkinHistories.isEmpty {
-                VStack(spacing: 16) {
-                    Text("📔")
-                        .font(.system(size: 56))
-                    Text(String(localized: "Your journal is empty"))
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                    Text(String(localized: "Check in a habit and add a diary note to start your personal journal."))
-                        .font(.body)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 32)
-                }
-                .padding(.top, 80)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                emptyState
             } else {
-                List {
-                    ForEach(viewModel.checkinHistories, id: \.checkIn.id) { entry in
-                        JournalEntryRow(entry: entry) {
-                            viewModel.onTapDeleteCheckin(entry)
-                        }
-                    }
-                }
-                .listStyle(.insetGrouped)
+                timelineList
             }
         }
+        .background(theme.background.ignoresSafeArea())
         .navigationTitle(String(localized: "Journal Entries"))
         .navigationBarTitleDisplayMode(.inline)
     }
+
+    // MARK: - Empty
+
+    private var emptyState: some View {
+        ScrollView {
+            VStack(spacing: AppSpacing.large) {
+                JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+                    VStack(spacing: AppSpacing.medium) {
+                        JournalSectionHeader(
+                            title: String(localized: "Your journal"),
+                            subtitle: String(localized: "Every note you’ve logged appears here"),
+                            systemImage: "book.pages.fill",
+                            theme: theme
+                        )
+                        Text("📔")
+                            .font(.system(size: 48))
+                            .frame(maxWidth: .infinity)
+                        Text(String(localized: "Nothing logged yet"))
+                            .font(.system(.title3, design: .serif))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(theme.textPrimary)
+                            .multilineTextAlignment(.center)
+                        Text(
+                            String(
+                                localized: "Complete a habit on Journal and add a note when prompted — your entries will show up in chronological order."
+                            )
+                        )
+                        .font(AppFont.subheadline)
+                        .foregroundStyle(theme.textSecondary)
+                        .multilineTextAlignment(.center)
+                    }
+                }
+                .padding(.horizontal)
+            }
+            .padding(.vertical, AppSpacing.large)
+        }
+    }
+
+    // MARK: - Timeline
+
+    private var timelineList: some View {
+        List {
+            ForEach(viewModel.daySections) { section in
+                Section {
+                    ForEach(section.entries, id: \.checkIn.id) { entry in
+                        JournalEntryRow(entry: entry, theme: theme)
+                            .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.clear)
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button(role: .destructive) {
+                                    viewModel.onTapDeleteCheckin(entry)
+                                } label: {
+                                    Label(String(localized: "Delete"), systemImage: "trash")
+                                }
+                            }
+                    }
+                } header: {
+                    sectionHeader(for: section.id)
+                }
+            }
+        }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+    }
+
+    private func sectionHeader(for day: Date) -> some View {
+        HStack {
+            Text(formattedDayHeader(day))
+                .font(.system(.subheadline, design: .serif))
+                .fontWeight(.semibold)
+                .foregroundStyle(theme.textPrimary)
+            Spacer(minLength: 0)
+        }
+        .textCase(nil)
+        .padding(.vertical, 4)
+    }
+
+    private func formattedDayHeader(_ day: Date) -> String {
+        let cal = Calendar.current
+        if cal.isDateInToday(day) { return String(localized: "Today") }
+        if cal.isDateInYesterday(day) { return String(localized: "Yesterday") }
+        if cal.isDate(day, equalTo: Date(), toGranularity: .year) {
+            return day.formatted(.dateTime.weekday(.wide).month(.abbreviated).day())
+        }
+        return day.formatted(
+            .dateTime.weekday(.wide).month(.abbreviated).day().year(.defaultDigits)
+        )
+    }
 }
+
+// MARK: - Row
 
 private struct JournalEntryRow: View {
     let entry: JournalEntrySummary
-    let onDelete: () -> Void
+    let theme: AppTheme
 
-    @Dependency(\.themeManager) var themeManager
+    private var habitTint: Color { Color(hex: entry.habitColor) }
+    private var noteText: String {
+        entry.checkIn.note.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 12) {
-                Text(entry.habitIcon)
-                    .font(.system(size: 28))
+        HStack(alignment: .top, spacing: 0) {
+            RoundedRectangle(cornerRadius: 2)
+                .fill(
+                    LinearGradient(
+                        colors: [habitTint, habitTint.opacity(0.35)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .frame(width: 4)
+                .padding(.vertical, 10)
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(entry.habitName)
-                        .font(.headline)
-                    Text(entry.checkIn.date.formatted(date: .abbreviated, time: .omitted))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: AppSpacing.small) {
+                HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
+                    Text(entry.habitIcon)
+                        .font(.system(size: 24))
+                        .frame(width: 40, height: 40)
+                        .background(habitTint.opacity(0.18))
+                        .clipShape(Circle())
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text(entry.habitName)
+                                .font(.system(.headline, design: .serif))
+                                .foregroundStyle(theme.textPrimary)
+                                .lineLimit(2)
+                            Spacer(minLength: 8)
+                            Text(entry.checkIn.date.formatted(date: .omitted, time: .shortened))
+                                .font(AppFont.caption)
+                                .foregroundStyle(theme.textSecondary)
+                                .monospacedDigit()
+                        }
+
+                        if !noteText.isEmpty {
+                            noteBlock
+                        }
+                    }
                 }
-
-                Spacer()
-
-                Button(action: onDelete) {
-                    Image(systemName: "trash")
-                        .foregroundStyle(.red)
-                        .font(.system(size: 14))
-                }
-                .buttonStyle(.borderless)
             }
-
-            if !entry.checkIn.note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                HStack(alignment: .top, spacing: 6) {
-                    Image(systemName: "pencil.line")
-                        .font(.caption)
-                        .foregroundStyle(themeManager.current.primaryColor)
-                        .padding(.top, 1)
-                    Text(entry.checkIn.note)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .padding(10)
-                .background(themeManager.current.primaryColor.opacity(0.06))
-                .clipShape(.rect(cornerRadius: 8))
-            }
+            .padding(AppSpacing.smallMedium)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(.vertical, 4)
+        .background { rowBackground }
+        .clipShape(.rect(cornerRadius: AppCornerRadius.info))
+        .overlay {
+            RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(accessibilityLabelText)
+    }
+
+    private var noteBlock: some View {
+        HStack(alignment: .top, spacing: 6) {
+            Image(systemName: "pencil.line")
+                .font(AppFont.caption)
+                .foregroundStyle(habitTint)
+                .padding(.top, 2)
+            Text(noteText)
+                .font(.system(.subheadline, design: .serif))
+                .foregroundStyle(theme.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(AppSpacing.small)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(theme.surface.opacity(0.55))
+        .clipShape(.rect(cornerRadius: 10))
+        .overlay {
+            RoundedRectangle(cornerRadius: 10)
+                .strokeBorder(habitTint.opacity(0.2), lineWidth: 1)
+        }
+    }
+
+    @ViewBuilder
+    private var rowBackground: some View {
+        if #available(iOS 26, *) {
+            Color.clear
+                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.info))
+        } else {
+            RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                .fill(theme.card)
+        }
+    }
+
+    private var accessibilityLabelText: String {
+        var parts: [String] = [
+            entry.habitName,
+            entry.checkIn.date.formatted(date: .abbreviated, time: .shortened)
+        ]
+        if !noteText.isEmpty {
+            parts.append(noteText)
+        }
+        return parts.joined(separator: ". ")
     }
 }
