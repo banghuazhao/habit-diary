@@ -7,13 +7,6 @@ import SQLiteData
 import SwiftUI
 import GoogleMobileAds
 
-// MARK: - Tab enum for type-safe selection
-enum AppTab: String, Hashable {
-    case journal
-    case library
-    case insights
-    case profile
-}
 
 @main
 struct HabitDiaryApp: App {
@@ -67,14 +60,9 @@ struct HabitDiaryApp: App {
     @ViewBuilder
     var content: some View {
         ZStack {
-            if #available(iOS 18.0, *) {
-                tabViewModern
-                    .tint(themeManager.current.primaryColor)
-            } else {
-                tabViewLegacy
-                    .background(themeManager.current.background)
-                    .tint(themeManager.current.primaryColor)
-            }
+            tabViewModern
+                .tint(themeManager.current.primaryColor)
+            
 
             Color.clear
                 .fullScreenCover(isPresented: .constant(!hasCompletedOnboarding)) {
@@ -107,24 +95,6 @@ struct HabitDiaryApp: App {
                         AdCoordinator.requestATTPermission(with: 1)
                     }
             }
-        }
-    }
-
-    var tabViewLegacy: some View {
-        TabView {
-            JournalHomeView()
-                .tabItem { Label(String(localized: "Journal"), systemImage: "book.pages.fill") }
-                .onAppear { AdCoordinator.requestATTPermission(with: 3) }
-
-            HabitLibraryView()
-                .tabItem { Label(String(localized: "Library"), systemImage: "books.vertical.fill") }
-
-            InsightsView()
-                .tabItem { Label(String(localized: "Insights"), systemImage: "chart.line.text.clipboard.fill") }
-
-            ReaderProfileView()
-                .tabItem { Label(String(localized: "Profile"), systemImage: "person.crop.square.fill") }
-                .onAppear { AdCoordinator.requestATTPermission(with: 1) }
         }
     }
 

@@ -56,6 +56,7 @@
       }
     },
     "%@ - Upgrade to Premium" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -70,6 +71,9 @@
           }
         }
       }
+    },
+    "%@ — Upgrade to Premium" : {
+
     },
     "%@, %@" : {
       "localizations" : {
@@ -413,6 +417,7 @@
       }
     },
     "• " : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -469,6 +474,7 @@
 
     },
     "💎 Thanks for being a Premium member!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -667,7 +673,7 @@
         }
       }
     },
-    "A clean, immersive journaling experience every day." : {
+    "A calm, immersive space for your daily entries." : {
 
     },
     "A daily ritual worth logging — notice the difference consistency makes." : {
@@ -1911,6 +1917,7 @@
       }
     },
     "Congratulations!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2011,7 +2018,11 @@
         }
       }
     },
+    "Contact support" : {
+
+    },
     "Contact Support" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2449,6 +2460,9 @@
           }
         }
       }
+    },
+    "Distraction-free journaling" : {
+
     },
     "Do a kind act" : {
       "localizations" : {
@@ -3654,6 +3668,9 @@
     "Journal" : {
 
     },
+    "Journal and log habits without advertising interruptions." : {
+
+    },
     "Journal Entries" : {
 
     },
@@ -4454,7 +4471,11 @@
         }
       }
     },
+    "No ads" : {
+
+    },
     "No Ads: " : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5087,7 +5108,11 @@
         }
       }
     },
+    "Privacy policy" : {
+
+    },
     "Privacy Policy" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5178,7 +5203,7 @@
     "Protect the streak" : {
 
     },
-    "Pure Focus: " : {
+    "Pure focus" : {
 
     },
     "Purple" : {
@@ -5499,7 +5524,11 @@
         }
       }
     },
+    "Restore purchases" : {
+
+    },
     "Restore Purchases" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6401,6 +6430,9 @@
         }
       }
     },
+    "Support the app and unlock premium benefits" : {
+
+    },
     "Swimming" : {
       "localizations" : {
         "zh-Hans" : {
@@ -6499,6 +6531,7 @@
 
     },
     "Thank you for supporting Habit Diary!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6513,6 +6546,12 @@
           }
         }
       }
+    },
+    "Thank you!" : {
+
+    },
+    "Thanks for supporting Habit Diary" : {
+
     },
     "The best time to plant a tree was 20 years ago. The second best time is now." : {
       "localizations" : {
@@ -7227,7 +7266,7 @@
         }
       }
     },
-    "Unlock the full Habit Diary experience with exclusive benefits:" : {
+    "Unlock the full Habit Diary experience:" : {
 
     },
     "Unlock the full power of Habit Diary with exclusive benefit:" : {
@@ -7337,7 +7376,7 @@
         }
       }
     },
-    "Upgrade to Premium and keep your diary distraction-free!" : {
+    "Upgrade to Premium and keep your diary distraction-free." : {
 
     },
     "Use reminders to never miss a day" : {
@@ -7637,9 +7676,6 @@
     "Write your first diary entry before 8 AM" : {
 
     },
-    "Write your habit journal with zero interruptions." : {
-
-    },
     "Write your top three intentions for the day — a mini diary entry every morning." : {
 
     },
@@ -7683,6 +7719,7 @@
       }
     },
     "You are now Premium user!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -7737,6 +7774,9 @@
         }
       }
     },
+    "You’re a Premium member — thank you!" : {
+
+    },
     "You're becoming a habit master! Keep pushing! 🔥" : {
       "localizations" : {
         "zh-Hans" : {
@@ -7784,6 +7824,9 @@
           }
         }
       }
+    },
+    "You’re now Premium — enjoy an ad-free diary." : {
+
     },
     "You’re ready to start" : {
 

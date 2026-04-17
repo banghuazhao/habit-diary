@@ -25,41 +25,45 @@ struct ReaderProfileView: View {
     @State private var showPurchaseSheet = false
     @State private var showEmojiPicker = false
 
+    private var theme: AppTheme { themeManager.current }
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: AppSpacing.large) {
-                    VStack(alignment: .leading, spacing: AppSpacing.medium) {
-                        readerIdentitySection
-                        if !premiumAccessManager.isPremiumUserPurchased {
-                            Button(action: {
-                                showPurchaseSheet = true
-                            }) {
-                                Text(String(localized: "Upgrade to Premium"))
-                                    .appButtonStyle(theme: themeManager.current)
+                    JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+                        VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                            readerIdentitySection
+                            if !premiumAccessManager.isPremiumUserPurchased {
+                                Button(action: {
+                                    showPurchaseSheet = true
+                                }) {
+                                    Text(String(localized: "Upgrade to Premium"))
+                                        .appButtonStyle(theme: themeManager.current)
+                                }
+                            } else {
+                                HStack(spacing: 8) {
+                                    Image(systemName: "crown.fill")
+                                        .foregroundStyle(.yellow)
+                                        .font(.title3)
+                                    Text(String(localized: "Welcome, Premium user!"))
+                                        .font(.headline)
+                                        .foregroundStyle(themeManager.current.primaryColor)
+                                }
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 16)
+                                .background(themeManager.current.card)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: AppCornerRadius.button)
+                                        .stroke(themeManager.current.primaryColor, lineWidth: 1.5)
+                                )
+                                .clipShape(.rect(cornerRadius: AppCornerRadius.button))
+                                .shadow(color: AppShadow.card.color, radius: 4, x: 0, y: 2)
                             }
-                        } else {
-                            HStack(spacing: 8) {
-                                Image(systemName: "crown.fill")
-                                    .foregroundStyle(.yellow)
-                                    .font(.title3)
-                                Text(String(localized: "Welcome, Premium user!"))
-                                    .font(.headline)
-                                    .foregroundStyle(themeManager.current.primaryColor)
-                            }
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 16)
-                            .background(themeManager.current.card)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: AppCornerRadius.button)
-                                    .stroke(themeManager.current.primaryColor, lineWidth: 1.5)
-                            )
-                            .clipShape(.rect(cornerRadius: AppCornerRadius.button))
-                            .shadow(color: AppShadow.card.color, radius: 4, x: 0, y: 2)
                         }
                     }
-                    .appCardStyle(theme: themeManager.current)
                     .padding(.horizontal)
+
                     journalToolsSection
                     discoverAndShareSection
 
@@ -181,25 +185,27 @@ struct ReaderProfileView: View {
 
     private func profileStatTile(icon: String, title: String, value: String) -> some View {
         let theme = themeManager.current
-        return VStack(alignment: .leading, spacing: 8) {
-            Image(systemName: icon)
-                .font(.body.weight(.semibold))
-                .foregroundStyle(theme.primaryColor)
-                .frame(width: 32, height: 32)
-                .background(theme.primaryColor.opacity(0.12))
-                .clipShape(.rect(cornerRadius: 8))
+        return HStack {
+            VStack(alignment: .leading, spacing: 8) {
+                Image(systemName: icon)
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(theme.primaryColor)
+                    .frame(width: 32, height: 32)
+                    .background(theme.primaryColor.opacity(0.12))
+                    .clipShape(.rect(cornerRadius: 8))
 
+                Text(title)
+                    .font(AppFont.caption)
+                    .foregroundStyle(theme.textSecondary)
+                    .lineLimit(1)
+            }
+            Spacer()
             Text(value)
                 .font(.system(.title3, design: .rounded))
                 .fontWeight(.bold)
                 .foregroundStyle(theme.textPrimary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
-
-            Text(title)
-                .font(AppFont.caption)
-                .foregroundStyle(theme.textSecondary)
-                .lineLimit(1)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(AppSpacing.smallMedium)
