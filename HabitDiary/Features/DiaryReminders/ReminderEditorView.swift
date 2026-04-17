@@ -3,37 +3,15 @@
 // Copyright Apps Bay Limited. All rights reserved.
 //
 
-import SwiftUI
 import Dependencies
 import SQLiteData
-
-@Observable
-@MainActor
-class ReminderEditorViewModel: HashableObject {
-    var reminder: Reminder.Draft
-    let onSave: ((Reminder.Draft) -> Void)?
-
-    let isEdit: Bool
-    
-    init(
-        reminder: Reminder.Draft,
-        onSave: ((Reminder.Draft) -> Void)? = nil
-    ) {
-        self.reminder = reminder
-        self.onSave = onSave
-        self.isEdit = reminder.id != nil
-    }
-    
-    func onTapSaveReminder()  {
-        onSave?(reminder)
-    }
-}
+import SwiftUI
 
 struct ReminderEditorView: View {
     @State var viewModel: ReminderEditorViewModel
-    
+
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -44,8 +22,8 @@ struct ReminderEditorView: View {
                 }
                 .navigationTitle(
                     viewModel.isEdit
-                    ? "Edit Reminder"
-                    : "New Reminder"
+                        ? "Edit Reminder"
+                        : "New Reminder"
                 )
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -70,16 +48,4 @@ struct ReminderEditorView: View {
             }
         }
     }
-}
-
-#Preview {
-    let _ = prepareDependencies {
-        $0.defaultDatabase = try! appDatabase()
-    }
-    
-    ReminderEditorView(
-        viewModel: ReminderEditorViewModel(
-            reminder: Reminder.Draft(Reminder(id: 0))
-        )
-    )
 }

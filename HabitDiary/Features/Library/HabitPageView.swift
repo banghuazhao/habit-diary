@@ -60,7 +60,7 @@ struct HabitPageView: View {
             HabitEditorView(viewModel: habitFormViewModel)
         }
         .sheet(isPresented: Binding($viewModel.route.editReminder)) {
-            if case .editReminder(let formViewModel) = viewModel.route {
+            if case let .editReminder(formViewModel) = viewModel.route {
                 ReminderEditorView(viewModel: formViewModel)
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
@@ -636,18 +636,5 @@ struct HabitBadgeRowView: View {
         }
         shareText += String(localized: "Habit Diary — \(appStoreURL)")
         return shareText
-    }
-}
-
-#Preview {
-    let _ = prepareDependencies {
-        $0.defaultDatabase = try! appDatabase()
-    }
-    NavigationStack {
-        HabitPageView(
-            viewModel: HabitPageViewModel(
-                habit: DiaryHabitLibrary.morningWalk.toMock
-            )
-        )
     }
 }
