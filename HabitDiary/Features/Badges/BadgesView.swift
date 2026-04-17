@@ -3,347 +3,285 @@
 // Copyright Apps Bay Limited. All rights reserved.
 //
 
-import SwiftUI
+import Dependencies
 import SQLiteData
-import Sharing
-
-@Observable
-@MainActor
-class BadgesViewModel {
-    @ObservationIgnored
-    @FetchAll(Badge.all, animation: .default) var allAchievements
-    
-    @ObservationIgnored
-    @FetchAll(DiaryEntry.all, animation: .default) var allCheckIns
-    
-    @ObservationIgnored
-    @FetchAll(Habit.all, animation: .default) var allHabits
-    
-    var unlockedAchievements: [Badge] {
-        allAchievements.filter { $0.isUnlocked }.sorted { $0.unlockedDate ?? Date() > $1.unlockedDate ?? Date() }
-    }
-    
-    var lockedAchievements: [Badge] {
-        allAchievements.filter { !$0.isUnlocked }
-    }
-    
-    var totalAchievements: Int {
-        allAchievements.count
-    }
-    
-    var unlockedCount: Int {
-        unlockedAchievements.count
-    }
-    
-    var progressPercentage: Double {
-        guard totalAchievements > 0 else { return 0 }
-        return Double(unlockedCount) / Double(totalAchievements) * 100
-    }
-    
-    @ObservationIgnored
-    @Shared(.appStorage("startWeekOnMonday")) private var startWeekOnMonday: Bool = true
-    
-    var userCalendar: Calendar {
-        var cal = Calendar.current
-        cal.firstWeekday = startWeekOnMonday ? 2 : 1 // 2 = Monday, 1 = Sunday
-        return cal
-    }
-    
-    func getProgress(for achievement: Badge) -> Double {
-        switch achievement.type {
-        case .streak:
-            return getStreakProgress(for: achievement)
-        case .totalCheckIns:
-            return getTotalCheckInsProgress(for: achievement)
-        case .perfectWeek, .perfectMonth:
-            return 0 // These are binary achievements
-        case .earlyBird, .nightOwl:
-            return 0 // These are binary achievements
-        case .consistency:
-            return getConsistencyProgress(for: achievement)
-        case .milestone:
-            return getMilestoneProgress(for: achievement)
-        }
-    }
-    
-    private func getStreakProgress(for achievement: Badge) -> Double {
-        let targetStreak = achievement.criteria.targetValue
-        let habitID = achievement.habitID
-        
-        let checkIns = allCheckIns.filter { habitID == nil || $0.habitID == habitID }
-        let sortedCheckIns = checkIns.sorted { $0.date > $1.date }
-        
-        guard let latestCheckIn = sortedCheckIns.first else { return 0 }
-        
-        var currentStreak = 0
-        var currentDate = latestCheckIn.date
-        
-        for _ in 0..<targetStreak {
-            let startOfDay = currentDate.startOfDay(for: userCalendar)
-            let endOfDay = currentDate.endOfDay(for: userCalendar)
-            
-            let hasCheckIn = checkIns.contains { checkIn in
-                checkIn.date >= startOfDay && checkIn.date <= endOfDay
-            }
-            
-            if hasCheckIn {
-                currentStreak += 1
-                currentDate = userCalendar.date(byAdding: .day, value: -1, to: currentDate) ?? currentDate
-            } else {
-                break
-            }
-        }
-        
-        return min(Double(currentStreak) / Double(targetStreak), 1.0)
-    }
-    
-    private func getTotalCheckInsProgress(for achievement: Badge) -> Double {
-        let targetCount = achievement.criteria.targetValue
-        let habitID = achievement.habitID
-        
-        let totalCheckIns = allCheckIns.filter { habitID == nil || $0.habitID == habitID }.count
-        
-        return min(Double(totalCheckIns) / Double(targetCount), 1.0)
-    }
-    
-    private func getConsistencyProgress(for achievement: Badge) -> Double {
-        let targetDays = achievement.criteria.targetValue
-        var currentDate = Date()
-        var consecutiveDays = 0
-        
-        for _ in 0..<targetDays {
-            let startOfDay = currentDate.startOfDay(for: userCalendar)
-            let endOfDay = currentDate.endOfDay(for: userCalendar)
-            
-            let hasAnyCheckIn = allCheckIns.contains { checkIn in
-                checkIn.date >= startOfDay && checkIn.date <= endOfDay
-            }
-            
-            if hasAnyCheckIn {
-                consecutiveDays += 1
-                currentDate = userCalendar.date(byAdding: .day, value: -1, to: currentDate) ?? currentDate
-            } else {
-                break
-            }
-        }
-        
-        return min(Double(consecutiveDays) / Double(targetDays), 1.0)
-    }
-    
-    private func getMilestoneProgress(for achievement: Badge) -> Double {
-        let targetCount = achievement.criteria.targetValue
-        let totalCheckIns = allCheckIns.count
-        
-        return min(Double(totalCheckIns) / Double(targetCount), 1.0)
-    }
-    
-    func createAchievementShareText(_ achievement: Badge) -> String {
-        let appName = "Habit Diary"
-        let appStoreURL = "https://apps.apple.com/app/id\(Constants.AppID.appID)"
-        
-        var shareText = "🎉 Badge Unlocked! 🎉\n\n"
-        shareText += "🏆 \(achievement.title)\n"
-        shareText += "📝 \(achievement.description)\n\n"
-        
-        if let unlockDate = achievement.unlockedDate {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium
-            shareText += "📅 Unlocked on \(formatter.string(from: unlockDate))\n\n"
-        }
-        
-        shareText += "💪 Keep building healthy habits with \(appName)!\n"
-        shareText += "📱 Download: \(appStoreURL)"
-        
-        return shareText
-    }
-}
+import SwiftUI
 
 struct BadgesView: View {
     @State private var viewModel = BadgesViewModel()
     @State private var selectedTab = 0
-    
-    @Dependency(\.themeManager) var themeManager
-    
+    @Dependency(\.themeManager) private var themeManager
+
+    private var theme: AppTheme { themeManager.current }
+
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                // Progress header
-                VStack(spacing: 16) {
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Achievements")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                            
-                            Text("\(viewModel.unlockedCount) of \(viewModel.totalAchievements) unlocked")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                        }
-                        
-                        Spacer()
-                        
-                        ZStack {
-                            Circle()
-                                .stroke(Color.gray.opacity(0.3), lineWidth: 8)
-                                .frame(width: 60, height: 60)
-                            
-                            Circle()
-                                .trim(from: 0, to: viewModel.progressPercentage / 100)
-                                .stroke(
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [Color.blue, Color.purple]),
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    ),
-                                    style: StrokeStyle(lineWidth: 8, lineCap: .round)
-                                )
-                                .frame(width: 60, height: 60)
-                                .rotationEffect(.degrees(-90))
-                            
-                            Text("\(Int(viewModel.progressPercentage))%")
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                        }
-                    }
-                    
-                    // Progress bar
-                    ProgressView(value: viewModel.progressPercentage, total: 100)
-                        .progressViewStyle(LinearProgressViewStyle(tint: Color.blue))
-                }
-                .padding()
-                .background(Color(.systemBackground))
-                
-                // Tab selector
-                Picker("Achievements", selection: $selectedTab) {
-                    Text("All").tag(0)
-                    Text("Unlocked").tag(1)
-                    Text("Locked").tag(2)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-                .padding(.bottom)
-                
-                // Achievements list
-                ScrollView {
-                    LazyVStack(spacing: 12) {
-                        ForEach(achievementsToShow) { achievement in
-                            BadgeRowView(
-                                achievement: achievement,
-                                progress: viewModel.getProgress(for: achievement),
-                                shareText: viewModel.createAchievementShareText(achievement)
-                            )
-                        }
-                    }
-                    .padding(.horizontal)
-                }
+        ScrollView {
+            VStack(spacing: AppSpacing.large) {
+                progressHeaderSection
+                filterPicker
+                badgesList
             }
-            .appBackground()
-            .tint(themeManager.current.primaryColor)
-            .navigationTitle("Achievements")
-            .navigationBarTitleDisplayMode(.inline)
+            .padding(.horizontal)
+            .padding(.vertical, AppSpacing.small)
+            .padding(.bottom, 24)
+        }
+        .background(theme.background.ignoresSafeArea())
+        .navigationTitle(String(localized: "Achievements"))
+        .navigationBarTitleDisplayMode(.inline)
+        .tint(theme.primaryColor)
+    }
+
+    // MARK: - Progress
+
+    private var progressHeaderSection: some View {
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                JournalSectionHeader(
+                    title: String(localized: "Progress"),
+                    subtitle: String(localized: "Unlock badges by journaling and building streaks"),
+                    systemImage: "rosette",
+                    theme: theme
+                )
+
+                HStack(alignment: .center, spacing: AppSpacing.medium) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(unlockedCountPhrase)
+                            .font(.system(.title3, design: .serif))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(theme.textPrimary)
+
+                        Text(String(localized: "Keep logging entries to collect the full set."))
+                            .font(AppFont.subheadline)
+                            .foregroundStyle(theme.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    progressRing
+                }
+
+                ProgressView(value: viewModel.progressPercentage, total: 100)
+                    .progressViewStyle(.linear)
+                    .tint(theme.primaryColor)
+                    .frame(height: 6)
+                    .clipShape(.capsule)
+            }
         }
     }
-    
+
+    private var unlockedCountPhrase: String {
+        String(
+            localized: "\(viewModel.unlockedCount) of \(viewModel.totalAchievements) unlocked"
+        )
+    }
+
+    private var progressRing: some View {
+        ZStack {
+            Circle()
+                .stroke(theme.secondaryGray.opacity(0.25), lineWidth: 7)
+                .frame(width: 64, height: 64)
+
+            Circle()
+                .trim(from: 0, to: viewModel.progressPercentage / 100)
+                .stroke(
+                    AngularGradient(
+                        colors: [theme.primaryColor, theme.warning, theme.primaryColor.opacity(0.75)],
+                        center: .center
+                    ),
+                    style: StrokeStyle(lineWidth: 7, lineCap: .round)
+                )
+                .frame(width: 64, height: 64)
+                .rotationEffect(.degrees(-90))
+
+            Text("\(Int(viewModel.progressPercentage))%")
+                .font(AppFont.caption)
+                .fontWeight(.bold)
+                .foregroundStyle(theme.textPrimary)
+                .monospacedDigit()
+        }
+        .accessibilityLabel(
+            String(
+                localized: "\(Int(viewModel.progressPercentage)) percent of badges unlocked"
+            )
+        )
+    }
+
+    // MARK: - Filter
+
+    private var filterPicker: some View {
+        Picker(String(localized: "Filter badges"), selection: $selectedTab) {
+            Text(String(localized: "All")).tag(0)
+            Text(String(localized: "Unlocked")).tag(1)
+            Text(String(localized: "Locked")).tag(2)
+        }
+        .pickerStyle(.segmented)
+    }
+
+    // MARK: - List
+
+    private var badgesList: some View {
+        LazyVStack(spacing: AppSpacing.smallMedium) {
+            ForEach(achievementsToShow) { achievement in
+                BadgeRowView(
+                    achievement: achievement,
+                    progress: viewModel.getProgress(for: achievement),
+                    shareText: viewModel.createAchievementShareText(achievement),
+                    theme: theme
+                )
+            }
+        }
+    }
+
     private var achievementsToShow: [Badge] {
         switch selectedTab {
-        case 0:
-            return viewModel.allAchievements
-        case 1:
-            return viewModel.unlockedAchievements
-        case 2:
-            return viewModel.lockedAchievements
-        default:
-            return viewModel.allAchievements
+        case 0: return viewModel.allAchievements
+        case 1: return viewModel.unlockedAchievements
+        case 2: return viewModel.lockedAchievements
+        default: return viewModel.allAchievements
         }
     }
 }
+
+// MARK: - Row
 
 struct BadgeRowView: View {
     let achievement: Badge
     let progress: Double
     let shareText: String
-    
+    let theme: AppTheme
+
     var body: some View {
-        HStack(spacing: 16) {
-            // Badge icon
-            ZStack {
-                Circle()
-                    .fill(achievement.isUnlocked ? 
-                          LinearGradient(
-                              gradient: Gradient(colors: [Color.yellow, Color.orange]),
-                              startPoint: .topLeading,
-                              endPoint: .bottomTrailing
-                          ) : 
-                          LinearGradient(
-                              gradient: Gradient(colors: [Color.gray.opacity(0.3), Color.gray.opacity(0.5)]),
-                              startPoint: .topLeading,
-                              endPoint: .bottomTrailing
-                          )
+        HStack(alignment: .top, spacing: 0) {
+            RoundedRectangle(cornerRadius: 2)
+                .fill(
+                    LinearGradient(
+                        colors: accentBarColors,
+                        startPoint: .top,
+                        endPoint: .bottom
                     )
-                    .frame(width: 50, height: 50)
-                
-                Text(achievement.icon)
-                    .font(.title2)
-                    .opacity(achievement.isUnlocked ? 1.0 : 0.5)
-            }
-            
-            // Badge details
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(achievement.title)
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(achievement.isUnlocked ? .primary : .secondary)
-                    
-                    Spacer()
-                    
-                    if achievement.isUnlocked {
-                        HStack(spacing: 8) {
-                            ShareLink(
-                                item: shareText,
-                                subject: Text("Badge Unlocked!"),
-                                message: Text("Check out this achievement I unlocked in Habit Diary!")
-                            ) {
-                                Image(systemName: "square.and.arrow.up")
-                                    .foregroundStyle(.blue)
-                                    .font(.caption)
+                )
+                .frame(width: 4)
+                .padding(.vertical, 10)
+
+            HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
+                badgeIcon
+
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack(alignment: .firstTextBaseline) {
+                        Text(achievement.title)
+                            .font(.system(.headline, design: .serif))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(achievement.isUnlocked ? theme.textPrimary : theme.textSecondary)
+                            .lineLimit(2)
+
+                        Spacer(minLength: 8)
+
+                        if achievement.isUnlocked {
+                            HStack(spacing: 10) {
+                                ShareLink(
+                                    item: shareText,
+                                    subject: Text(String(localized: "Badge unlocked")),
+                                    message: Text(String(localized: "From Habit Diary"))
+                                ) {
+                                    Image(systemName: "square.and.arrow.up.circle.fill")
+                                        .symbolRenderingMode(.hierarchical)
+                                        .font(.title3)
+                                        .foregroundStyle(theme.primaryColor)
+                                }
+                                .accessibilityLabel(String(localized: "Share badge"))
+
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.title3)
+                                    .foregroundStyle(theme.success)
+                                    .accessibilityHidden(true)
                             }
-                            
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundStyle(.green)
-                                .font(.title3)
                         }
                     }
-                }
-                
-                Text(achievement.description)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(2)
-                
-                // Progress bar for locked achievements
-                if !achievement.isUnlocked && progress > 0 {
-                    ProgressView(value: progress, total: 1.0)
-                        .progressViewStyle(LinearProgressViewStyle(tint: Color.blue))
-                        .frame(height: 4)
-                }
-                
-                // Unlock date for unlocked achievements
-                if achievement.isUnlocked, let unlockDate = achievement.unlockedDate {
-                    Text("Unlocked \(unlockDate.formatted(date: .abbreviated, time: .omitted))")
-                        .font(.caption)
-                        .foregroundStyle(.green)
+
+                    Text(achievement.description)
+                        .font(AppFont.subheadline)
+                        .foregroundStyle(theme.textSecondary)
+                        .lineLimit(3)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    if !achievement.isUnlocked, progress > 0 {
+                        ProgressView(value: progress, total: 1.0)
+                            .progressViewStyle(.linear)
+                            .tint(theme.primaryColor)
+                            .frame(height: 5)
+                            .clipShape(.capsule)
+                    }
+
+                    if achievement.isUnlocked, let unlockDate = achievement.unlockedDate {
+                        Text(
+                            String(
+                                localized: "Unlocked \(unlockDate.formatted(date: .abbreviated, time: .omitted))"
+                            )
+                        )
+                        .font(AppFont.caption)
+                        .fontWeight(.medium)
+                        .foregroundStyle(theme.primaryColor)
+                    }
                 }
             }
-            
-            Spacer()
+            .padding(AppSpacing.smallMedium)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.systemBackground))
-                .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
-        )
+        .background { rowBackground }
+        .clipShape(.rect(cornerRadius: AppCornerRadius.info))
+        .overlay {
+            RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private var accentBarColors: [Color] {
+        if achievement.isUnlocked {
+            [theme.warning, theme.primaryColor.opacity(0.45)]
+        } else {
+            [theme.secondaryGray.opacity(0.55), theme.secondaryGray.opacity(0.25)]
+        }
+    }
+
+    private var badgeIcon: some View {
+        ZStack {
+            Circle()
+                .fill(badgeIconFill)
+                .frame(width: 52, height: 52)
+
+            Text(achievement.icon)
+                .font(.title2)
+                .opacity(achievement.isUnlocked ? 1 : 0.45)
+        }
+        .accessibilityHidden(true)
+    }
+
+    private var badgeIconFill: LinearGradient {
+        if achievement.isUnlocked {
+            LinearGradient(
+                colors: [theme.warning.opacity(0.45), theme.primaryColor.opacity(0.35)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        } else {
+            LinearGradient(
+                colors: [theme.secondaryGray.opacity(0.22), theme.secondaryGray.opacity(0.38)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+    }
+
+    @ViewBuilder
+    private var rowBackground: some View {
+        if #available(iOS 26, *) {
+            Color.clear
+                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.info))
+        } else {
+            RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                .fill(theme.card)
+        }
     }
 }
 
@@ -351,5 +289,7 @@ struct BadgeRowView: View {
     let _ = prepareDependencies {
         $0.defaultDatabase = try! appDatabase()
     }
-    BadgesView()
-} 
+    NavigationStack {
+        BadgesView()
+    }
+}

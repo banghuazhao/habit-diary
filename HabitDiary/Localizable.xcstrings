@@ -214,6 +214,9 @@
         }
       }
     },
+    "%lld percent of badges unlocked" : {
+
+    },
     "%lld points" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3027,6 +3030,9 @@
     "Fill your diary 30 days in a row" : {
 
     },
+    "Filter badges" : {
+
+    },
     "Filter by" : {
 
     },
@@ -3612,6 +3618,9 @@
 
     },
     "Keep habits active" : {
+
+    },
+    "Keep logging entries to collect the full set." : {
 
     },
     "Keep your workspace clean and organized for better productivity." : {
@@ -5717,6 +5726,9 @@
         }
       }
     },
+    "Share badge" : {
+
+    },
     "Share Badge" : {
 
     },
@@ -7093,6 +7105,9 @@
           }
         }
       }
+    },
+    "Unlock badges by journaling and building streaks" : {
+
     },
     "Unlock exciting achievements for streaks, consistency, and milestones. Celebrate your progress!" : {
       "localizations" : {
