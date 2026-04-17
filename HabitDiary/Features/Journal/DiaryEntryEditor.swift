@@ -17,6 +17,8 @@ struct DiaryEntryEditor: View {
     @Environment(\.dismiss) private var dismiss
     @Dependency(\.themeManager) var themeManager
 
+    private var theme: AppTheme { themeManager.current }
+
     private let maxNoteLength = 280
 
     var body: some View {
@@ -27,7 +29,7 @@ struct DiaryEntryEditor: View {
                     HStack(spacing: 12) {
                         ZStack {
                             Circle()
-                                .fill(themeManager.current.primaryColor.opacity(0.12))
+                                .fill(theme.primaryColor.opacity(0.12))
                                 .frame(width: 48, height: 48)
                             Text(habitIcon)
                                 .font(.system(size: 26))
@@ -37,15 +39,15 @@ struct DiaryEntryEditor: View {
                                 .font(.headline)
                             Text(checkIn.date, style: .date)
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(theme.textSecondary)
                         }
                         Spacer()
                         Image(systemName: "checkmark.circle.fill")
-                            .foregroundStyle(.green)
+                            .foregroundStyle(theme.success)
                             .font(.title2)
                     }
                     .padding()
-                    .background(themeManager.current.card)
+                    .background(theme.card)
                     .clipShape(.rect(cornerRadius: 12))
                     .padding(.horizontal)
                 }
@@ -59,21 +61,21 @@ struct DiaryEntryEditor: View {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Image(systemName: "pencil.line")
-                            .foregroundStyle(themeManager.current.primaryColor)
+                            .foregroundStyle(theme.primaryColor)
                         Text(String(localized: "Diary Note"))
                             .font(.subheadline)
                             .fontWeight(.semibold)
                         Spacer()
                         Text("\(noteText.count)/\(maxNoteLength)")
                             .font(.caption2)
-                            .foregroundStyle(noteText.count > maxNoteLength ? .red : .secondary)
+                            .foregroundStyle(noteText.count > maxNoteLength ? theme.error : theme.textSecondary)
                     }
 
                     ZStack(alignment: .topLeading) {
                         if noteText.isEmpty {
                             Text(String(localized: "How did it go? Write a quick reflection… (optional)"))
                                 .font(.body)
-                                .foregroundStyle(.secondary.opacity(0.7))
+                                .foregroundStyle(theme.textSecondary.opacity(0.75))
                                 .padding(.top, 8)
                                 .padding(.leading, 4)
                         }
@@ -88,7 +90,7 @@ struct DiaryEntryEditor: View {
                             }
                     }
                     .padding(12)
-                    .background(themeManager.current.card)
+                    .background(theme.card)
                     .clipShape(.rect(cornerRadius: 12))
                 }
                 .padding()
@@ -103,17 +105,16 @@ struct DiaryEntryEditor: View {
                     } label: {
                         Text(noteText.isEmpty ? String(localized: "Skip Note") : String(localized: "Save to Journal"))
                             .font(.headline)
-                            .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(noteText.isEmpty ? Color.secondary : themeManager.current.primaryColor)
-                            .clipShape(.rect(cornerRadius: 12))
                     }
+                    .buttonStyle(.borderedProminent)
+                    .tint(noteText.isEmpty ? theme.secondaryGray : theme.primaryColor)
                 }
                 .padding(.horizontal)
                 .padding(.bottom, 24)
             }
-            .background(themeManager.current.background.ignoresSafeArea())
+            .background(theme.background.ignoresSafeArea())
             .navigationTitle(String(localized: "Checked In! ✅"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -122,7 +123,7 @@ struct DiaryEntryEditor: View {
                         onSave(noteText)
                         dismiss()
                     }
-                    .foregroundStyle(themeManager.current.primaryColor)
+                    .foregroundStyle(theme.primaryColor)
                 }
             }
         }

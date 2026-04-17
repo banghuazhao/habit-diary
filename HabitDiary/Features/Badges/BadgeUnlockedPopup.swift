@@ -3,6 +3,7 @@
 // Copyright Apps Bay Limited. All rights reserved.
 //
 
+import Dependencies
 import SwiftUI
 
 struct BadgeUnlockedPopup: View {
@@ -11,119 +12,99 @@ struct BadgeUnlockedPopup: View {
     @State private var animationScale: CGFloat = 0.1
     @State private var animationOpacity: Double = 0
     @State private var showConfetti = false
-    
+
+    @Dependency(\.themeManager) private var themeManager
+
+    private var theme: AppTheme { themeManager.current }
+
     var body: some View {
         ZStack {
-            // Background overlay
-            Color.black.opacity(0.4)
+            Color.black.opacity(0.45)
                 .ignoresSafeArea()
                 .onTapGesture {
                     dismissPopup()
                 }
-            
-            // Badge popup
-            VStack(spacing: 20) {
-                // Badge icon with celebration
+
+            VStack(spacing: AppSpacing.medium) {
                 ZStack {
                     Circle()
                         .fill(
                             LinearGradient(
-                                gradient: Gradient(colors: [Color.yellow, Color.orange]),
+                                colors: [theme.warning, theme.primaryColor.opacity(0.92)],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             )
                         )
                         .frame(width: 100, height: 100)
-                        .shadow(color: .yellow.opacity(0.5), radius: 10, x: 0, y: 5)
-                    
+                        .shadow(color: theme.warning.opacity(0.35), radius: 12, x: 0, y: 6)
+
                     Text(achievement.icon)
                         .font(.system(size: 50))
                         .scaleEffect(animationScale)
                         .opacity(animationOpacity)
                 }
-                
-                // Badge title
-                Text(String(localized: "🎉 Badge Unlocked! 🎉"))
-                    .font(.title2)
+
+                Text(String(localized: "Badge unlocked"))
+                    .font(.system(.title2, design: .serif))
                     .fontWeight(.bold)
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(theme.textPrimary)
                     .multilineTextAlignment(.center)
                     .opacity(animationOpacity)
-                
-                // Badge details
-                VStack(spacing: 12) {
+
+                VStack(spacing: AppSpacing.smallMedium) {
                     Text(achievement.title)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.primary)
+                        .font(.title3.weight(.semibold))
+                        .foregroundStyle(theme.textPrimary)
                         .multilineTextAlignment(.center)
-                    
+
                     Text(achievement.description)
-                        .font(.body)
-                        .foregroundStyle(.secondary)
+                        .font(.system(.body, design: .serif))
+                        .foregroundStyle(theme.textSecondary)
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal)
+                        .padding(.horizontal, AppSpacing.small)
                 }
                 .opacity(animationOpacity)
-                
-                // Share button
+
                 ShareLink(
                     item: createAchievementShareText(achievement),
-                    subject: Text(String(localized: "Badge Unlocked!")),
-                    message: Text(String(localized: "Check out this achievement I unlocked in Habit Diary!"))
+                    subject: Text(String(localized: "Badge unlocked")),
+                    message: Text(String(localized: "From Habit Diary"))
                 ) {
-                    HStack {
-                        Image(systemName: "square.and.arrow.up")
-                        Text(String(localized: "Share Badge"))
-                    }
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color.green, Color.blue]),
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-                    .clipShape(.rect(cornerRadius: 12))
+                    Label(String(localized: "Share badge"), systemImage: "square.and.arrow.up")
+                        .font(AppFont.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, AppSpacing.smallMedium)
                 }
+                .buttonStyle(.borderedProminent)
+                .tint(theme.primaryColor)
                 .opacity(animationOpacity)
-                .padding(.horizontal)
-                
-                // Continue button
+                .padding(.horizontal, AppSpacing.small)
+
                 Button(action: dismissPopup) {
                     Text(String(localized: "Continue"))
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.white)
+                        .font(AppFont.headline)
                         .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.blue, Color.purple]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .clipShape(.rect(cornerRadius: 12))
+                        .padding(.vertical, AppSpacing.smallMedium)
                 }
+                .buttonStyle(.bordered)
+                .tint(theme.primaryColor)
                 .opacity(animationOpacity)
-                .padding(.horizontal)
+                .padding(.horizontal, AppSpacing.small)
             }
-            .padding(30)
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color(.systemBackground))
-                    .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 10)
-            )
-            .padding(.horizontal, 40)
+            .padding(AppSpacing.large)
+            .background {
+                RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                    .fill(theme.card)
+                    .shadow(color: .black.opacity(0.18), radius: 24, x: 0, y: 12)
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                    .strokeBorder(theme.textSecondary.opacity(0.12), lineWidth: 1)
+            }
+            .padding(.horizontal, AppSpacing.large)
             .scaleEffect(animationScale)
             .opacity(animationOpacity)
-            
-            // Confetti effect
+
             if showConfetti {
                 ConfettiView()
             }
@@ -132,61 +113,58 @@ struct BadgeUnlockedPopup: View {
             startAnimation()
         }
     }
-    
+
     private func startAnimation() {
-        // Play haptic feedback
         Haptics.shared.vibrateIfEnabled()
-        
-        // Animate popup appearance
+
         withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
             animationScale = 1.0
             animationOpacity = 1.0
         }
-        
-        // Show confetti after a short delay
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             withAnimation(.easeInOut(duration: 0.5)) {
                 showConfetti = true
             }
         }
     }
-    
+
     private func dismissPopup() {
         withAnimation(.easeInOut(duration: 0.3)) {
             animationScale = 0.1
             animationOpacity = 0
         }
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             isPresented = false
         }
     }
-    
+
     private func createAchievementShareText(_ achievement: Badge) -> String {
-        let appName = "Habit Diary"
+        let appName = String(localized: "Habit Diary")
         let appStoreURL = "https://apps.apple.com/app/id\(Constants.AppID.appID)"
-        
-        var shareText = "🎉 Badge Unlocked! 🎉\n\n"
-        shareText += "🏆 \(achievement.title)\n"
-        shareText += "📝 \(achievement.description)\n\n"
-        
+
+        var shareText = String(localized: "Badge unlocked!\n\n")
+        shareText += "\(achievement.title)\n"
+        shareText += "\(achievement.description)\n\n"
+
         if let unlockDate = achievement.unlockedDate {
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
-            shareText += "📅 Unlocked on \(formatter.string(from: unlockDate))\n\n"
+            shareText += String(localized: "Unlocked \(formatter.string(from: unlockDate))\n\n")
         }
-        
-        shareText += "💪 Keep building healthy habits with \(appName)!\n"
-        shareText += "📱 Download: \(appStoreURL)"
-        
+
+        shareText += String(localized: "\(appName)\n\(appStoreURL)")
         return shareText
     }
 }
 
-// Confetti effect view
+// MARK: - Confetti
+
 struct ConfettiView: View {
     @State private var particles: [ConfettiParticle] = []
-    
+    @Dependency(\.themeManager) private var themeManager
+
     var body: some View {
         ZStack {
             ForEach(particles) { particle in
@@ -197,16 +175,26 @@ struct ConfettiView: View {
             createParticles()
         }
     }
-    
+
     private func createParticles() {
-        particles = (0..<50).map { _ in
+        let theme = themeManager.current
+        let palette: [Color] = [
+            theme.primaryColor,
+            theme.warning,
+            theme.success,
+            theme.accent,
+            theme.primaryColor.opacity(0.65),
+            theme.warning.opacity(0.85),
+            theme.success.opacity(0.9)
+        ]
+        particles = (0 ..< 50).map { _ in
             ConfettiParticle(
                 id: UUID(),
-                x: Double.random(in: 0...1),
-                y: Double.random(in: 0...1),
-                rotation: Double.random(in: 0...360),
-                scale: Double.random(in: 0.5...1.5),
-                color: [.red, .blue, .green, .yellow, .orange, .purple, .pink].randomElement() ?? .blue
+                x: Double.random(in: 0 ... 1),
+                y: Double.random(in: 0 ... 1),
+                rotation: Double.random(in: 0 ... 360),
+                scale: Double.random(in: 0.5 ... 1.5),
+                color: palette.randomElement() ?? theme.primaryColor
             )
         }
     }
@@ -226,7 +214,7 @@ struct ConfettiParticleView: View {
     @State private var animationOffset: CGSize = .zero
     @State private var animationRotation: Double = 0
     @State private var animationOpacity: Double = 1
-    
+
     var body: some View {
         Circle()
             .fill(particle.color)
@@ -242,14 +230,14 @@ struct ConfettiParticleView: View {
                 animateParticle()
             }
     }
-    
+
     private func animateParticle() {
         let randomOffset = CGSize(
-            width: Double.random(in: -100...100),
-            height: Double.random(in: -200...200)
+            width: Double.random(in: -100 ... 100),
+            height: Double.random(in: -200 ... 200)
         )
-        let randomRotation = Double.random(in: -360...360)
-        
+        let randomRotation = Double.random(in: -360 ... 360)
+
         withAnimation(.easeOut(duration: 2.0)) {
             animationOffset = randomOffset
             animationRotation = randomRotation
@@ -273,4 +261,4 @@ struct ConfettiParticleView: View {
         ),
         isPresented: .constant(true)
     )
-} 
+}

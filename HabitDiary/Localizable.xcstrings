@@ -23,6 +23,16 @@
     "%.1f%% of maximum" : {
 
     },
+    "%@\n%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@\n%2$@"
+          }
+        }
+      }
+    },
     "%@ - %@" : {
       "localizations" : {
         "en" : {
@@ -458,9 +468,6 @@
     "🎉 Badge unlocked\n\n" : {
 
     },
-    "🎉 Badge Unlocked! 🎉" : {
-
-    },
     "💎 Thanks for being a Premium member!" : {
       "localizations" : {
         "zh-Hans" : {
@@ -805,6 +812,9 @@
           }
         }
       }
+    },
+    "Add habit" : {
+
     },
     "Add habits you want to track — they’ll appear here like titles on a shelf." : {
 
@@ -1264,7 +1274,7 @@
     "Badge unlocked" : {
 
     },
-    "Badge Unlocked!" : {
+    "Badge unlocked!\n\n" : {
 
     },
     "Badges" : {
@@ -1614,6 +1624,7 @@
       }
     },
     "Check out this achievement I unlocked in Habit Diary!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4546,6 +4557,9 @@
     "Nothing logged yet" : {
 
     },
+    "Nothing scheduled today" : {
+
+    },
     "Notifications are disabled. Please enable them in Settings to receive reminders." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5799,9 +5813,6 @@
     "Share badge" : {
 
     },
-    "Share Badge" : {
-
-    },
     "Share Habit Diary" : {
 
     },
@@ -6699,6 +6710,7 @@
 
     },
     "Theme Color" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6746,6 +6758,9 @@
         }
       }
     },
+    "This permanently deletes “%@” and its journal entries. You can’t undo this." : {
+
+    },
     "This permanently removes this habit and its journal entries. You can’t undo this." : {
 
     },
@@ -6781,9 +6796,6 @@
           }
         }
       }
-    },
-    "This will permanently delete the habit '%@' and all its check-in history. This action cannot be undone. Are you sure you want to proceed?" : {
-
     },
     "This will permanently delete the habit ‘%@’ and all its check-in history. This action cannot be undone. Are you sure you want to proceed?" : {
       "extractionState" : "stale",
@@ -7704,6 +7716,9 @@
       }
     },
     "You can explore the habit gallery anytime and add habits that inspire you. Start whenever you’re ready." : {
+
+    },
+    "You don’t have habits for this day yet. Add habits from Library to fill your journal." : {
 
     },
     "You don't have to be great to get started, but you have to get started to be great." : {

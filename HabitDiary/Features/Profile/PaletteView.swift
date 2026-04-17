@@ -51,13 +51,13 @@ struct PaletteView: View {
                     VStack(spacing: AppSpacing.medium) {
                         // Sample button
                         HStack {
-                                                    Button(action: {
-                            Haptics.shared.vibrateIfEnabled()
-                        }) {
-                            Text(String(localized: "Sample Button"))
-                        }
+                            Button(action: {
+                                Haptics.shared.vibrateIfEnabled()
+                            }) {
+                                Text(String(localized: "Sample Button"))
+                            }
                             .buttonStyle(.appRect)
-                            
+
                             Button(action: {
                                 Haptics.shared.vibrateIfEnabled()
                             }) {
@@ -85,10 +85,11 @@ struct PaletteView: View {
                 }
                 .padding(.horizontal)
             }
-            .navigationTitle("Theme Color")
-            .navigationBarTitleDisplayMode(.inline)
+            .padding(.vertical, AppSpacing.small)
         }
-        .background(themeManager.current.background)
+        .background(themeManager.current.background.ignoresSafeArea())
+        .navigationTitle(String(localized: "Ink & paper"))
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

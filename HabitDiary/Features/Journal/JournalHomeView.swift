@@ -3,15 +3,18 @@
 // Copyright Apps Bay Limited. All rights reserved.
 //
 
+import Dependencies
 import SQLiteData
 import SwiftUI
 import SwiftUINavigation
 
 struct JournalHomeView: View {
     @State var viewModel = JournalHomeViewModel()
-    
+
     @Dependency(\.themeManager) var themeManager
-    
+
+    private var theme: AppTheme { themeManager.current }
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -34,9 +37,11 @@ struct JournalHomeView: View {
                     if viewModel.todayHabits.isEmpty {
                         EmptyStateView(
                             icon: "📔",
-                            title: "No Habits for Today",
-                            subtitle: "You don't have any habits scheduled for today. Create some habits to start writing your story!",
-                            buttonTitle: "Add Habit"
+                            title: String(localized: "Nothing scheduled today"),
+                            subtitle: String(
+                                localized: "You don’t have habits for this day yet. Add habits from Library to fill your journal."
+                            ),
+                            buttonTitle: String(localized: "Add habit")
                         ) {
                             viewModel.onTapAddHabit()
                         }
@@ -70,13 +75,17 @@ struct JournalHomeView: View {
                                         Text(String(localized: "Delete '\(habit.truncatedName)'?"))
                                     },
                                     actions: { habit in
-                                        Button("Delete", role: .destructive) {
+                                        Button(String(localized: "Delete"), role: .destructive) {
                                             viewModel.confirmDeleteHabit(habit)
                                         }
-                                        Button("Cancel", role: .cancel) {}
+                                        Button(String(localized: "Cancel"), role: .cancel) {}
                                     },
                                     message: { habit in
-                                        Text(String(localized: "This will permanently delete the habit '\(habit.truncatedName)' and all its check-in history. This action cannot be undone. Are you sure you want to proceed?"))
+                                        Text(
+                                            String(
+                                                localized: "This permanently deletes “\(habit.truncatedName)” and its journal entries. You can’t undo this."
+                                            )
+                                        )
                                     }
                                 )
                             }
@@ -99,14 +108,18 @@ struct JournalHomeView: View {
                 }
             }
             .appBackground()
-            .navigationTitle("Today")
+            .navigationTitle(String(localized: "Today"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
                         viewModel.onTapEdit()
                     }) {
-                        Text(viewModel.isEditing ? "Done" : "Edit")
+                        Text(
+                            viewModel.isEditing
+                                ? String(localized: "Done")
+                                : String(localized: "Edit")
+                        )
                             .appRectButtonStyle()
                     }
                 }
@@ -127,7 +140,7 @@ struct JournalHomeView: View {
                     .environment(\.calendar, viewModel.userCalendar)
                     .labelsHidden()
                     .datePickerStyle(.compact)
-                    .tint(ThemeManager.shared.current.primaryColor)
+                    .tint(theme.primaryColor)
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
@@ -150,7 +163,8 @@ struct JournalHomeView: View {
         let total     = viewModel.todayHabits.count
         let progress  = total > 0 ? Double(completed) / Double(total) : 0
         let allDone   = completed == total && total > 0
-        let primary   = themeManager.current.primaryColor
+        let primary = themeManager.current.primaryColor
+        let success = themeManager.current.success
 
         return VStack(spacing: 0) {
             // ── Diary entry header ──────────────────────────────
@@ -174,7 +188,7 @@ struct JournalHomeView: View {
                         .font(.title2)
                     Text("\(completed)/\(total)")
                         .font(.system(size: 11, weight: .semibold, design: .rounded))
-                        .foregroundStyle(allDone ? .green : primary)
+                        .foregroundStyle(allDone ? success : primary)
                 }
             }
             .padding(.horizontal, 16)
@@ -193,17 +207,17 @@ struct JournalHomeView: View {
                          ? String(localized: "Today's entry is complete! 🎉")
                          : String(localized: "\(completed) of \(total) habits written today"))
                         .font(.caption)
-                        .foregroundStyle(allDone ? .green : themeManager.current.textSecondary)
+                        .foregroundStyle(allDone ? success : themeManager.current.textSecondary)
                     Spacer()
                     Text(String(format: "%.0f%%", progress * 100))
                         .font(.system(size: 11, weight: .bold, design: .rounded))
-                        .foregroundStyle(allDone ? .green : primary)
+                        .foregroundStyle(allDone ? success : primary)
                 }
                 .padding(.horizontal, 16)
 
                 ProgressView(value: progress)
                     .progressViewStyle(LinearProgressViewStyle(
-                        tint: allDone ? .green : primary
+                        tint: allDone ? success : primary
                     ))
                     .scaleEffect(x: 1, y: 1.8, anchor: .center)
                     .padding(.horizontal, 16)
