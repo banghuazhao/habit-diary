@@ -769,6 +769,9 @@
         }
       }
     },
+    "Adjust how your diary behaves and feels." : {
+
+    },
     "Advance through 12 levels from Beginner (F) to Legend (SSS) based on your habit consistency and achievements." : {
       "localizations" : {
         "zh-Hans" : {
@@ -936,6 +939,9 @@
 
     },
     "and %lld more entries…" : {
+
+    },
+    "Appearance" : {
 
     },
     "Apprentice" : {
@@ -1298,6 +1304,9 @@
         }
       }
     },
+    "Calendar" : {
+
+    },
     "Call family/friends" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1554,6 +1563,7 @@
       }
     },
     "Checkin Sound" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1635,6 +1645,9 @@
           }
         }
       }
+    },
+    "Clears the dismiss for this day" : {
+
     },
     "Close" : {
 
@@ -1941,6 +1954,7 @@
       }
     },
     "Daily Motivational Quotes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1955,6 +1969,12 @@
           }
         }
       }
+    },
+    "Daily prompts" : {
+
+    },
+    "Daily prompts on your Journal home" : {
+
     },
     "Daily Reflection" : {
 
@@ -2547,6 +2567,9 @@
         }
       }
     },
+    "Entry sound" : {
+
+    },
     "Evening diary entry" : {
 
     },
@@ -3108,6 +3131,9 @@
         }
       }
     },
+    "Haptics" : {
+
+    },
     "How %@ Score is Calculated" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3142,6 +3168,9 @@
           }
         }
       }
+    },
+    "How weeks line up in your journal" : {
+
     },
     "If you get 1% better each day for one year, you'll end up 37 times better." : {
       "localizations" : {
@@ -3280,6 +3309,9 @@
     "Journal Keeper" : {
 
     },
+    "Journal preferences" : {
+
+    },
     "Keep a 7-day journaling streak" : {
 
     },
@@ -3387,6 +3419,9 @@
 
     },
     "Life in Pages" : {
+
+    },
+    "Light or dark paper tone" : {
 
     },
     "Limit processed foods and drinks with added sugars." : {
@@ -4855,6 +4890,9 @@
     "Reflect on your goals" : {
 
     },
+    "Reflection" : {
+
+    },
     "Reminders" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4920,6 +4958,7 @@
       }
     },
     "Reset Today's Motivation" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5022,6 +5061,9 @@
       }
     },
     "Save to Journal" : {
+
+    },
+    "Saved on this device" : {
 
     },
     "Schedule focused work blocks for important tasks." : {
@@ -5275,6 +5317,9 @@
         }
       }
     },
+    "Show today’s prompt again" : {
+
+    },
     "Skincare routine" : {
       "localizations" : {
         "zh-Hans" : {
@@ -5405,6 +5450,9 @@
           }
         }
       }
+    },
+    "Sounds and haptics when you log habits" : {
+
     },
     "Spend 10 minutes each morning planning your day and priorities." : {
       "extractionState" : "stale",
@@ -6674,6 +6722,7 @@
       }
     },
     "Vibrate" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6709,6 +6758,7 @@
       }
     },
     "Week Start" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
