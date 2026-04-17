@@ -20,6 +20,9 @@
     "— %@" : {
 
     },
+    "%.1f%% of maximum" : {
+
+    },
     "%@ - %@" : {
       "localizations" : {
         "en" : {
@@ -197,6 +200,7 @@
       }
     },
     "%lld points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -213,6 +217,7 @@
       }
     },
     "%lld points needed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -228,7 +233,18 @@
         }
       }
     },
+    "%lld pts to %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld pts to %2$@"
+          }
+        }
+      }
+    },
     "%lld-%lld points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -246,6 +262,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld-%2$lld 分"
+          }
+        }
+      }
+    },
+    "%lld–%lld points" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld–%2$lld points"
           }
         }
       }
@@ -633,6 +659,9 @@
 
     },
     "A simple daily entry — keep the streak going and notice how you feel." : {
+
+    },
+    "A single number from your habits" : {
 
     },
     "A small first win every morning — log it and start the page on a good note." : {
@@ -1024,6 +1053,9 @@
         }
       }
     },
+    "Archive what you don’t use so your library matches real life." : {
+
+    },
     "Archived" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1178,6 +1210,9 @@
     "Badges" : {
 
     },
+    "Badges reward patterns — explore them in the Badges tab." : {
+
+    },
     "Be the person your dog thinks you are." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1298,6 +1333,7 @@
 
     },
     "Build Consistency" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1382,6 +1418,9 @@
           }
         }
       }
+    },
+    "Category detail" : {
+
     },
     "Celebrate milestones to stay motivated" : {
       "localizations" : {
@@ -1489,6 +1528,7 @@
       }
     },
     "Check out my Habit rating from Habit Diary!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1684,6 +1724,9 @@
     "Close" : {
 
     },
+    "Collect badges" : {
+
+    },
     "Collector of Days" : {
 
     },
@@ -1736,6 +1779,7 @@
       }
     },
     "Complete various challenges to earn achievement points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2913,6 +2957,7 @@
       }
     },
     "Focus on daily check-ins rather than perfect performance" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2929,6 +2974,7 @@
       }
     },
     "Focus on habits with higher anti-aging ratings for better scores" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3139,6 +3185,7 @@
       }
     },
     "Habit Rating System" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3189,7 +3236,14 @@
     "Haptics" : {
 
     },
+    "Here’s my habit insight summary from Habit Diary." : {
+
+    },
+    "How %@ is calculated" : {
+
+    },
     "How %@ Score is Calculated" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3209,6 +3263,7 @@
 
     },
     "How It's Calculated" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3224,7 +3279,16 @@
         }
       }
     },
+    "How it’s calculated" : {
+
+    },
+    "How scoring works" : {
+
+    },
     "How weeks line up in your journal" : {
+
+    },
+    "Ideas to try" : {
 
     },
     "If you get 1% better each day for one year, you'll end up 37 times better." : {
@@ -3283,6 +3347,22 @@
 
     },
     "Ink Is Flowing" : {
+
+    },
+    "Insight rating %@, %lld points" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Insight rating %1$@, %2$lld points"
+          }
+        }
+      }
+    },
+    "Insight score" : {
+
+    },
+    "Insight snapshot" : {
 
     },
     "Insights" : {
@@ -3377,6 +3457,9 @@
 
     },
     "Keep a 100-day diary streak" : {
+
+    },
+    "Keep habits active" : {
 
     },
     "Keep your workspace clean and organized for better productivity." : {
@@ -3837,6 +3920,7 @@
       }
     },
     "Monitor your streaks and celebrate small victories" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3957,6 +4041,7 @@
       }
     },
     "Motivation" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3972,7 +4057,11 @@
         }
       }
     },
+    "My habit insights" : {
+
+    },
     "My Habit Rating" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4099,6 +4188,9 @@
           }
         }
       }
+    },
+    "Next tier" : {
+
     },
     "Night Owl" : {
       "localizations" : {
@@ -4259,6 +4351,12 @@
     "Nudges for your habits" : {
 
     },
+    "Numbers" : {
+
+    },
+    "of %lld" : {
+
+    },
     "Once archived, the habit will be hidden from today's habits list, but its check-ins will be kept." : {
       "localizations" : {
         "zh-Hans" : {
@@ -4291,10 +4389,16 @@
         }
       }
     },
+    "One check-in on a busy day keeps momentum." : {
+
+    },
     "Opening Chapter" : {
 
     },
     "Opens App Store review" : {
+
+    },
+    "Opens score breakdown" : {
 
     },
     "Orange" : {
@@ -4382,6 +4486,9 @@
         }
       }
     },
+    "Overall progress" : {
+
+    },
     "Page Turner" : {
 
     },
@@ -4451,6 +4558,9 @@
           }
         }
       }
+    },
+    "Performance" : {
+
     },
     "Personalized notifications to keep you on track without being overwhelming." : {
       "localizations" : {
@@ -4667,6 +4777,7 @@
       }
     },
     "Prioritize High-Impact Habits" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4718,6 +4829,7 @@
       }
     },
     "Progress in %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4734,6 +4846,7 @@
       }
     },
     "Progress to %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4768,6 +4881,9 @@
     "Prolific Journaler" : {
 
     },
+    "Protect the streak" : {
+
+    },
     "Pure Focus: " : {
 
     },
@@ -4789,6 +4905,7 @@
       }
     },
     "Range: %lld - %@ points" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4809,6 +4926,19 @@
           }
         }
       }
+    },
+    "Range: %lld–%lld points" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Range: %1$lld–%2$lld points"
+          }
+        }
+      }
+    },
+    "Range: %lld+ points" : {
+
     },
     "Rate on the App Store" : {
 
@@ -4848,6 +4978,7 @@
       }
     },
     "Rating Levels" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5176,7 +5307,18 @@
         }
       }
     },
+    "Score %lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Score %1$lld of %2$lld"
+          }
+        }
+      }
+    },
     "Score Breakdown" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5193,6 +5335,7 @@
       }
     },
     "Score Categories" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5209,6 +5352,7 @@
       }
     },
     "Score Range" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5225,6 +5369,7 @@
       }
     },
     "Score: %lld/%lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5279,6 +5424,7 @@
 
     },
     "Set Realistic Goals" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5384,6 +5530,9 @@
           }
         }
       }
+    },
+    "Short journal entries still lift your consistency score." : {
+
     },
     "Shortcuts inside Habit Diary" : {
 
@@ -5695,6 +5844,7 @@
       }
     },
     "Start with small, achievable habits and gradually increase complexity" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5978,6 +6128,9 @@
         }
       }
     },
+    "Tap a row for details." : {
+
+    },
     "Tap Add a Reminder to get started" : {
       "localizations" : {
         "zh-Hans" : {
@@ -5993,6 +6146,9 @@
           }
         }
       }
+    },
+    "Tap for category breakdown" : {
+
     },
     "Thank you for supporting Habit Diary!" : {
       "localizations" : {
@@ -6311,6 +6467,9 @@
     "Three things you're grateful for — the simplest diary entry with the biggest impact." : {
 
     },
+    "Tiers" : {
+
+    },
     "Time" : {
       "localizations" : {
         "zh-Hans" : {
@@ -6344,6 +6503,7 @@
       }
     },
     "Tips for Improvement" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6360,6 +6520,7 @@
       }
     },
     "Tips to Improve" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6458,6 +6619,9 @@
         }
       }
     },
+    "Total" : {
+
+    },
     "Total Check-ins" : {
       "localizations" : {
         "zh-Hans" : {
@@ -6491,6 +6655,7 @@
       }
     },
     "Total Score" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6510,6 +6675,7 @@
 
     },
     "Track Progress" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6649,6 +6815,7 @@
       }
     },
     "Unlock Achievements" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6862,6 +7029,9 @@
     "Violet" : {
 
     },
+    "Ways to move the needle" : {
+
+    },
     "We are what we repeatedly do. Excellence, then, is not an act, but a habit." : {
       "localizations" : {
         "zh-Hans" : {
@@ -6877,6 +7047,9 @@
           }
         }
       }
+    },
+    "We combine habits, journal entries, streaks, and badges into one score — so you can see momentum at a glance." : {
+
     },
     "Week Start" : {
       "extractionState" : "stale",
@@ -6943,6 +7116,9 @@
         }
       }
     },
+    "What goes in" : {
+
+    },
     "What seems impossible today will one day become your warm-up." : {
       "localizations" : {
         "zh-Hans" : {
@@ -6959,6 +7135,9 @@
         }
       }
     },
+    "Where your score comes from" : {
+
+    },
     "Why Habit Diary?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -6974,6 +7153,9 @@
           }
         }
       }
+    },
+    "Within %@" : {
+
     },
     "Workout" : {
       "localizations" : {
@@ -7043,6 +7225,9 @@
 
     },
     "Write one thing you noticed outside today — your diary becomes a nature log." : {
+
+    },
+    "Write small, often" : {
 
     },
     "Write the one idea from today's episode worth remembering." : {
@@ -7279,6 +7464,7 @@
       }
     },
     "Your Performance:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -7295,6 +7481,7 @@
       }
     },
     "Your rating is calculated based on your overall health and wellness habits across multiple dimensions. Focus on building consistent habits across all categories to improve your rating!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -7317,6 +7504,7 @@
 
     },
     "Your Statistics" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

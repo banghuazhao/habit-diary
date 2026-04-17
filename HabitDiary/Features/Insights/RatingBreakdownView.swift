@@ -3,36 +3,41 @@
 // Copyright Apps Bay Limited. All rights reserved.
 //
 
-import SwiftUI
-import SQLiteData
+import Dependencies
 import Sharing
+import SQLiteData
+import SwiftUI
 
 struct RatingBreakdownView: View {
     @Environment(\.dismiss) private var dismiss
+    @Dependency(\.themeManager) private var themeManager
     @State var viewModel: RatingBreakdownViewModel
-    
+
+    private var theme: AppTheme { themeManager.current }
+
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
+                VStack(spacing: AppSpacing.large) {
                     headerCard
                     progressSection
                     statisticsSection
                     tipsSection
                 }
-                .padding()
+                .padding(.horizontal)
+                .padding(.vertical, AppSpacing.small)
             }
             .appBackground()
-            .navigationTitle(viewModel.category.rawValue)
+            .navigationTitle(viewModel.category.localizedTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button{
+                    Button {
                         dismiss()
                     } label: {
-                       Text(String(localized: "Done"))
-                           .appRectButtonStyle()
-                   }
+                        Text(String(localized: "Done"))
+                            .appRectButtonStyle()
+                    }
                 }
             }
             .task {
@@ -40,128 +45,204 @@ struct RatingBreakdownView: View {
             }
         }
     }
-    
+
     private var headerCard: some View {
-        VStack(spacing: 16) {
-            HStack {
-                Image(systemName: viewModel.category.icon)
-                    .font(.system(size: 32))
-                    .foregroundStyle(viewModel.category.color)
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(viewModel.category.rawValue)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                    
-                    Text(String(localized: "Score: \(viewModel.currentScore)/\(viewModel.category.maxScore)"))
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
-                Spacer()
-            }
-            
-            VStack(spacing: 8) {
-                HStack {
-                    Text(String(localized: "Progress"))
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                    Text(String("\(Int(viewModel.percentage * 100))%"))
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
-                
-                ProgressView(value: viewModel.percentage)
-                    .progressViewStyle(LinearProgressViewStyle(tint: viewModel.category.color))
-                    .scaleEffect(x: 1, y: 2, anchor: .center)
-            }
-        }
-        .appCardStyle()
-    }
-    
-    private var progressSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(String(localized: "How It's Calculated"))
-                .font(.headline)
-                .fontWeight(.semibold)
-            
-            Text(viewModel.category.calculationExplanation)
-                .font(.callout)
-                .foregroundStyle(.secondary)
-                .appInfoSection()
-        }
-    }
-    
-    private var statisticsSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(String(localized: "Your Statistics"))
-                .font(.headline)
-                .fontWeight(.semibold)
-            
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                ForEach(viewModel.statistics, id: \.title) { stat in
-                    StatCard(title: stat.title, value: stat.value, subtitle: stat.subtitle, color: viewModel.category.color)
-                }
-            }
-        }
-    }
-    
-    private var tipsSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(String(localized: "Tips to Improve"))
-                .font(.headline)
-                .fontWeight(.semibold)
-            
-            VStack(spacing: 12) {
-                ForEach(viewModel.tips, id: \.self) { tip in
-                    HStack(alignment: .top, spacing: 12) {
-                        Image(systemName: "lightbulb.fill")
-                            .foregroundStyle(viewModel.category.color)
-                            .font(.system(size: 16))
-                        
-                        Text(tip)
-                            .font(.callout)
-                            .foregroundStyle(ThemeManager.shared.current.textSecondary)
-                        
-                        Spacer()
+        let c = viewModel.category.color
+        return HStack(alignment: .top, spacing: 0) {
+            RoundedRectangle(cornerRadius: 2)
+                .fill(
+                    LinearGradient(
+                        colors: [c, c.opacity(0.35)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .frame(width: 5)
+                .padding(.vertical, 10)
+
+            VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                Text(String(localized: "Category detail"))
+                    .font(AppFont.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(theme.textSecondary)
+                    .textCase(.uppercase)
+                    .tracking(0.6)
+
+                HStack(alignment: .center, spacing: AppSpacing.smallMedium) {
+                    Image(systemName: viewModel.category.icon)
+                        .font(.system(size: 28, weight: .semibold))
+                        .foregroundStyle(c)
+                        .frame(width: 48, height: 48)
+                        .background(c.opacity(0.12))
+                        .clipShape(.rect(cornerRadius: 12))
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(viewModel.category.localizedTitle)
+                            .font(.system(.title3, design: .serif))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(theme.textPrimary)
+
+                        Text(
+                            String(
+                                localized: "Score \(viewModel.currentScore) of \(viewModel.category.maxScore)"
+                            )
+                        )
+                        .font(AppFont.subheadline)
+                        .foregroundStyle(theme.textSecondary)
                     }
-                    .appInfoSection()
+                    Spacer(minLength: 0)
+                }
+
+                VStack(spacing: 8) {
+                    HStack {
+                        Text(String(localized: "Progress"))
+                            .font(AppFont.subheadline)
+                            .foregroundStyle(theme.textSecondary)
+                        Spacer()
+                        Text("\(Int(viewModel.percentage * 100))%")
+                            .font(AppFont.subheadline.weight(.semibold))
+                            .foregroundStyle(c)
+                    }
+
+                    ProgressView(value: viewModel.percentage)
+                        .tint(c)
+                        .scaleEffect(x: 1, y: 1.8, anchor: .center)
+                }
+                .padding(AppSpacing.smallMedium)
+                .background(theme.surface.opacity(0.65))
+                .clipShape(.rect(cornerRadius: AppCornerRadius.info))
+            }
+            .padding(AppSpacing.medium)
+        }
+        .background {
+            if #available(iOS 26, *) {
+                Color.clear
+                    .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
+            } else {
+                theme.card
+            }
+        }
+        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
+        .overlay {
+            RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                .strokeBorder(theme.textSecondary.opacity(0.12), lineWidth: 1)
+        }
+    }
+
+    private var progressSection: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+            Text(String(localized: "How it’s calculated"))
+                .font(.system(.headline, design: .serif))
+                .foregroundStyle(theme.textPrimary)
+
+            Text(viewModel.category.calculationExplanation)
+                .font(AppFont.body)
+                .foregroundStyle(theme.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(AppSpacing.smallMedium)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(theme.surface.opacity(0.5))
+                .clipShape(.rect(cornerRadius: AppCornerRadius.info))
+        }
+    }
+
+    private var statisticsSection: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+            Text(String(localized: "Numbers"))
+                .font(.system(.headline, design: .serif))
+                .foregroundStyle(theme.textPrimary)
+
+            LazyVGrid(
+                columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)],
+                spacing: 12
+            ) {
+                ForEach(viewModel.statistics, id: \.title) { stat in
+                    InsightStatTile(
+                        title: stat.title,
+                        value: stat.value,
+                        subtitle: stat.subtitle,
+                        accent: viewModel.category.color,
+                        theme: theme
+                    )
+                }
+            }
+        }
+    }
+
+    private var tipsSection: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+            Text(String(localized: "Ideas to try"))
+                .font(.system(.headline, design: .serif))
+                .foregroundStyle(theme.textPrimary)
+
+            VStack(spacing: AppSpacing.small) {
+                ForEach(viewModel.tips, id: \.self) { tip in
+                    HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
+                        Image(systemName: "leaf.fill")
+                            .foregroundStyle(viewModel.category.color)
+                            .font(.body)
+
+                        Text(tip)
+                            .font(AppFont.body)
+                            .foregroundStyle(theme.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        Spacer(minLength: 0)
+                    }
+                    .padding(AppSpacing.smallMedium)
+                    .background(theme.surface.opacity(0.45))
+                    .clipShape(.rect(cornerRadius: AppCornerRadius.info))
                 }
             }
         }
     }
 }
 
-struct StatCard: View {
+/// Compact stat cell — matches Insights “shelf” tiles (replaces plain `StatCard`).
+private struct InsightStatTile: View {
     let title: String
     let value: String
     let subtitle: String
-    let color: Color
-    
+    let accent: Color
+    let theme: AppTheme
+
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) {
             Text(title)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+                .font(AppFont.caption)
+                .foregroundStyle(theme.textSecondary)
                 .multilineTextAlignment(.center)
-            
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+
             Text(value)
-                .font(.title2)
+                .font(.system(.title2, design: .rounded))
                 .fontWeight(.bold)
-                .foregroundStyle(color)
-            
+                .foregroundStyle(accent)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+
             Text(subtitle)
-                .font(.caption2)
-                .foregroundStyle(.secondary)
+                .font(AppFont.footnote)
+                .foregroundStyle(theme.textSecondary)
                 .multilineTextAlignment(.center)
+                .lineLimit(2)
         }
-        .padding(12)
+        .padding(AppSpacing.smallMedium)
         .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.systemBackground))
-                .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
-        )
+        .background {
+            if #available(iOS 26, *) {
+                Color.clear
+                    .glassEffect(in: .rect(cornerRadius: AppCornerRadius.info))
+            } else {
+                ZStack {
+                    RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                        .fill(theme.card)
+                    RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                        .strokeBorder(accent.opacity(0.2), lineWidth: 1)
+                }
+            }
+        }
     }
 }
 

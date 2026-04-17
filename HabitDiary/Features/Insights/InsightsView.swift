@@ -3,38 +3,40 @@
 // Copyright Apps Bay Limited. All rights reserved.
 //
 
-import SwiftUI
+import Dependencies
 import SQLiteData
+import SwiftUI
 
 struct InsightsView: View {
+    @Dependency(\.themeManager) private var themeManager
     @State private var viewModel = InsightsViewModel()
-    
+
+    private var theme: AppTheme { themeManager.current }
+
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
-                    // Rating Card
-                    ratingCard
-                    
-                    // Motivational Message Card
+                VStack(spacing: AppSpacing.large) {
+                    insightRatingCard
+
                     if let breakdown = viewModel.scoreBreakdown {
                         motivationalCard(rating: breakdown.rating)
                     }
-                    
-                    // Score Breakdown
+
                     scoreBreakdownSection
                 }
-                .padding()
+                .padding(.horizontal)
+                .padding(.vertical, AppSpacing.small)
             }
             .appBackground()
-            .navigationTitle(String(localized: "Habit Rating"))
+            .navigationTitle(String(localized: "Insights"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     ShareLink(
                         item: viewModel.createShareText(),
-                        subject: Text(String(localized: "My Habit Rating")),
-                        message: Text(String(localized: "Check out my Habit rating from Habit Diary!"))
+                        subject: Text(String(localized: "My habit insights")),
+                        message: Text(String(localized: "Here’s my habit insight summary from Habit Diary."))
                     ) {
                         Image(systemName: "square.and.arrow.up")
                             .appCircularButtonStyle()
@@ -57,151 +59,258 @@ struct InsightsView: View {
             }
         }
     }
-    
-    private var ratingCard: some View {
-        VStack(spacing: 16) {
+
+    // MARK: - Main rating card (journal “snapshot” layout)
+
+    private var insightRatingCard: some View {
+        Group {
             if let breakdown = viewModel.scoreBreakdown {
-                // Rating Display
-                VStack(spacing: 8) {
-                    Text(breakdown.rating.displayName)
-                        .font(.system(size: 48, weight: .bold, design: .rounded))
-                        .foregroundStyle(breakdown.rating.color)
-                    
-                    Text(breakdown.rating.description)
-                        .font(.title2)
-                        .foregroundStyle(.secondary)
-                    
-                    Text(String(localized: "\(breakdown.totalScore) points"))
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                }
-                
-                // Score Progress Bar
-                VStack(spacing: 8) {
-                    HStack {
-                        Text(String(localized: "Total Score"))
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                        Text(String(localized: "\(breakdown.totalScore)/\(breakdown.maxPossibleScore)"))
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                let rating = breakdown.rating
+                HStack(alignment: .top, spacing: 0) {
+                    RoundedRectangle(cornerRadius: 2)
+                        .fill(
+                            LinearGradient(
+                                colors: [rating.color, rating.color.opacity(0.35)],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        .frame(width: 5)
+                        .padding(.vertical, 10)
+
+                    VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                        Text(String(localized: "Insight snapshot"))
+                            .font(AppFont.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(theme.textSecondary)
+                            .textCase(.uppercase)
+                            .tracking(0.75)
+
+                        HStack(alignment: .center, spacing: AppSpacing.medium) {
+                            Text(rating.displayName)
+                                .font(.system(size: 52, weight: .bold, design: .rounded))
+                                .foregroundStyle(rating.color)
+                                .minimumScaleFactor(0.5)
+                                .lineLimit(1)
+
+                            Spacer(minLength: 0)
+
+                            VStack(alignment: .trailing, spacing: 2) {
+                                Text(String(localized: "Total"))
+                                    .font(AppFont.caption)
+                                    .foregroundStyle(theme.textSecondary)
+                                Text("\(breakdown.totalScore)")
+                                    .font(.system(.title2, design: .rounded))
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(theme.textPrimary)
+                                Text(String(localized: "of \(breakdown.maxPossibleScore)"))
+                                    .font(AppFont.caption)
+                                    .foregroundStyle(theme.textSecondary)
+                            }
+                        }
+
+                        Text(rating.description)
+                            .font(.system(.title3, design: .serif))
+                            .foregroundStyle(theme.textPrimary)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        VStack(spacing: 10) {
+                            HStack {
+                                Text(String(localized: "Overall progress"))
+                                    .font(AppFont.subheadline)
+                                    .foregroundStyle(theme.textSecondary)
+                                Spacer()
+                                Text("\(breakdown.totalScore)/\(breakdown.maxPossibleScore)")
+                                    .font(AppFont.subheadline.weight(.semibold))
+                                    .foregroundStyle(theme.textPrimary)
+                            }
+
+                            ProgressView(value: breakdown.overallProgress)
+                                .tint(rating.color)
+                                .scaleEffect(x: 1, y: 1.8, anchor: .center)
+
+                            HStack {
+                                Text(
+                                    String(
+                                        localized: "Within \(rating.description)"
+                                    )
+                                )
+                                .font(AppFont.caption)
+                                .foregroundStyle(theme.textSecondary)
+                                Spacer()
+                                Text(String(format: "%.0f%%", breakdown.progressInCurrentRating * 100))
+                                    .font(AppFont.caption.weight(.semibold))
+                                    .foregroundStyle(rating.color)
+                            }
+
+                            ProgressView(value: breakdown.progressInCurrentRating)
+                                .tint(rating.color.opacity(0.85))
+                                .scaleEffect(x: 1, y: 1.4, anchor: .center)
+                        }
+                        .padding(AppSpacing.smallMedium)
+                        .background(theme.surface.opacity(0.65))
+                        .clipShape(.rect(cornerRadius: AppCornerRadius.info))
+
+                        if let nextRating = viewModel.scoreBreakdown?.nextRating {
+                            progressToNextBlock(nextRating: nextRating)
+                        }
+
+                        HStack(spacing: 6) {
+                            Image(systemName: "hand.tap.fill")
+                                .font(.caption2)
+                            Text(String(localized: "Tap for category breakdown"))
+                                .font(AppFont.caption)
+                        }
+                        .foregroundStyle(theme.textSecondary.opacity(0.9))
                     }
-                    
-                    ProgressView(value: breakdown.overallProgress)
-                        .progressViewStyle(LinearProgressViewStyle(tint: breakdown.rating.color))
-                        .scaleEffect(x: 1, y: 2, anchor: .center)
-                    
-                    // Progress within current rating
-                    HStack {
-                        Text(String(localized: "Progress in \(breakdown.rating.description)"))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                        Text(String(format: "%.1f%%", breakdown.progressInCurrentRating * 100))
-                            .font(.caption)
-                            .foregroundStyle(breakdown.rating.color)
-                    }
-                    
-                    ProgressView(value: breakdown.progressInCurrentRating)
-                        .progressViewStyle(LinearProgressViewStyle(tint: breakdown.rating.color.opacity(0.7)))
-                        .scaleEffect(x: 1, y: 1.5, anchor: .center)
+                    .padding(AppSpacing.medium)
                 }
-                
-                if let nextRating = viewModel.scoreBreakdown?.nextRating {
-                    progressToNextRatingCard(nextRating: nextRating)
+                .background { insightCardBackground }
+                .clipShape(.rect(cornerRadius: AppCornerRadius.card))
+                .overlay {
+                    RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                        .strokeBorder(theme.textSecondary.opacity(0.12), lineWidth: 1)
                 }
+                .contentShape(.rect(cornerRadius: AppCornerRadius.card))
+                .onTapGesture {
+                    viewModel.onTapRatingCard()
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(
+                    String(
+                        localized: "Insight rating \(rating.displayName), \(breakdown.totalScore) points"
+                    )
+                )
+                .accessibilityHint(String(localized: "Opens score breakdown"))
             } else {
                 ProgressView()
-                    .scaleEffect(1.5)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 40)
             }
         }
-        .padding(24)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color(.systemBackground))
-                .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
-        )
-        .onTapGesture {
-            viewModel.onTapRatingCard()
+    }
+
+    @ViewBuilder
+    private var insightCardBackground: some View {
+        if #available(iOS 26, *) {
+            Color.clear
+                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
+        } else {
+            theme.card
         }
     }
-    
+
     private func motivationalCard(rating: HabitRating) -> some View {
-        VStack(spacing: 12) {
-            HStack {
-                Image(systemName: "quote.bubble.fill")
-                    .foregroundStyle(rating.color)
-                    .font(.title3)
-                
-                Text(String(localized: "Motivation"))
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-                
-                Spacer()
-            }
-            
-            Text(rating.motivationalMessage)
-                .font(.body)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding(20)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(rating.color.opacity(0.05))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(rating.color.opacity(0.2), lineWidth: 1)
+        HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
+            Rectangle()
+                .fill(
+                    LinearGradient(
+                        colors: [rating.color, rating.color.opacity(0.3)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
                 )
-        )
-    }
-    
-    private func progressToNextRatingCard(nextRating: HabitRating) -> some View {
-        VStack(spacing: 12) {
-            HStack {
-                Image(systemName: "arrow.up.circle.fill")
-                    .foregroundStyle(nextRating.color)
-                Text(String(localized: "Progress to \(nextRating.displayName)"))
-                    .font(.headline)
-                Spacer()
+                .frame(width: 4)
+                .clipShape(.rect(cornerRadius: 2))
+                .padding(.vertical, 4)
+
+            VStack(alignment: .leading, spacing: AppSpacing.small) {
+                Label {
+                    Text(String(localized: "Reflection"))
+                        .font(AppFont.headline)
+                        .foregroundStyle(theme.textPrimary)
+                } icon: {
+                    Image(systemName: "text.quote")
+                        .foregroundStyle(rating.color)
+                }
+
+                Text(rating.motivationalMessage)
+                    .font(.system(.body, design: .serif))
+                    .italic()
+                    .foregroundStyle(theme.textSecondary)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            
-            if let breakdown = viewModel.scoreBreakdown {
-                VStack(spacing: 8) {
-                    HStack {
-                        Text(String(localized: "\(breakdown.scoreToNextRating) points needed"))
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                        Text(nextRating.description)
-                            .font(.subheadline)
-                            .foregroundStyle(nextRating.color)
-                    }
-                    
-                    // Show score range for next rating
-                    HStack {
-                        Text(String(localized: "Range: \(nextRating.scoreRange.lowerBound) - \(nextRating.scoreRange.upperBound == Int.max ? "∞" : "\(nextRating.scoreRange.upperBound)") points"))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                    }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(AppSpacing.medium)
+        }
+        .background {
+            if #available(iOS 26, *) {
+                Color.clear
+                    .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
+            } else {
+                ZStack {
+                    RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                        .fill(rating.color.opacity(0.06))
+                    RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                        .strokeBorder(rating.color.opacity(0.22), lineWidth: 1)
                 }
             }
         }
     }
-    
+
+    private func progressToNextBlock(nextRating: HabitRating) -> some View {
+        VStack(alignment: .leading, spacing: AppSpacing.small) {
+            Label {
+                Text(String(localized: "Next tier"))
+                    .font(AppFont.subheadline.weight(.semibold))
+                    .foregroundStyle(theme.textPrimary)
+            } icon: {
+                Image(systemName: "arrow.up.forward.circle.fill")
+                    .foregroundStyle(nextRating.color)
+            }
+
+            if let breakdown = viewModel.scoreBreakdown {
+                HStack {
+                    Text(
+                        String(
+                            localized: "\(breakdown.scoreToNextRating) pts to \(nextRating.displayName)"
+                        )
+                    )
+                    .font(AppFont.caption)
+                    .foregroundStyle(theme.textSecondary)
+                    Spacer()
+                    Text(nextRating.description)
+                        .font(AppFont.caption.weight(.medium))
+                        .foregroundStyle(nextRating.color)
+                }
+
+                Text(rangeLine(for: nextRating))
+                    .font(AppFont.footnote)
+                    .foregroundStyle(theme.textSecondary)
+            }
+        }
+        .padding(AppSpacing.smallMedium)
+        .background(nextRating.color.opacity(0.08))
+        .clipShape(.rect(cornerRadius: AppCornerRadius.info))
+    }
+
+    private func rangeLine(for nextRating: HabitRating) -> String {
+        let range = nextRating.scoreRange
+        if range.upperBound == Int.max {
+            return String(localized: "Range: \(range.lowerBound)+ points")
+        }
+        return String(localized: "Range: \(range.lowerBound)–\(range.upperBound) points")
+    }
+
+    // MARK: - Score breakdown list
+
     private var scoreBreakdownSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(String(localized: "Score Breakdown"))
-                .font(.title2)
-                .fontWeight(.bold)
-            
+        VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(String(localized: "Where your score comes from"))
+                    .font(.system(.title3, design: .serif))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(theme.textPrimary)
+                Text(String(localized: "Tap a row for details."))
+                    .font(AppFont.caption)
+                    .foregroundStyle(theme.textSecondary)
+            }
+
             if let breakdownItems = viewModel.scoreBreakdownItems {
-                LazyVStack(spacing: 12) {
-                    ForEach(Array(breakdownItems.enumerated()), id: \.offset) { index, item in
-                        ScoreBreakdownRow(item: item)
+                LazyVStack(spacing: AppSpacing.small) {
+                    ForEach(Array(breakdownItems.enumerated()), id: \.offset) { _, item in
+                        InsightsScoreBreakdownRow(item: item, theme: theme)
                             .onTapGesture {
                                 viewModel.onTapScoreBreakdownItem(item)
                             }
@@ -210,127 +319,133 @@ struct InsightsView: View {
             } else {
                 ProgressView()
                     .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.vertical, 24)
             }
-            
         }
     }
-    
-    struct ScoreBreakdownRow: View {
-        let item: ScoreBreakdownItem
-        
-        @State var isInfoPresented: Bool = false
-        
-        var body: some View {
-            VStack(spacing: 12) {
-                HStack {
-                    Image(systemName: item.icon)
-                        .foregroundStyle(item.color)
-                        .frame(width: 24)
-                    
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(item.title)
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                        
-                        Text(item.performanceLevel.description)
-                            .font(.caption)
-                            .foregroundStyle(item.performanceLevel.color)
-                    }
-                    
-                    Button(action: {
-                        isInfoPresented.toggle()
-                    }) {
-                        Image(systemName: "info.circle")
-                            .foregroundStyle(.secondary)
-                            .font(.system(size: 16))
-                    }
-                    .buttonStyle(.borderless)
-                    .popover(isPresented: $isInfoPresented) {
-                        ScrollView {
-                            VStack(spacing: 16) {
-                                Text(String(localized: "How \(item.title) Score is Calculated"))
-                                    .font(.headline)
-                                    .multilineTextAlignment(.center)
-                                
-                                Text(item.explanation)
-                                    .font(.body)
-                                    .multilineTextAlignment(.leading)
-                                
-                                // Performance level explanation
-                                VStack(alignment: .leading, spacing: 8) {
-                                    HStack {
-                                        Text(String(localized: "Your Performance:"))
-                                            .font(.subheadline)
-                                            .fontWeight(.medium)
-                                        Text(item.performanceLevel.description)
-                                            .font(.subheadline)
-                                            .foregroundStyle(item.performanceLevel.color)
-                                    }
-                                    
-                                    Text(String(format: "%.1f%% of maximum possible score", item.percentage * 100))
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                }
-                                .padding(.top, 8)
-                            }
-                            .frame(minHeight: 200)
-                        }
-                        .padding()
-                        .presentationCompactAdaptation(.popover)
-                    }
-                    
-                    Spacer()
-                    
-                    VStack(alignment: .trailing, spacing: 2) {
-                        Text(String(localized: "\(item.score)/\(item.maxScore)"))
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                            .foregroundStyle(.primary)
-                        
-                        Text(String(format: "%.0f%%", item.percentage * 100))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
+}
+
+// MARK: - Breakdown row (separate type for clarity)
+
+private struct InsightsScoreBreakdownRow: View {
+    let item: ScoreBreakdownItem
+    let theme: AppTheme
+
+    @State private var isInfoPresented = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.small) {
+            HStack(alignment: .center, spacing: AppSpacing.smallMedium) {
+                Image(systemName: item.icon)
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(item.color)
+                    .frame(width: 40, height: 40)
+                    .background(item.color.opacity(0.12))
+                    .clipShape(.rect(cornerRadius: 10))
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(item.title)
+                        .font(AppFont.subheadline.weight(.semibold))
+                        .foregroundStyle(theme.textPrimary)
+                    Text(item.performanceLevel.description)
+                        .font(AppFont.caption)
+                        .foregroundStyle(item.performanceLevel.color)
                 }
-                
-                // Progress bar with performance color
-                VStack(spacing: 4) {
-                    ProgressView(value: item.percentage)
-                        .progressViewStyle(LinearProgressViewStyle(tint: item.performanceLevel.color))
-                        .scaleEffect(x: 1, y: 1.5, anchor: .center)
-                    
-                    // Performance level indicator
-                    HStack {
-                        Spacer()
-                        HStack(spacing: 4) {
-                            Circle()
-                                .fill(item.performanceLevel.color)
-                                .frame(width: 6, height: 6)
-                            Text(item.performanceLevel.description)
-                                .font(.caption2)
-                                .foregroundStyle(item.performanceLevel.color)
-                        }
-                    }
+
+                Spacer(minLength: 8)
+
+                Button {
+                    isInfoPresented.toggle()
+                } label: {
+                    Image(systemName: "info.circle.fill")
+                        .symbolRenderingMode(.hierarchical)
+                        .font(.title3)
+                        .foregroundStyle(theme.textSecondary)
+                }
+                .buttonStyle(.plain)
+                .popover(isPresented: $isInfoPresented) {
+                    breakdownInfoPopover
+                }
+
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text("\(item.score)/\(item.maxScore)")
+                        .font(AppFont.subheadline.weight(.semibold))
+                        .foregroundStyle(theme.textPrimary)
+                    Text(String(format: "%.0f%%", item.percentage * 100))
+                        .font(AppFont.caption)
+                        .foregroundStyle(theme.textSecondary)
                 }
             }
-            .padding(16)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color(.systemBackground))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(item.performanceLevel.color.opacity(0.2), lineWidth: 1)
-                    )
-                    .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
-            )
+
+            ProgressView(value: item.percentage)
+                .tint(item.performanceLevel.color)
+                .scaleEffect(x: 1, y: 1.4, anchor: .center)
+
+            HStack {
+                Spacer()
+                HStack(spacing: 4) {
+                    Circle()
+                        .fill(item.performanceLevel.color)
+                        .frame(width: 6, height: 6)
+                    Text(item.performanceLevel.description)
+                        .font(AppFont.footnote)
+                        .foregroundStyle(item.performanceLevel.color)
+                }
+            }
         }
+        .padding(AppSpacing.medium)
+        .background {
+            if #available(iOS 26, *) {
+                Color.clear
+                    .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
+            } else {
+                ZStack {
+                    RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                        .fill(theme.card)
+                    RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                        .strokeBorder(item.performanceLevel.color.opacity(0.18), lineWidth: 1)
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var breakdownInfoPopover: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                Text(String(localized: "How \(item.title) is calculated"))
+                    .font(AppFont.headline)
+                    .frame(maxWidth: .infinity, alignment: .center)
+
+                Text(item.explanation)
+                    .font(AppFont.body)
+                    .foregroundStyle(theme.textPrimary)
+                    .multilineTextAlignment(.leading)
+
+                VStack(alignment: .leading, spacing: AppSpacing.small) {
+                    HStack {
+                        Text(String(localized: "Performance"))
+                            .font(AppFont.subheadline.weight(.semibold))
+                        Text(item.performanceLevel.description)
+                            .font(AppFont.subheadline)
+                            .foregroundStyle(item.performanceLevel.color)
+                    }
+                    Text(String(format: String(localized: "%.1f%% of maximum"), item.percentage * 100))
+                        .font(AppFont.caption)
+                        .foregroundStyle(theme.textSecondary)
+                }
+                .padding(.top, AppSpacing.small)
+            }
+            .frame(minHeight: 200)
+        }
+        .padding()
+        .presentationCompactAdaptation(.popover)
     }
 }
 
 #Preview {
-    let _ = prepareDependencies {
+    _ = prepareDependencies {
         $0.defaultDatabase = try! appDatabase()
     }
     InsightsView()
 }
-
