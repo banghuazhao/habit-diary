@@ -5,519 +5,35 @@
 
 import Dependencies
 import EasyToast
-import SQLiteData
 import SwiftNavigation
 import SwiftUI
 
-@Observable
-@MainActor
-class HabitEditorViewModel: HashableObject {
-    var habit: Habit.Draft
-    
-    var draftReminders: [Reminder.Draft] = []
-    private var originalReminderIDs: Set<Int> = []
-
-    var todayHabit: JournalDraftHabit {
-        let frequencyDescription: String? = switch habit.frequency {
-        case .nDaysEachWeek: String(localized: "1/\(habit.nDaysPerWeek) this week")
-        case .nDaysEachMonth: String(localized: "1/\(habit.nDaysPerMonth) this month")
-        default: nil
-        }
-        return habit.toTodayDraftHabit(
-            streakDescription: String(localized: "🔥 1d streak"),
-            frequencyDescription: frequencyDescription
-        )
-    }
-
-    @CasePathable
-    enum Route: Equatable {
-        case editHabitIcon
-        case habitsGallery
-        case addReminder(ReminderEditorViewModel)
-        case editReminder(ReminderEditorViewModel)
-    }
-
-    var route: Route?
-
-    @ObservationIgnored
-    @Dependency(\.defaultDatabase) var database
-    
-    @ObservationIgnored
-    @Dependency(\.reminderNotificationCenter) var reminderNotificationCenter
-    
-    @ObservationIgnored
-    @Dependency(\.appReviewPromptService) var appReviewPromptService
-
-    var showTitleEmptyToast = false
-    let isEdit: Bool
-    let onSaveHabit: ((Habit) -> Void)?
-
-    init(
-        habit: Habit.Draft,
-        onSaveHabit: ((Habit) -> Void)? = nil
-    ) {
-        self.habit = habit
-        self.onSaveHabit = onSaveHabit
-        isEdit = habit.id != nil
-        if let habitID = habit.id, isEdit {
-            if let reminders = try? appDatabase().read({ db in
-                try Reminder
-                    .where { $0.habitID.eq(habitID) }
-                    .fetchAll(db)
-            }) {
-                self.draftReminders = reminders.map { Reminder.Draft($0) }
-                self.originalReminderIDs = Set(reminders.map { $0.id })
-            }
-        } else {
-            self.draftReminders = []
-            self.originalReminderIDs = []
-        }
-    }
-
-    func toggleWeekDay(_ weekDay: WeekDays) {
-        guard habit.frequency == .fixedDaysInWeek else { return }
-        var daysOfWeek = habit.daysOfWeek
-        if hasSelectedWeekDay(weekDay) {
-            daysOfWeek.remove(weekDay.rawValue)
-        } else {
-            daysOfWeek.insert(weekDay.rawValue)
-        }
-        habit.frequencyDetail = daysOfWeek.sorted().map(String.init).joined(separator: ",")
-    }
-
-    func toggleMonthDay(_ monthDay: Int) {
-        guard habit.frequency == .fixedDaysInMonth else { return }
-        var daysOfMonth = habit.daysOfMonth
-        if hasSelectedMonthDay(monthDay) {
-            daysOfMonth.remove(monthDay)
-        } else {
-            daysOfMonth.insert(monthDay)
-        }
-        habit.frequencyDetail = daysOfMonth.sorted().map(String.init).joined(separator: ",")
-    }
-
-    func hasSelectedWeekDay(_ weekDay: WeekDays) -> Bool {
-        guard habit.frequency == .fixedDaysInWeek else { return false }
-        return habit.daysOfWeek.contains(weekDay.rawValue)
-    }
-
-    func hasSelectedMonthDay(_ monthDay: Int) -> Bool {
-        guard habit.frequency == .fixedDaysInMonth else { return false }
-        return habit.daysOfMonth.contains(monthDay)
-    }
-
-    func onSelectNDays(_ nDays: Int) {
-        habit.frequencyDetail = "\(nDays)"
-    }
-
-    func onChangeOfHabitFrequency() {
-        switch habit.frequency {
-        case .fixedDaysInWeek:
-            habit.frequencyDetail = "1,2,3,4,5,6,7"
-        case .fixedDaysInMonth:
-            habit.frequencyDetail = "1"
-        case .nDaysEachWeek:
-            habit.frequencyDetail = "1"
-        case .nDaysEachMonth:
-            habit.frequencyDetail = "1"
-        }
-    }
-
-    func onTapTodayHabit() {
-        route = .editHabitIcon
-    }
-
-    func onTapSaveHabit() async -> Bool {
-        guard !habit.name.isEmpty else {
-            showTitleEmptyToast = true
-            return false
-        }
-        await withErrorReporting {
-            let updatedHabit = try await database.write { [habit] db in
-                try Habit
-                    .upsert { habit }
-                    .returning { $0 }
-                    .fetchOne(db)
-            }
-            
-            guard let updatedHabit else { return }
-            
-            for var draftReminder in draftReminders {
-                draftReminder.habitID = updatedHabit.id
-                draftReminder.title = "\(updatedHabit.icon) \(updatedHabit.name)"
-                let reminder = try await database.write { [draftReminder] db in
-                    try Reminder
-                        .upsert { draftReminder }
-                        .returning { $0 }
-                        .fetchOne(db)
-                }
-                
-                if let reminder {
-                    await reminderNotificationCenter.scheduleReminder(reminder)
-                }
-            }
-            
-            let currentIDs = Set(draftReminders.compactMap { $0.id })
-            let toDelete = originalReminderIDs.subtracting(currentIDs)
-            for id in toDelete {
-                let reminderToDelete = try await database.read { db in
-                    try Reminder
-                        .where { $0.id.eq(id) }
-                        .fetchOne(db)
-                }
-                if let reminderToDelete {
-                    try await database.write { db in
-                        try Reminder
-                            .delete(reminderToDelete)
-                            .execute(db)
-                    }
-                    reminderNotificationCenter.removeReminder(reminderToDelete)
-                }
-            }
-            onSaveHabit?(updatedHabit)
-            
-            // Increment habit modification count for rating prompts
-            appReviewPromptService.incrementHabitModificationCount()
-        }
-        return true
-    }
-
-    func onTapGallery() {
-        route = .habitsGallery
-    }
-    
-    func onTapAddReminder() {
-        route = .addReminder(
-            ReminderEditorViewModel(
-                reminder: Reminder.Draft(),
-                onSave: { [weak self] draft in
-                    guard let self else { return }
-                    draftReminders.append(draft)
-                    route = nil
-                }
-            )
-        )
-    }
-    
-    func onTapEditReminder(_ reminder: Reminder.Draft) {
-        route = .editReminder(
-            ReminderEditorViewModel(
-                reminder: reminder,
-                onSave: { [weak self] updatedDraft in
-                    guard let self else { return }
-                    if let idx = draftReminders.firstIndex(where: { $0.id == updatedDraft.id }) {
-                        draftReminders[idx] = updatedDraft
-                    }
-                    route = nil
-                }
-            )
-        )
-    }
-    
-    func onTapDeleteReminder(_ reminder: Reminder.Draft) {
-        if let idx = draftReminders.firstIndex(where: { $0.id == reminder.id }) {
-            draftReminders.remove(at: idx)
-        }
-    }
-}
-
-enum WeekDays: Int, CaseIterable {
-    case mon = 2
-    case tue = 3
-    case wed = 4
-    case thu = 5
-    case fri = 6
-    case sat = 7
-    case sun = 1
-
-    var title: String {
-        switch self {
-        case .mon:
-            "Mon"
-        case .tue:
-            "Tue"
-        case .wed:
-            "Wed"
-        case .thu:
-            "Thu"
-        case .fri:
-            "Fri"
-        case .sat:
-            "Sat"
-        case .sun:
-            "Sun"
-        }
-    }
-}
-
 struct HabitEditorView: View {
     @State var viewModel: HabitEditorViewModel
-    @Dependency(\.themeManager) var themeManager
-    @Environment(\.dismiss) var dismiss
+    @Dependency(\.themeManager) private var themeManager
+    @Environment(\.dismiss) private var dismiss
+
+    private var theme: AppTheme { themeManager.current }
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: AppSpacing.medium) {
-                    HStack {
-                        DraftHabitTile(todayHabit: viewModel.todayHabit) {
-                            viewModel.onTapTodayHabit()
-                        }
-                        .frame(maxWidth: 200)
-                        .sheet(isPresented: Binding($viewModel.route.editHabitIcon)) {
-                            IconPickerView(
-                                color: $viewModel.habit.color,
-                                icon: $viewModel.habit.icon
-                            )
-                            .presentationDetents([.fraction(0.8), .large])
-                            .presentationDragIndicator(.visible)
-                        }
-                        Button {
-                            viewModel.onTapTodayHabit()
-                        } label: {
-                            Text("Change")
-                                .appRectButtonStyle()
-                        }
-                    }
-
-                    VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
-                        HStack(spacing: AppSpacing.small) {
-                            Image(systemName: "list.bullet.clipboard.fill")
-                                .foregroundStyle(themeManager.current.primaryColor)
-                            TextField("New habit name", text: $viewModel.habit.name)
-                                .font(AppFont.headline)
-                                .foregroundStyle(themeManager.current.textPrimary)
-                            Button {
-                                viewModel.onTapGallery()
-                            } label: {
-                                Text("Gallery")
-                                    .appRectButtonStyle()
-                            }
-                            .sheet(isPresented: Binding($viewModel.route.habitsGallery)) {
-                                HabitCatalogView(
-                                    habit: $viewModel.habit
-                                )
-                                .presentationDetents([.fraction(0.7), .large])
-                                .presentationDragIndicator(.visible)
-                            }
-                        }
-                    }
-                    .appCardStyle(theme: themeManager.current)
-
-                    VStack(alignment: .leading, spacing: AppSpacing.small) {
-                        HStack {
-                            Image(systemName: "clock.fill")
-                                .foregroundStyle(themeManager.current.primaryColor)
-                            Text("Frequency")
-                                .fontWeight(.semibold)
-                                .foregroundStyle(themeManager.current.textPrimary)
-                            Spacer()
-                            Picker("Frequency", selection: $viewModel.habit.frequency) {
-                                ForEach(HabitFrequency.allCases, id: \ .self) { habitFrequency in
-                                    Text(habitFrequency.title)
-                                        .tag(habitFrequency.rawValue)
-                                }
-                            }
-                            .tint(themeManager.current.primaryColor)
-                        }
-                        switch viewModel.habit.frequency {
-                        case .fixedDaysInWeek:
-                            LazyVGrid(
-                                columns: Array(repeating: GridItem(.flexible()), count: 7)
-                            ) {
-                                ForEach(WeekDays.allCases, id: \ .self) { weekDay in
-                                    Button(action: { viewModel.toggleWeekDay(weekDay) }) {
-                                        VStack(spacing: 8) {
-                                            Text(weekDay.title)
-                                                .font(.subheadline)
-                                                .lineLimit(1)
-                                                .minimumScaleFactor(0.5)
-                                            if viewModel.hasSelectedWeekDay(weekDay) {
-                                                Image(systemName: "checkmark.circle.fill")
-                                                    .foregroundStyle(themeManager.current.primaryColor)
-                                            }
-                                        }
-                                        .padding(8)
-                                    }
-                                    .tint(themeManager.current.primaryColor)
-                                    .background(
-                                        viewModel.hasSelectedWeekDay(weekDay)
-                                        ? themeManager.current.primaryColor.opacity(0.12)
-                                        : themeManager.current.background
-                                    )
-                                    .clipShape(.rect(cornerRadius: AppCornerRadius.button))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: AppCornerRadius.button)
-                                            .stroke(viewModel.hasSelectedWeekDay(weekDay) ? themeManager.current.primaryColor : themeManager.current.secondaryGray.opacity(0.2), lineWidth: 1)
-                                    )
-                                }
-                            }
-                        case .fixedDaysInMonth:
-                            LazyVGrid(
-                                columns: Array(repeating: GridItem(.flexible()), count: 7)
-                            ) {
-                                ForEach(1 ... 28, id: \ .self) { monthDay in
-                                    Button(action: { viewModel.toggleMonthDay(monthDay) }) {
-                                        VStack(spacing: 8) {
-                                            Text("\(monthDay)")
-                                                .font(.subheadline)
-                                                .lineLimit(1)
-                                                .minimumScaleFactor(0.5)
-                                        }
-                                        .padding(8)
-                                    }
-                                    .tint(themeManager.current.primaryColor)
-                                    .background(
-                                        viewModel.hasSelectedMonthDay(monthDay)
-                                        ? themeManager.current.primaryColor.opacity(0.12)
-                                        : themeManager.current.background
-                                    )
-                                    .clipShape(.rect(cornerRadius: AppCornerRadius.button))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: AppCornerRadius.button)
-                                            .stroke(viewModel.hasSelectedMonthDay(monthDay) ? themeManager.current.primaryColor : themeManager.current.secondaryGray.opacity(0.2), lineWidth: 1)
-                                    )
-                                }
-                            }
-                        case .nDaysEachWeek:
-                            HStack {
-                                Spacer()
-                                Picker("", selection: Binding(
-                                    get: { viewModel.habit.nDaysPerWeek },
-                                    set: { viewModel.onSelectNDays($0) }
-                                )) {
-                                    ForEach(1 ... 7, id: \ .self) { nDays in
-                                        if nDays == 1 {
-                                            Text("\(nDays) day")
-                                                .tag(nDays)
-                                        } else {
-                                            Text("\(nDays) days")
-                                                .tag(nDays)
-                                        }
-                                    }
-                                }
-                                .tint(themeManager.current.primaryColor)
-                            }
-                            HStack {
-                                Image(systemName: "info.circle.fill")
-                                    .foregroundStyle(themeManager.current.secondaryGray)
-                                    .font(.caption)
-                                if viewModel.habit.nDaysPerWeek == 1 {
-                                    Text("After being completed on \(viewModel.habit.nDaysPerWeek) day, the habit will not show up again this week.")
-                                        .foregroundStyle(themeManager.current.secondaryGray)
-                                        .font(.caption)
-                                } else {
-                                    Text("After being completed on \(viewModel.habit.nDaysPerWeek) days, the habit will not show up again this week.")
-                                        .foregroundStyle(themeManager.current.secondaryGray)
-                                        .font(.caption)
-                                }
-                            }
-                        case .nDaysEachMonth:
-                            HStack {
-                                Spacer()
-                                Picker("", selection: Binding(
-                                    get: { viewModel.habit.nDaysPerMonth },
-                                    set: { viewModel.onSelectNDays($0) }
-                                )) {
-                                    ForEach(1 ... 28, id: \ .self) { nDays in
-                                        if nDays == 1 {
-                                            Text("\(nDays) day")
-                                                .tag(nDays)
-                                        } else {
-                                            Text("\(nDays) days")
-                                                .tag(nDays)
-                                        }
-                                    }
-                                }
-                                .tint(themeManager.current.primaryColor)
-                            }
-                            HStack {
-                                Image(systemName: "info.circle.fill")
-                                    .foregroundStyle(themeManager.current.secondaryGray)
-                                    .font(.caption)
-                                if viewModel.habit.nDaysPerMonth == 1 {
-                                    Text("After being completed on \(viewModel.habit.nDaysPerMonth) day, the habit will not show up again this month.")
-                                        .foregroundStyle(themeManager.current.secondaryGray)
-                                        .font(.caption)
-                                } else {
-                                    Text("After being completed on \(viewModel.habit.nDaysPerMonth) days, the habit will not show up again this month.")
-                                        .foregroundStyle(themeManager.current.secondaryGray)
-                                        .font(.caption)
-                                }
-                            }
-                        }
-                    }
-                    .appCardStyle(theme: themeManager.current)
-                    
-                    VStack(alignment: .leading, spacing: AppSpacing.small) {
-                        HStack {
-                            Image(systemName: "text.quote")
-                                .foregroundStyle(themeManager.current.primaryColor)
-                            Text("Description")
-                                .fontWeight(.semibold)
-                                .foregroundStyle(themeManager.current.textPrimary)
-                        }
-                        TextEditor(text: $viewModel.habit.note)
-                            .frame(minHeight: 50)
-                            .padding(8)
-                            .background(themeManager.current.background)
-                            .clipShape(.rect(cornerRadius: AppCornerRadius.button))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: AppCornerRadius.button)
-                                    .stroke(themeManager.current.secondaryGray.opacity(0.3), lineWidth: 1)
-                            )
-                    }
-                    .appCardStyle(theme: themeManager.current)
-                    
-                    VStack(alignment: .leading, spacing: AppSpacing.small) {
-                        HStack {
-                            Image(systemName: "bell.fill")
-                                .foregroundStyle(themeManager.current.primaryColor)
-                            Text("Reminders")
-                                .fontWeight(.semibold)
-                                .foregroundStyle(themeManager.current.textPrimary)
-                            Spacer()
-                            Button("Add Reminder") {
-                                viewModel.onTapAddReminder()
-                            }
-                            .font(AppFont.subheadline)
-                            .foregroundStyle(themeManager.current.primaryColor)
-                        }
-                        if viewModel.draftReminders.isEmpty {
-                            Text("No reminders set for this habit")
-                                .font(AppFont.subheadline)
-                                .foregroundStyle(themeManager.current.textSecondary)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(themeManager.current.background)
-                                .clipShape(.rect(cornerRadius: AppCornerRadius.button))
-                        } else {
-                            VStack(spacing: AppSpacing.small) {
-                                ForEach(viewModel.draftReminders, id: \ .id) { draft in
-                                    ReminderCell(
-                                        time: draft.time,
-                                        title: "Every Day",
-                                        onDelete: {
-                                            viewModel.onTapDeleteReminder(draft)
-                                        }
-                                    )
-                                    .onTapGesture {
-                                        viewModel.onTapEditReminder(draft)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .appCardStyle(theme: themeManager.current)
+                VStack(spacing: AppSpacing.large) {
+                    previewStripSection
+                    nameAndCatalogSection
+                    scheduleSection
+                    journalNoteSection
+                    remindersSection
                 }
-                .padding()
+                .padding(.horizontal)
+                .padding(.vertical, AppSpacing.small)
                 .padding(.bottom, 40)
             }
-            .background(themeManager.current.background.ignoresSafeArea())
+            .background(theme.background.ignoresSafeArea())
             .navigationTitle(
                 viewModel.isEdit
-                ? String(localized: "Edit Habit")
-                : String(localized: "New Habit")
+                    ? String(localized: "Edit habit")
+                    : String(localized: "New habit")
             )
             .scrollDismissesKeyboard(.immediately)
             .navigationBarTitleDisplayMode(.inline)
@@ -526,7 +42,7 @@ struct HabitEditorView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Text("Dismiss")
+                        Text(String(localized: "Close"))
                             .appRectButtonStyle()
                     }
                 }
@@ -538,7 +54,7 @@ struct HabitEditorView: View {
                             }
                         }
                     } label: {
-                        Text(viewModel.isEdit ? "Update" : "Save")
+                        Text(viewModel.isEdit ? String(localized: "Update") : String(localized: "Save"))
                             .appRectButtonStyle()
                     }
                 }
@@ -546,10 +62,26 @@ struct HabitEditorView: View {
             .onChange(of: viewModel.habit.frequency) { _, _ in
                 viewModel.onChangeOfHabitFrequency()
             }
-            .easyToast(isPresented: $viewModel.showTitleEmptyToast, message: "Habit name is empty")
+            .easyToast(
+                isPresented: $viewModel.showTitleEmptyToast,
+                message: String(localized: "Give your habit a name first.")
+            )
+            .sheet(isPresented: Binding($viewModel.route.editHabitIcon)) {
+                IconPickerView(
+                    color: $viewModel.habit.color,
+                    icon: $viewModel.habit.icon
+                )
+                .presentationDetents([.fraction(0.8), .large])
+                .presentationDragIndicator(.visible)
+            }
+            .sheet(isPresented: Binding($viewModel.route.habitsGallery)) {
+                HabitCatalogView(habit: $viewModel.habit)
+                    .presentationDetents([.fraction(0.7), .large])
+                    .presentationDragIndicator(.visible)
+            }
             .sheet(isPresented: Binding($viewModel.route.addReminder)) {
                 if case .addReminder(let formViewModel) = viewModel.route {
-                    ReminderEditorView(viewModel: formViewModel) 
+                    ReminderEditorView(viewModel: formViewModel)
                         .presentationDetents([.medium])
                         .presentationDragIndicator(.visible)
                         .presentationBackgroundInteraction(.enabled)
@@ -563,6 +95,428 @@ struct HabitEditorView: View {
                         .presentationBackgroundInteraction(.enabled)
                 }
             }
+        }
+    }
+
+    // MARK: - Preview (emoji + tile)
+
+    private var previewStripSection: some View {
+        HabitEditorPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+                HabitEditorSectionHeader(
+                    title: String(localized: "On your shelf"),
+                    subtitle: String(localized: "How this habit will look in your journal"),
+                    systemImage: "books.vertical.fill",
+                    theme: theme
+                )
+
+                HStack(spacing: AppSpacing.medium) {
+                    DraftHabitTile(todayHabit: viewModel.todayHabit) {
+                        viewModel.onTapTodayHabit()
+                    }
+                    .frame(maxWidth: 200)
+
+                    VStack(alignment: .leading, spacing: AppSpacing.small) {
+                        Button {
+                            viewModel.onTapTodayHabit()
+                        } label: {
+                            Label(String(localized: "Icon & color"), systemImage: "paintpalette.fill")
+                                .font(AppFont.subheadline.weight(.semibold))
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(theme.primaryColor)
+
+                        Button {
+                            viewModel.onTapGallery()
+                        } label: {
+                            Label(String(localized: "Browse catalog"), systemImage: "square.grid.2x2.fill")
+                                .font(AppFont.subheadline.weight(.medium))
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.bordered)
+                        .tint(theme.primaryColor)
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - Name
+
+    private var nameAndCatalogSection: some View {
+        HabitEditorPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+                HabitEditorSectionHeader(
+                    title: String(localized: "Title"),
+                    subtitle: String(localized: "Short and memorable works best"),
+                    systemImage: "character.cursor.ibeam",
+                    theme: theme
+                )
+
+                TextField(String(localized: "Habit name"), text: $viewModel.habit.name)
+                    .font(.system(.title3, design: .serif))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(theme.textPrimary)
+                    .padding(AppSpacing.smallMedium)
+                    .background(theme.background.opacity(0.9))
+                    .clipShape(.rect(cornerRadius: 12))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .strokeBorder(theme.textSecondary.opacity(0.18), lineWidth: 1)
+                    )
+            }
+        }
+    }
+
+    // MARK: - Schedule
+
+    private var scheduleSection: some View {
+        HabitEditorPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                HabitEditorSectionHeader(
+                    title: String(localized: "Schedule"),
+                    subtitle: String(localized: "When this habit appears on Journal"),
+                    systemImage: "calendar",
+                    theme: theme
+                )
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(String(localized: "Repeat"))
+                        .font(AppFont.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(theme.textSecondary)
+                        .textCase(.uppercase)
+                        .tracking(0.5)
+
+                    Picker(String(localized: "Frequency"), selection: $viewModel.habit.frequency) {
+                        ForEach(HabitFrequency.allCases, id: \.self) { mode in
+                            Text(mode.title)
+                                .tag(mode)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .tint(theme.primaryColor)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(theme.surface.opacity(0.75))
+                    .clipShape(.rect(cornerRadius: 12))
+                }
+
+                frequencyDetailContent
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var frequencyDetailContent: some View {
+        switch viewModel.habit.frequency {
+        case .fixedDaysInWeek:
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 7), spacing: 8) {
+                ForEach(WeekDays.allCases, id: \.self) { weekDay in
+                    weekDayCell(weekDay)
+                }
+            }
+        case .fixedDaysInMonth:
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 7), spacing: 8) {
+                ForEach(1 ... 28, id: \.self) { monthDay in
+                    monthDayCell(monthDay)
+                }
+            }
+        case .nDaysEachWeek:
+            nDaysPicker(
+                range: 1 ... 7,
+                selection: Binding(
+                    get: { viewModel.habit.nDaysPerWeek },
+                    set: { viewModel.onSelectNDays($0) }
+                ),
+                singularLabel: String(localized: "day this week"),
+                pluralLabel: String(localized: "days this week"),
+                explanation: { n in
+                    if n == 1 {
+                        String(
+                            localized: "After you complete it once, it hides until next week."
+                        )
+                    } else {
+                        String(
+                            localized: "After \(n) completions, it hides until next week."
+                        )
+                    }
+                }
+            )
+        case .nDaysEachMonth:
+            nDaysPicker(
+                range: 1 ... 28,
+                selection: Binding(
+                    get: { viewModel.habit.nDaysPerMonth },
+                    set: { viewModel.onSelectNDays($0) }
+                ),
+                singularLabel: String(localized: "day this month"),
+                pluralLabel: String(localized: "days this month"),
+                explanation: { n in
+                    if n == 1 {
+                        String(
+                            localized: "After you complete it once, it hides until next month."
+                        )
+                    } else {
+                        String(
+                            localized: "After \(n) completions, it hides until next month."
+                        )
+                    }
+                }
+            )
+        }
+    }
+
+    private func weekDayCell(_ weekDay: WeekDays) -> some View {
+        let selected = viewModel.hasSelectedWeekDay(weekDay)
+        return Button {
+            viewModel.toggleWeekDay(weekDay)
+        } label: {
+            VStack(spacing: 6) {
+                Text(weekDay.title)
+                    .font(AppFont.caption)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                if selected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.caption)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(selected ? theme.primaryColor : theme.textPrimary)
+        .background(selected ? theme.primaryColor.opacity(0.12) : theme.background.opacity(0.6))
+        .clipShape(.rect(cornerRadius: 10))
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .strokeBorder(
+                    selected ? theme.primaryColor.opacity(0.45) : theme.textSecondary.opacity(0.15),
+                    lineWidth: 1
+                )
+        )
+    }
+
+    private func monthDayCell(_ monthDay: Int) -> some View {
+        let selected = viewModel.hasSelectedMonthDay(monthDay)
+        return Button {
+            viewModel.toggleMonthDay(monthDay)
+        } label: {
+            Text("\(monthDay)")
+                .font(AppFont.subheadline.weight(.medium))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(selected ? theme.primaryColor : theme.textPrimary)
+        .background(selected ? theme.primaryColor.opacity(0.12) : theme.background.opacity(0.6))
+        .clipShape(.rect(cornerRadius: 10))
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .strokeBorder(
+                    selected ? theme.primaryColor.opacity(0.45) : theme.textSecondary.opacity(0.15),
+                    lineWidth: 1
+                )
+        )
+    }
+
+    private func nDaysPicker(
+        range: ClosedRange<Int>,
+        selection: Binding<Int>,
+        singularLabel: String,
+        pluralLabel: String,
+        explanation: @escaping (Int) -> String
+    ) -> some View {
+        VStack(alignment: .leading, spacing: AppSpacing.small) {
+            HStack {
+                Spacer(minLength: 0)
+                Picker("", selection: selection) {
+                    ForEach(Array(range), id: \.self) { n in
+                        Text(n == 1 ? "\(n) \(singularLabel)" : "\(n) \(pluralLabel)")
+                            .tag(n)
+                    }
+                }
+                .pickerStyle(.wheel)
+                .frame(height: 120)
+                .clipped()
+            }
+
+            Label {
+                Text(explanation(selection.wrappedValue))
+                    .font(AppFont.caption)
+                    .foregroundStyle(theme.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            } icon: {
+                Image(systemName: "info.circle.fill")
+                    .foregroundStyle(theme.textSecondary.opacity(0.9))
+            }
+        }
+    }
+
+    // MARK: - Note
+
+    private var journalNoteSection: some View {
+        HabitEditorPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+                HabitEditorSectionHeader(
+                    title: String(localized: "Note"),
+                    subtitle: String(localized: "Optional — why this habit matters to you"),
+                    systemImage: "text.alignleft",
+                    theme: theme
+                )
+
+                HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
+                    Rectangle()
+                        .fill(
+                            LinearGradient(
+                                colors: [theme.primaryColor.opacity(0.5), theme.primaryColor.opacity(0.2)],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        .frame(width: 3)
+                        .clipShape(.rect(cornerRadius: 1.5))
+
+                    TextEditor(text: $viewModel.habit.note)
+                        .font(.system(.body, design: .serif))
+                        .foregroundStyle(theme.textPrimary)
+                        .scrollContentBackground(.hidden)
+                        .frame(minHeight: 100)
+                        .padding(10)
+                        .background(theme.background.opacity(0.85))
+                        .clipShape(.rect(cornerRadius: 10))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .strokeBorder(theme.textSecondary.opacity(0.15), lineWidth: 1)
+                        )
+                }
+            }
+        }
+    }
+
+    // MARK: - Reminders
+
+    private var remindersSection: some View {
+        HabitEditorPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+                HStack {
+                    HabitEditorSectionHeader(
+                        title: String(localized: "Reminders"),
+                        subtitle: String(localized: "Optional nudges"),
+                        systemImage: "bell.badge.fill",
+                        theme: theme
+                    )
+                    Spacer(minLength: 0)
+                    Button {
+                        viewModel.onTapAddReminder()
+                    } label: {
+                        Label(String(localized: "Add"), systemImage: "plus.circle.fill")
+                            .font(AppFont.subheadline.weight(.semibold))
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(theme.primaryColor)
+                    .controlSize(.small)
+                }
+
+                if viewModel.draftReminders.isEmpty {
+                    Text(String(localized: "No reminders yet"))
+                        .font(AppFont.subheadline)
+                        .foregroundStyle(theme.textSecondary)
+                        .frame(maxWidth: .infinity)
+                        .padding(AppSpacing.medium)
+                        .background(theme.surface.opacity(0.5))
+                        .clipShape(.rect(cornerRadius: 12))
+                } else {
+                    VStack(spacing: AppSpacing.small) {
+                        ForEach(viewModel.draftReminders, id: \.id) { draft in
+                            ReminderCell(
+                                time: draft.time,
+                                title: String(localized: "Every day"),
+                                onDelete: { viewModel.onTapDeleteReminder(draft) }
+                            )
+                            .onTapGesture {
+                                viewModel.onTapEditReminder(draft)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Section chrome (matches Settings / Profile)
+
+private struct HabitEditorSectionHeader: View {
+    let title: String
+    let subtitle: String
+    let systemImage: String
+    let theme: AppTheme
+
+    var body: some View {
+        HStack(alignment: .top, spacing: AppSpacing.smallMedium) {
+            Image(systemName: systemImage)
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(theme.primaryColor)
+                .frame(width: 32, height: 32)
+                .background(theme.primaryColor.opacity(0.12))
+                .clipShape(.rect(cornerRadius: 8))
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.system(.headline, design: .serif))
+                    .foregroundStyle(theme.textPrimary)
+                Text(subtitle)
+                    .font(AppFont.caption)
+                    .foregroundStyle(theme.textSecondary)
+            }
+            Spacer(minLength: 0)
+        }
+    }
+}
+
+private struct HabitEditorPanel<Content: View>: View {
+    let theme: AppTheme
+    let accent: Color
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 0) {
+            RoundedRectangle(cornerRadius: 2)
+                .fill(
+                    LinearGradient(
+                        colors: [accent, accent.opacity(0.35)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .frame(width: 4)
+                .padding(.vertical, 8)
+
+            VStack(alignment: .leading, spacing: 0) {
+                content()
+            }
+            .padding(AppSpacing.medium)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .background { panelBackground }
+        .clipShape(.rect(cornerRadius: AppCornerRadius.card))
+        .overlay {
+            RoundedRectangle(cornerRadius: AppCornerRadius.card)
+                .strokeBorder(theme.textSecondary.opacity(0.12), lineWidth: 1)
+        }
+    }
+
+    @ViewBuilder
+    private var panelBackground: some View {
+        if #available(iOS 26, *) {
+            Color.clear
+                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.card))
+        } else {
+            theme.card
         }
     }
 }

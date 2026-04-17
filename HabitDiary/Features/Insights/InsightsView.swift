@@ -442,10 +442,3 @@ private struct InsightsScoreBreakdownRow: View {
         .presentationCompactAdaptation(.popover)
     }
 }
-
-#Preview {
-    _ = prepareDependencies {
-        $0.defaultDatabase = try! appDatabase()
-    }
-    InsightsView()
-}

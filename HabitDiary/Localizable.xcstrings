@@ -87,7 +87,18 @@
         }
       }
     },
+    "%lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld %2$@"
+          }
+        }
+      }
+    },
     "%lld day" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -104,6 +115,7 @@
       }
     },
     "%lld days" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -751,6 +763,9 @@
         }
       }
     },
+    "Add" : {
+
+    },
     "Add a diary note when you check in — even a few words capture your journey." : {
 
     },
@@ -783,6 +798,7 @@
 
     },
     "Add Reminder" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -881,7 +897,14 @@
         }
       }
     },
+    "After %lld completions, it hides until next month." : {
+
+    },
+    "After %lld completions, it hides until next week." : {
+
+    },
     "After being completed on %lld day, the habit will not show up again this month." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -898,6 +921,7 @@
       }
     },
     "After being completed on %lld day, the habit will not show up again this week." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -914,6 +938,7 @@
       }
     },
     "After being completed on %lld days, the habit will not show up again this month." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -930,6 +955,7 @@
       }
     },
     "After being completed on %lld days, the habit will not show up again this week." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -946,6 +972,12 @@
       }
     },
     "After each sit, write one thing that surfaced — a thought, feeling, or insight." : {
+
+    },
+    "After you complete it once, it hides until next month." : {
+
+    },
+    "After you complete it once, it hides until next week." : {
 
     },
     "All" : {
@@ -1329,6 +1361,9 @@
         }
       }
     },
+    "Browse catalog" : {
+
+    },
     "Browse your Journal Entries anytime to reflect on your personal growth." : {
 
     },
@@ -1458,6 +1493,7 @@
       }
     },
     "Change" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2074,6 +2110,12 @@
         }
       }
     },
+    "day this month" : {
+
+    },
+    "day this week" : {
+
+    },
     "days" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2121,6 +2163,12 @@
           }
         }
       }
+    },
+    "days this month" : {
+
+    },
+    "days this week" : {
+
     },
     "Declutter 15 minutes" : {
       "localizations" : {
@@ -2244,6 +2292,7 @@
       }
     },
     "Description" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2305,6 +2354,7 @@
       }
     },
     "Dismiss" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2548,7 +2598,11 @@
         }
       }
     },
+    "Edit habit" : {
+
+    },
     "Edit Habit" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2693,6 +2747,9 @@
           }
         }
       }
+    },
+    "Every day" : {
+
     },
     "Every day is a new opportunity to improve yourself." : {
       "localizations" : {
@@ -3030,6 +3087,7 @@
 
     },
     "Gallery" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3078,6 +3136,9 @@
       }
     },
     "Getting Started" : {
+
+    },
+    "Give your habit a name first." : {
 
     },
     "Go to bed early on weekdays to ensure adequate rest." : {
@@ -3167,6 +3228,9 @@
           }
         }
       }
+    },
+    "Habit name" : {
+
     },
     "Habit Rating" : {
       "localizations" : {
@@ -3285,7 +3349,13 @@
     "How scoring works" : {
 
     },
+    "How this habit will look in your journal" : {
+
+    },
     "How weeks line up in your journal" : {
+
+    },
+    "Icon & color" : {
 
     },
     "Ideas to try" : {
@@ -4125,7 +4195,11 @@
         }
       }
     },
+    "New habit" : {
+
+    },
     "New Habit" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4142,6 +4216,7 @@
       }
     },
     "New habit name" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4241,6 +4316,7 @@
       }
     },
     "No reminders set for this habit" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4255,6 +4331,9 @@
           }
         }
       }
+    },
+    "No reminders yet" : {
+
     },
     "No screens 1 hour before bed" : {
       "localizations" : {
@@ -4287,6 +4366,9 @@
           }
         }
       }
+    },
+    "Note" : {
+
     },
     "Note what you cleared out — both your space and your thoughts become lighter." : {
 
@@ -4357,6 +4439,9 @@
     "of %lld" : {
 
     },
+    "On your shelf" : {
+
+    },
     "Once archived, the habit will be hidden from today's habits list, but its check-ins will be kept." : {
       "localizations" : {
         "zh-Hans" : {
@@ -4399,6 +4484,12 @@
 
     },
     "Opens score breakdown" : {
+
+    },
+    "Optional — why this habit matters to you" : {
+
+    },
+    "Optional nudges" : {
 
     },
     "Orange" : {
@@ -5142,6 +5233,9 @@
         }
       }
     },
+    "Repeat" : {
+
+    },
     "Reset" : {
       "localizations" : {
         "zh-Hans" : {
@@ -5288,6 +5382,9 @@
 
     },
     "Saved on this device" : {
+
+    },
+    "Schedule" : {
 
     },
     "Schedule focused work blocks for important tasks." : {
@@ -5530,6 +5627,9 @@
           }
         }
       }
+    },
+    "Short and memorable works best" : {
+
     },
     "Short journal entries still lift your consistency score." : {
 
@@ -6536,6 +6636,9 @@
         }
       }
     },
+    "Title" : {
+
+    },
     "To receive timely reminders, please set notification method on your phone to \"Immediate Push.\"" : {
       "localizations" : {
         "zh-Hans" : {
@@ -7134,6 +7237,9 @@
           }
         }
       }
+    },
+    "When this habit appears on Journal" : {
+
     },
     "Where your score comes from" : {
 
