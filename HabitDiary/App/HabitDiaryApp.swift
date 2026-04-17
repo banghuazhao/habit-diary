@@ -9,22 +9,22 @@ import GoogleMobileAds
 
 // MARK: - Tab enum for type-safe selection
 enum AppTab: String, Hashable {
-    case today
-    case habits
-    case rating
-    case me
+    case journal
+    case library
+    case insights
+    case profile
 }
 
 @main
 struct HabitDiaryApp: App {
     @AppStorage("darkModeEnabled") private var darkModeEnabled: Bool = false
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
-    @Dependency(\.achievementService) private var achievementService
+    @Dependency(\.badgeService) private var badgeService
     @Dependency(\.themeManager) private var themeManager
-    @Dependency(\.purchaseManager) private var purchaseManager
+    @Dependency(\.premiumAccessManager) private var premiumAccessManager
     @StateObject private var openAd = OpenAd()
     @Environment(\.scenePhase) private var scenePhase
-    @State private var selectedTab: AppTab = .today
+    @State private var selectedTab: AppTab = .journal
 
     init() {
         MobileAds.shared.start(completionHandler: nil)
@@ -37,12 +37,12 @@ struct HabitDiaryApp: App {
         WindowGroup {
             content
                 .overlay {
-                    if let achievementToShow = achievementService.achievementToShow {
-                        AchievementPopupView(
+                    if let achievementToShow = badgeService.achievementToShow {
+                        BadgeUnlockedPopup(
                             achievement: achievementToShow,
                             isPresented: Binding(
-                                get: { achievementService.achievementToShow != nil },
-                                set: { if !$0 { achievementService.achievementToShow = nil } }
+                                get: { badgeService.achievementToShow != nil },
+                                set: { if !$0 { badgeService.achievementToShow = nil } }
                             )
                         )
                     }
@@ -53,7 +53,7 @@ struct HabitDiaryApp: App {
                 }
                 .onChange(of: scenePhase) { _, newPhase in
                     if newPhase == .active {
-                        if !purchaseManager.isPremiumUserPurchased {
+                        if !premiumAccessManager.isPremiumUserPurchased {
                             openAd.tryToPresentAd()
                         }
                         openAd.appHasEnterBackgroundBefore = false
@@ -78,7 +78,7 @@ struct HabitDiaryApp: App {
 
             Color.clear
                 .fullScreenCover(isPresented: .constant(!hasCompletedOnboarding)) {
-                    OnboardingView()
+                    WelcomeFlowView()
                 }
         }
     }
@@ -86,25 +86,25 @@ struct HabitDiaryApp: App {
     @available(iOS 18.0, *)
     var tabViewModern: some View {
         TabView(selection: $selectedTab) {
-            Tab("Today", systemImage: "calendar", value: AppTab.today) {
-                TodayView()
+            Tab(String(localized: "Journal"), systemImage: "book.pages.fill", value: AppTab.journal) {
+                JournalHomeView()
                     .onAppear {
-                        AdManager.requestATTPermission(with: 3)
+                        AdCoordinator.requestATTPermission(with: 3)
                     }
             }
 
-            Tab("Habits", systemImage: "list.bullet", value: AppTab.habits) {
-                HabitsListView()
+            Tab(String(localized: "Library"), systemImage: "books.vertical.fill", value: AppTab.library) {
+                HabitLibraryView()
             }
 
-            Tab("Rating", systemImage: "star.fill", value: AppTab.rating) {
-                RatingView()
+            Tab(String(localized: "Insights"), systemImage: "chart.line.text.clipboard.fill", value: AppTab.insights) {
+                InsightsView()
             }
 
-            Tab("Me", systemImage: "person.fill", value: AppTab.me) {
-                MeView()
+            Tab(String(localized: "Profile"), systemImage: "person.crop.square.fill", value: AppTab.profile) {
+                ReaderProfileView()
                     .onAppear {
-                        AdManager.requestATTPermission(with: 1)
+                        AdCoordinator.requestATTPermission(with: 1)
                     }
             }
         }
@@ -112,25 +112,25 @@ struct HabitDiaryApp: App {
 
     var tabViewLegacy: some View {
         TabView {
-            TodayView()
-                .tabItem { Label("Today", systemImage: "calendar") }
-                .onAppear { AdManager.requestATTPermission(with: 3) }
+            JournalHomeView()
+                .tabItem { Label(String(localized: "Journal"), systemImage: "book.pages.fill") }
+                .onAppear { AdCoordinator.requestATTPermission(with: 3) }
 
-            HabitsListView()
-                .tabItem { Label("Habits", systemImage: "list.bullet") }
+            HabitLibraryView()
+                .tabItem { Label(String(localized: "Library"), systemImage: "books.vertical.fill") }
 
-            RatingView()
-                .tabItem { Label("Rating", systemImage: "star.fill") }
+            InsightsView()
+                .tabItem { Label(String(localized: "Insights"), systemImage: "chart.line.text.clipboard.fill") }
 
-            MeView()
-                .tabItem { Label("Me", systemImage: "person.fill") }
-                .onAppear { AdManager.requestATTPermission(with: 1) }
+            ReaderProfileView()
+                .tabItem { Label(String(localized: "Profile"), systemImage: "person.crop.square.fill") }
+                .onAppear { AdCoordinator.requestATTPermission(with: 1) }
         }
     }
 
     private func requestNotificationPermissions() async {
-        @Dependency(\.notificationService) var notificationService
-        await notificationService.requestPermission()
-        await notificationService.printAllNotifications()
+        @Dependency(\.reminderNotificationCenter) var reminderNotificationCenter
+        await reminderNotificationCenter.requestPermission()
+        await reminderNotificationCenter.printAllNotifications()
     }
 }

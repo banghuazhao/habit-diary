@@ -380,6 +380,7 @@
 
     },
     "🎉 Achievement Unlocked! 🎉" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -394,6 +395,9 @@
           }
         }
       }
+    },
+    "🎉 Badge Unlocked! 🎉" : {
+
     },
     "🏆" : {
 
@@ -628,6 +632,7 @@
 
     },
     "Achievement Unlocked!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1141,6 +1146,9 @@
           }
         }
       }
+    },
+    "Badge Unlocked!" : {
+
     },
     "Be the person your dog thinks you are." : {
       "localizations" : {
@@ -3190,6 +3198,9 @@
     "Ink Is Flowing" : {
 
     },
+    "Insights" : {
+
+    },
     "Intermediate" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3258,6 +3269,9 @@
 
     },
     "Jot down what you made or explored — your diary tracks your creative journey." : {
+
+    },
+    "Journal" : {
 
     },
     "Journal Entries" : {
@@ -3368,6 +3382,9 @@
           }
         }
       }
+    },
+    "Library" : {
+
     },
     "Life in Pages" : {
 
@@ -4567,6 +4584,9 @@
         }
       }
     },
+    "Profile" : {
+
+    },
     "Progress" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4693,6 +4713,7 @@
       }
     },
     "Rating" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5155,6 +5176,7 @@
 
     },
     "Share Achievement" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5185,6 +5207,9 @@
           }
         }
       }
+    },
+    "Share Badge" : {
+
     },
     "Share My Stats" : {
       "localizations" : {
