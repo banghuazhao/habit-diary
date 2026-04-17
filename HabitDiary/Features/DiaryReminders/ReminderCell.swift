@@ -3,53 +3,59 @@
 // Copyright Apps Bay Limited. All rights reserved.
 //
 
+import Dependencies
 import SwiftUI
 
 struct ReminderCell: View {
     let time: Date
     let title: String
     let onDelete: (() -> Void)?
-    
-    @State private var showingDeleteAlert = false
-    
+
+    @Dependency(\.themeManager) private var themeManager
+
+    private var theme: AppTheme { themeManager.current }
+
     var body: some View {
-        HStack {
+        HStack(spacing: AppSpacing.smallMedium) {
             HStack {
-                Image(systemName: "alarm")
-                    .foregroundStyle(.gray)
-                    .font(.subheadline)
-                Spacer()
+                Image(systemName: "alarm.fill")
+                    .foregroundStyle(theme.primaryColor)
+                    .font(AppFont.subheadline)
+                Spacer(minLength: 0)
                 Text(time, format: .dateTime.hour().minute())
-                    .font(.subheadline)
-                    .fontWeight(.medium)
+                    .font(AppFont.subheadline.weight(.semibold))
+                    .foregroundStyle(theme.textPrimary)
+                    .monospacedDigit()
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
             }
-            .frame(width: 90)
-            
-            
-            Divider()
-                .frame(maxHeight: 20)
-           
+            .frame(width: 92, alignment: .leading)
+
+            Rectangle()
+                .fill(theme.textSecondary.opacity(0.22))
+                .frame(width: 1, height: 22)
+
             Text(title)
-                .font(.body)
-            
-            Spacer()
-            
+                .font(.system(.body, design: .serif))
+                .foregroundStyle(theme.textPrimary)
+                .lineLimit(2)
+                .minimumScaleFactor(0.9)
+
+            Spacer(minLength: 0)
+
             if let onDelete {
-                HStack(spacing: 4) {
-                    Button(action: {
-                        onDelete()
-                    }) {
-                        Image(systemName: "trash")
-                            .foregroundStyle(.red)
-                    }
+                Button(action: onDelete) {
+                    Image(systemName: "trash")
+                        .font(AppFont.subheadline)
+                        .foregroundStyle(theme.error)
                 }
+                .buttonStyle(.borderless)
+                .accessibilityLabel(String(localized: "Delete reminder"))
             }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .clipShape(.rect(cornerRadius: 8))
+        .padding(.horizontal, AppSpacing.smallMedium)
+        .padding(.vertical, AppSpacing.small)
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -60,12 +66,11 @@ struct ReminderCell: View {
             title: "Drink Water",
             onDelete: {}
         )
-        
         ReminderCell(
             time: Date(),
             title: "Drink Water",
-            onDelete: {}
+            onDelete: nil
         )
     }
     .padding()
-} 
+}

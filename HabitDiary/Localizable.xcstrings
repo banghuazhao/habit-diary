@@ -792,7 +792,11 @@
     "Add a note about what you read today — your diary becomes a reading log." : {
 
     },
+    "Add a reminder" : {
+
+    },
     "Add a Reminder" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -830,6 +834,9 @@
           }
         }
       }
+    },
+    "Add times that fit your day" : {
+
     },
     "Add to Favorites" : {
       "localizations" : {
@@ -1147,6 +1154,7 @@
 
     },
     "At most 64 notifications allowed. Currently %lld set." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2034,7 +2042,11 @@
         }
       }
     },
+    "Create daily reminder" : {
+
+    },
     "Create Daily Reminder" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2333,6 +2345,9 @@
       }
     },
     "Delete habit" : {
+
+    },
+    "Delete reminder" : {
 
     },
     "Description" : {
@@ -3126,6 +3141,9 @@
         }
       }
     },
+    "For the most reliable reminders, use immediate or time-sensitive delivery in Settings → Notifications → Habit Diary." : {
+
+    },
     "Frequency" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3187,6 +3205,9 @@
         }
       }
     },
+    "Get nudges when you expect them" : {
+
+    },
     "Get Started" : {
       "localizations" : {
         "zh-Hans" : {
@@ -3227,6 +3248,7 @@
       }
     },
     "Go to Settings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3285,6 +3307,9 @@
 
     },
     "Habit Diary — %@" : {
+
+    },
+    "Habit Diary can’t schedule alerts until you allow them" : {
 
     },
     "Habit insights" : {
@@ -4413,6 +4438,7 @@
       }
     },
     "No reminders set" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4499,6 +4525,7 @@
 
     },
     "Notifications are disabled. Please enable them in Settings to receive reminders." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -4513,6 +4540,9 @@
           }
         }
       }
+    },
+    "Notifications are off" : {
+
     },
     "Novice" : {
       "localizations" : {
@@ -4593,6 +4623,9 @@
       }
     },
     "One check-in on a busy day keeps momentum." : {
+
+    },
+    "Open Settings" : {
 
     },
     "Opening Chapter" : {
@@ -5326,6 +5359,9 @@
 
     },
     "Reflection" : {
+
+    },
+    "Reliable delivery" : {
 
     },
     "Reminders" : {
@@ -6383,7 +6419,11 @@
     "Tap a row for details." : {
 
     },
+    "Tap a row to edit" : {
+
+    },
     "Tap Add a Reminder to get started" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6799,6 +6839,7 @@
 
     },
     "To receive timely reminders, please set notification method on your phone to \"Immediate Push.\"" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -7037,6 +7078,9 @@
         }
       }
     },
+    "Turn on notifications in Settings so reminders can appear on your Lock Screen and as banners." : {
+
+    },
     "Ultra Consistent" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -7180,6 +7224,12 @@
     "Unlocked %@\n\n" : {
 
     },
+    "Up to 64 notifications can be scheduled. You currently have %lld reminders." : {
+
+    },
+    "Up to 64 notifications can be scheduled. You currently have 1 reminder." : {
+
+    },
     "Update" : {
       "localizations" : {
         "zh-Hans" : {
@@ -7247,6 +7297,9 @@
           }
         }
       }
+    },
+    "Use reminders to nudge yourself on Journal — add one above or start with a daily suggestion." : {
+
     },
     "Use that screen-free hour to write tonight's diary entry instead." : {
 
@@ -7789,6 +7842,9 @@
           }
         }
       }
+    },
+    "Your reminders" : {
+
     },
     "Your richest diary entry of the week — wins, struggles, and what comes next." : {
 

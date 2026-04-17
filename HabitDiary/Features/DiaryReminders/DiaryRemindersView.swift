@@ -5,233 +5,47 @@
 //  Created by Lulin Yang on 2025/6/30.
 //
 
-import SwiftUI
 import Dependencies
 import SQLiteData
+import SwiftUI
 import SwiftUINavigation
-
-@Observable
-@MainActor
-class DiaryRemindersViewModel: HashableObject {
-    @ObservationIgnored
-    @FetchAll(Reminder.all, animation: .default) var reminders
-        
-    @ObservationIgnored
-    @Dependency(\.defaultDatabase) var database
-    
-    @ObservationIgnored
-    @Dependency(\.reminderNotificationCenter) var reminderNotificationCenter
-    
-    var notificationStatus: ReminderNotificationCenter.NotificationAuthorizationStatus = .notDetermined
-    
-    @CasePathable
-    enum Route: Equatable {
-        case addReminder(ReminderEditorViewModel)
-        case editReminder(ReminderEditorViewModel)
-    }
-    
-    var route: Route?
-    
-    func onTapAddReminder() {
-        route = .addReminder(
-            ReminderEditorViewModel(
-                reminder: Reminder.Draft(),
-                onSave: { [weak self] reminder in
-                    guard let self else { return }
-                    onUpdateReminder(reminder)
-                    route = nil
-                }
-            )
-        )
-    }
-    
-    func onTapDeleteReminder(_ reminder: Reminder) {
-        onDeleteReminder(Reminder.Draft(reminder))
-    }
-    
-    func onTapEditReminder(_ reminder: Reminder) {
-        route = .editReminder(
-            ReminderEditorViewModel(
-                reminder: Reminder.Draft(reminder),
-                onSave: { [weak self] reminderDraft in
-                    guard let self else { return }
-                    onUpdateReminder(reminderDraft)
-                    route = nil
-                }
-            )
-        )
-    }
-
-    
-    private func onUpdateReminder(_ reminder: Reminder.Draft) {
-        Task {
-            await withErrorReporting {
-                let updatedReminder = try await database.write { db in
-                    try Reminder
-                        .upsert { reminder }
-                        .returning(\.self)
-                        .fetchOne(db)
-                }
-                if let updatedReminder {
-                    await reminderNotificationCenter.scheduleReminder(updatedReminder)
-                }
-                
-            }
-        }
-    }
-    
-    private func onDeleteReminder(_ reminder: Reminder.Draft) {
-        Task {
-            await withErrorReporting {
-                guard let reminderID = reminder.id else { return }
-                let reminderToDelete = try await database.read { db in
-                    try Reminder.find(reminderID).fetchOne(db)
-                }
-                if let reminderToDelete {
-                    reminderNotificationCenter.removeReminder(reminderToDelete)
-                    try await database.write { db in
-                        try Reminder.delete(reminderToDelete).execute(db)
-                    }
-                }
-            }
-        }
-    }
-    
-    func createDefaultDailyReminder() async {
-        await withErrorReporting {
-            let defaultReminder = reminderNotificationCenter.createDefaultDailyReminder()
-            let reminder = try await database.write { db in
-                try Reminder
-                    .upsert { defaultReminder }
-                    .returning(\.self)
-                    .fetchOne(db)
-            }
-            if let reminder {
-                await reminderNotificationCenter.scheduleReminder(reminder)
-            }
-        }
-    }
-    
-    func checkNotificationPermission() async {
-        notificationStatus = await reminderNotificationCenter.getAuthorizationStatus()
-    }
-    
-    func openSettings() {
-        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        }
-    }
-}
 
 struct DiaryRemindersView: View {
     @State var viewModel: DiaryRemindersViewModel = DiaryRemindersViewModel()
-    
+    @Dependency(\.themeManager) private var themeManager
+
+    private var theme: AppTheme { themeManager.current }
+
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
-                // 1. Top info box
-                HStack(alignment: .top, spacing: 10) {
-                    Image(systemName: "bell.badge")
-                        .foregroundStyle(.yellow)
-                        .font(.title2)
-                    Text("To receive timely reminders, please set notification method on your phone to \"Immediate Push.\"")
-                        .font(.subheadline)
-                        .foregroundStyle(.orange)
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 10).stroke(Color.yellow))
+            VStack(spacing: AppSpacing.large) {
+                deliveryTipsPanel
 
-                // Permission warning and button
                 if viewModel.notificationStatus == .denied {
-                    VStack(spacing: 10) {
-                        Text("Notifications are disabled. Please enable them in Settings to receive reminders.")
-                            .font(.subheadline)
-                            .foregroundStyle(.red)
-                            .multilineTextAlignment(.center)
-                        Button("Go to Settings") {
-                            viewModel.openSettings()
-                        }
-                        .appButtonStyle()
-                    }
+                    notificationsDeniedPanel
                 }
 
-                // 2. Add Reminder Button
-                Button(action: {
-                    viewModel.onTapAddReminder()
-                }) {
-                    HStack {
-                        Image(systemName: "plus.circle.fill")
-                        Text("Add a Reminder")
-                    }
-                }
-                .appButtonStyle()
+                remindersContentPanel
 
-                // 3. Reminders List
-                if viewModel.reminders.isEmpty {
-                    VStack(spacing: 16) {
-                        Image(systemName: "bell.slash")
-                            .font(.system(size: 48))
-                            .foregroundStyle(.gray)
-                        
-                        Text("No reminders set")
-                            .font(.headline)
-                            .foregroundStyle(.gray)
-                        
-                        Text("Tap Add a Reminder to get started")
-                            .font(.subheadline)
-                            .foregroundStyle(.gray)
-                            .multilineTextAlignment(.center)
-                        
-                        Button("Create Daily Reminder") {
-                            Task {
-                                await viewModel.createDefaultDailyReminder()
-                            }
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                        .background(Color.blue)
-                        .foregroundStyle(.white)
-                        .clipShape(.rect(cornerRadius: 8))
-                    }
-                    .padding(.vertical, 40)
-                } else {
-                    VStack {
-                        ForEach(viewModel.reminders, id: \.id) { reminder in
-                            ReminderCell(
-                                time: reminder.time,
-                                title: reminder.title,
-                                onDelete: {
-                                    viewModel.onTapDeleteReminder(reminder)
-                                }
-                            )
-                            .onTapGesture {
-                                viewModel.onTapEditReminder(reminder)
-                            }
-                        }
-                    }
-                    .appCardStyle()
-                }
-
-                // 4. Info Footer
                 if !viewModel.reminders.isEmpty {
-                    Text("At most 64 notifications allowed. Currently \(viewModel.reminders.count) set.")
-                        .font(.footnote)
-                        .foregroundStyle(.gray)
-                        .padding()
+                    notificationLimitFooter
                 }
             }
-            .padding()
+            .padding(.horizontal)
+            .padding(.vertical, AppSpacing.small)
+            .padding(.bottom, 24)
         }
-        .navigationTitle("Reminders")
+        .background(theme.background.ignoresSafeArea())
+        .navigationTitle(String(localized: "Reminders"))
         .navigationBarTitleDisplayMode(.inline)
+        .tint(theme.primaryColor)
         .onAppear {
             Task {
                 await viewModel.checkNotificationPermission()
             }
         }
         .sheet(isPresented: Binding($viewModel.route.addReminder)) {
-            if case .addReminder(let formViewModel) = viewModel.route {
+            if case let .addReminder(formViewModel) = viewModel.route {
                 ReminderEditorView(viewModel: formViewModel)
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
@@ -239,7 +53,7 @@ struct DiaryRemindersView: View {
             }
         }
         .sheet(isPresented: Binding($viewModel.route.editReminder)) {
-            if case .editReminder(let formViewModel) = viewModel.route {
+            if case let .editReminder(formViewModel) = viewModel.route {
                 ReminderEditorView(viewModel: formViewModel)
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
@@ -247,14 +61,195 @@ struct DiaryRemindersView: View {
             }
         }
     }
-}
 
-#Preview {
-    let _ = prepareDependencies {
-        $0.defaultDatabase = try! appDatabase()
+    // MARK: - Tips
+
+    private var deliveryTipsPanel: some View {
+        JournalAccentPanel(theme: theme, accent: theme.warning) {
+            VStack(alignment: .leading, spacing: AppSpacing.smallMedium) {
+                JournalSectionHeader(
+                    title: String(localized: "Reliable delivery"),
+                    subtitle: String(localized: "Get nudges when you expect them"),
+                    systemImage: "bell.badge.fill",
+                    theme: theme
+                )
+
+                Text(
+                    String(
+                        localized: "For the most reliable reminders, use immediate or time-sensitive delivery in Settings → Notifications → Habit Diary."
+                    )
+                )
+                .font(AppFont.subheadline)
+                .foregroundStyle(theme.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+            }
+        }
     }
-    
-    NavigationStack {
-        DiaryRemindersView()
+
+    // MARK: - Permission denied
+
+    private var notificationsDeniedPanel: some View {
+        JournalAccentPanel(theme: theme, accent: theme.error) {
+            VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                JournalSectionHeader(
+                    title: String(localized: "Notifications are off"),
+                    subtitle: String(localized: "Habit Diary can’t schedule alerts until you allow them"),
+                    systemImage: "bell.slash.fill",
+                    theme: theme
+                )
+
+                Text(
+                    String(
+                        localized: "Turn on notifications in Settings so reminders can appear on your Lock Screen and as banners."
+                    )
+                )
+                .font(AppFont.subheadline)
+                .foregroundStyle(theme.textSecondary)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+
+                Button {
+                    viewModel.openSettings()
+                } label: {
+                    Label(String(localized: "Open Settings"), systemImage: "gearshape.fill")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(theme.primaryColor)
+            }
+        }
+    }
+
+    // MARK: - Main content
+
+    private var remindersContentPanel: some View {
+        JournalAccentPanel(theme: theme, accent: theme.primaryColor) {
+            VStack(alignment: .leading, spacing: AppSpacing.medium) {
+                JournalSectionHeader(
+                    title: String(localized: "Your reminders"),
+                    subtitle: viewModel.reminders.isEmpty
+                        ? String(localized: "Add times that fit your day")
+                        : String(localized: "Tap a row to edit"),
+                    systemImage: "alarm.fill",
+                    theme: theme
+                )
+
+                Button {
+                    viewModel.onTapAddReminder()
+                } label: {
+                    Label(String(localized: "Add a reminder"), systemImage: "plus.circle.fill")
+                        .font(AppFont.headline)
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(theme.primaryColor)
+
+                if viewModel.reminders.isEmpty {
+                    emptyRemindersContent
+                } else {
+                    remindersList
+                }
+            }
+        }
+    }
+
+    private var emptyRemindersContent: some View {
+        VStack(spacing: AppSpacing.medium) {
+            Image(systemName: "bell.slash")
+                .font(.system(size: 44))
+                .foregroundStyle(theme.textSecondary.opacity(0.85))
+                .padding(.top, AppSpacing.small)
+
+            Text(String(localized: "No reminders yet"))
+                .font(.system(.title3, design: .serif))
+                .fontWeight(.semibold)
+                .foregroundStyle(theme.textPrimary)
+
+            Text(
+                String(
+                    localized: "Use reminders to nudge yourself on Journal — add one above or start with a daily suggestion."
+                )
+            )
+            .font(AppFont.subheadline)
+            .foregroundStyle(theme.textSecondary)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+
+            Button {
+                Task {
+                    await viewModel.createDefaultDailyReminder()
+                }
+            } label: {
+                Text(String(localized: "Create daily reminder"))
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+            .tint(theme.primaryColor)
+            .padding(.top, AppSpacing.small)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, AppSpacing.medium)
+    }
+
+    private var remindersList: some View {
+        VStack(spacing: AppSpacing.small) {
+            ForEach(viewModel.reminders, id: \.id) { reminder in
+                reminderRow(reminder)
+            }
+        }
+    }
+
+    private func reminderRow(_ reminder: Reminder) -> some View {
+        ReminderCell(
+            time: reminder.time,
+            title: reminder.title,
+            onDelete: { viewModel.onTapDeleteReminder(reminder) }
+        )
+        .background { reminderRowBackground }
+        .clipShape(.rect(cornerRadius: AppCornerRadius.info))
+        .overlay {
+            RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                .strokeBorder(theme.textSecondary.opacity(0.1), lineWidth: 1)
+        }
+        .contentShape(.rect)
+        .onTapGesture {
+            viewModel.onTapEditReminder(reminder)
+        }
+    }
+
+    @ViewBuilder
+    private var reminderRowBackground: some View {
+        if #available(iOS 26, *) {
+            Color.clear
+                .glassEffect(in: .rect(cornerRadius: AppCornerRadius.info))
+        } else {
+            RoundedRectangle(cornerRadius: AppCornerRadius.info)
+                .fill(theme.surface.opacity(0.55))
+        }
+    }
+
+    // MARK: - Footer
+
+    private var notificationLimitFooter: some View {
+        Group {
+            if viewModel.reminders.count == 1 {
+                Text(
+                    String(
+                        localized: "Up to 64 notifications can be scheduled. You currently have 1 reminder."
+                    )
+                )
+            } else {
+                Text(
+                    String(
+                        localized: "Up to 64 notifications can be scheduled. You currently have \(viewModel.reminders.count) reminders."
+                    )
+                )
+            }
+        }
+        .font(AppFont.footnote)
+        .foregroundStyle(theme.textSecondary)
+        .multilineTextAlignment(.center)
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, AppSpacing.small)
     }
 }
