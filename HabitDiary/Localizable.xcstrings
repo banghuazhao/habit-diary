@@ -725,6 +725,9 @@
     "Add a diary note when you check in — even a few words capture your journey." : {
 
     },
+    "Add a habit" : {
+
+    },
     "Add a note about what you read today — your diary becomes a reading log." : {
 
     },
@@ -743,6 +746,9 @@
           }
         }
       }
+    },
+    "Add habits you want to track — they’ll appear here like titles on a shelf." : {
+
     },
     "Add personal reflections to each check-in. Look back on how you felt, what you learned, and how far you've come." : {
 
@@ -2158,6 +2164,7 @@
 
     },
     "Delete ‘%@’?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2172,6 +2179,9 @@
           }
         }
       }
+    },
+    "Delete “%@”?" : {
+
     },
     "Delete %@?" : {
       "localizations" : {
@@ -2863,7 +2873,11 @@
     "Fill your diary 30 days in a row" : {
 
     },
+    "Filter by" : {
+
+    },
     "Filter By" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -3085,6 +3099,9 @@
           }
         }
       }
+    },
+    "Habit actions" : {
+
     },
     "Habit Diary" : {
 
@@ -5010,7 +5027,11 @@
         }
       }
     },
+    "Reset to default" : {
+
+    },
     "Reset to Default" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -5517,7 +5538,11 @@
         }
       }
     },
+    "Sort by" : {
+
+    },
     "Sort By" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6264,6 +6289,7 @@
 
     },
     "This will permanently delete the habit ‘%@’ and all its check-in history. This action cannot be undone. Are you sure you want to proceed?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -6278,6 +6304,9 @@
           }
         }
       }
+    },
+    "This will permanently delete this habit and its journal entries. This can’t be undone." : {
+
     },
     "Three things you're grateful for — the simplest diary entry with the biggest impact." : {
 
@@ -7282,6 +7311,9 @@
       }
     },
     "Your richest diary entry of the week — wins, struggles, and what comes next." : {
+
+    },
+    "Your shelf is empty" : {
 
     },
     "Your Statistics" : {

@@ -4,155 +4,7 @@
 //
 
 import SwiftUI
-import SQLiteData
-import Observation
 import SwiftUINavigation
-import Sharing
-
-@Observable
-@MainActor
-class HabitLibraryViewModel {
-    @ObservationIgnored
-    @FetchAll(animation: .default) var habits: [Habit]
-    
-    @ObservationIgnored
-    @Dependency(\.defaultDatabase) var database
-    
-    @ObservationIgnored
-    @Dependency(\.reminderNotificationCenter) var reminderNotificationCenter
-        
-    // Add sort and filter properties
-    enum SortOption: String, CaseIterable {
-        case `default` = "Default"
-        case name = "Name"
-        
-        var displayName: String {
-            return self.rawValue
-        }
-    }
-    
-    enum FilterOption: String, CaseIterable {
-        case all = "All"
-        case favorites = "Favorites"
-        case active = "Active"
-        case archived = "Archived"
-        
-        var displayName: String {
-            return self.rawValue
-        }
-    }
-    
-    @ObservationIgnored
-    @Shared(.appStorage("selectedSortOption")) var selectedSortOption: SortOption = .default
-    @ObservationIgnored
-    @Shared(.appStorage("selectedFilterOption")) var selectedFilterOption: FilterOption = .all
-    
-    // Computed property for filtered and sorted habits
-    var filteredHabits: [Habit] {
-        var filtered = habits
-        
-        // Apply additional filters
-        switch selectedFilterOption {
-        case .all:
-            break // No additional filtering
-        case .favorites:
-            filtered = filtered.filter { $0.isFavorite }
-        case .archived:
-            filtered = filtered.filter { $0.isArchived }
-        case .active:
-            filtered = filtered.filter { !$0.isArchived }
-        }
-        
-        // Apply sorting
-        switch selectedSortOption {
-        case .default:
-            break
-        case .name:
-            filtered.sort { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
-        }
-        
-        return filtered
-    }
-    
-    @CasePathable
-    enum Route {
-        case editHabit(HabitEditorViewModel)
-        case createHabit(HabitEditorViewModel)
-        case habitDetail(HabitPageViewModel)
-    }
-    var route: Route?
-    
-    func confirmDeleteHabit(_ habit: Habit) {
-        withErrorReporting {
-            reminderNotificationCenter.removeRemindersForHabit(habit.id)
-            try  database.write { db in
-                try Habit.delete(habit).execute(db)
-            }
-        }
-    }
-    
-    func onTapHabitItem(_ habit: Habit) {
-        route = .habitDetail(HabitPageViewModel(habit: habit))
-    }
-    
-    func onTapEditHabit(_ habit: Habit) {
-        route = .editHabit(
-            HabitEditorViewModel(
-                habit: Habit.Draft(habit)
-            ) { [weak self] _ in
-                guard let self else { return }
-                route = nil
-            }
-        )
-    }
-    
-    func toggleFavorite(_ habit: Habit) {
-        var updatedHabit = habit
-        updatedHabit.isFavorite = !habit.isFavorite
-        withErrorReporting {
-            try database.write { db in
-                try Habit
-                    .update(updatedHabit)
-                    .execute(db)
-            }
-        }
-    }
-    
-    func toggleArchive(_ habit: Habit) {
-        var updatedHabit = habit
-        updatedHabit.isArchived = !habit.isArchived
-        withErrorReporting {
-            try database.write { db in
-                try Habit
-                    .update(updatedHabit)
-                    .execute(db)
-            }
-        }
-    }
-    
-    func onTapCreateHabit() {
-        route = .createHabit(
-            HabitEditorViewModel(
-                habit: Habit.Draft()
-            ) { [weak self] _ in
-                guard let self else { return }
-                route = nil
-            }
-        )
-    }
-    
-    func selectSortOption(_ option: SortOption) {
-        withAnimation {
-            $selectedSortOption.withLock { $0 = option }
-        }
-    }
-    
-    func selectFilterOption(_ option: FilterOption) {
-        withAnimation {
-            $selectedFilterOption.withLock { $0 = option }
-        }
-    }
-}
 
 struct HabitLibraryView: View {
     @State var viewModel = HabitLibraryViewModel()
@@ -160,13 +12,15 @@ struct HabitLibraryView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 16) {
+                VStack(spacing: 14) {
                     if viewModel.filteredHabits.isEmpty {
                         EmptyStateView(
-                            icon: "📝",
-                            title: "No Habits Yet",
-                            subtitle: "Start building healthy habits by creating your first one. Small steps lead to big changes!",
-                            buttonTitle: "Add Habit"
+                            icon: "📚",
+                            title: String(localized: "Your shelf is empty"),
+                            subtitle: String(
+                                localized: "Add habits you want to track — they’ll appear here like titles on a shelf."
+                            ),
+                            buttonTitle: String(localized: "Add a habit")
                         ) {
                             viewModel.onTapCreateHabit()
                         }
@@ -180,26 +34,22 @@ struct HabitLibraryView: View {
                                 onToggleArchive: { viewModel.toggleArchive(habit) }
                             )
                             .padding(.horizontal)
-                            .sheet(item: $viewModel.route.editHabit, id: \.self) { habitFormViewModel in
-                                HabitEditorView(
-                                    viewModel: habitFormViewModel
-                                )
-                            }
+                            .contentShape(.rect)
                             .onTapGesture {
                                 viewModel.onTapHabitItem(habit)
                             }
                         }
                     }
                 }
+                .padding(.vertical, 8)
             }
             .appBackground()
-            .navigationTitle("Habits")
+            .navigationTitle(String(localized: "Library"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Menu {
-                        // Sort Section
-                        Section("Sort By") {
+                        Section(String(localized: "Sort by")) {
                             ForEach(HabitLibraryViewModel.SortOption.allCases, id: \.self) { option in
                                 Button(action: {
                                     viewModel.selectSortOption(option)
@@ -214,9 +64,8 @@ struct HabitLibraryView: View {
                                 }
                             }
                         }
-                        
-                        // Filter Section
-                        Section("Filter By") {
+
+                        Section(String(localized: "Filter by")) {
                             ForEach(HabitLibraryViewModel.FilterOption.allCases, id: \.self) { option in
                                 Button(action: {
                                     viewModel.selectFilterOption(option)
@@ -231,23 +80,25 @@ struct HabitLibraryView: View {
                                 }
                             }
                         }
-                        
-                        // Reset Option
+
                         if viewModel.selectedFilterOption != .all || viewModel.selectedSortOption != .default {
                             Divider()
-                            Button("Reset to Default") {
+                            Button(String(localized: "Reset to default")) {
                                 viewModel.selectSortOption(.default)
                                 viewModel.selectFilterOption(.all)
                             }
                         }
                     } label: {
-                        ZStack {
-                            Image(systemName: viewModel.selectedFilterOption != .all || viewModel.selectedSortOption != .default ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
-                                .appCircularButtonStyle()
-                        }
+                        Image(
+                            systemName: viewModel.selectedFilterOption != .all
+                                || viewModel.selectedSortOption != .default
+                                ? "line.3.horizontal.decrease.circle.fill"
+                                : "line.3.horizontal.decrease.circle"
+                        )
+                        .appCircularButtonStyle()
                     }
                 }
-                
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         viewModel.onTapCreateHabit()
@@ -260,16 +111,12 @@ struct HabitLibraryView: View {
             .sheet(item: $viewModel.route.createHabit, id: \.self) { habitFormViewModel in
                 HabitEditorView(viewModel: habitFormViewModel)
             }
+            .sheet(item: $viewModel.route.editHabit, id: \.self) { habitFormViewModel in
+                HabitEditorView(viewModel: habitFormViewModel)
+            }
             .navigationDestination(item: $viewModel.route.habitDetail) { habitDetailViewModel in
                 HabitPageView(viewModel: habitDetailViewModel)
             }
         }
     }
-}
-
-#Preview {
-    let _ = prepareDependencies {
-        $0.defaultDatabase = try! appDatabase()
-    }
-    HabitLibraryView()
 }
