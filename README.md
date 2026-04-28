@@ -7,13 +7,14 @@
 
 A comprehensive iOS habit tracking app built with SwiftUI and GRDB, designed to help users build and maintain habits through gamification, achievements, and a sophisticated rating system. Transform your life one habit at a time with intelligent tracking, personalized reminders, and motivational features.
 
+## App Store
+
+HabitDiary is now available on the App Store: [Habit Diary: Build Good Habits](https://apps.apple.com/us/app/habit-diary-build-good-habits/id1550484411).
+
 ## 📱 Screenshots
 
 <div align="center">
-  <img src="screenshots/1.png" alt="HabitDiary Screenshot 1" width="200"/>
-  <img src="screenshots/2.png" alt="HabitDiary Screenshot 2" width="200"/>
-  <img src="screenshots/3.png" alt="HabitDiary Screenshot 3" width="200"/>
-  <img src="screenshots/4.png" alt="HabitDiary Screenshot 4" width="200"/>
+  <img src="screenshots/HabitDiary.png" alt="HabitDiary App Screenshots" width="900"/>
 </div>
 
 *Experience a clean, modern interface with intuitive habit tracking, comprehensive analytics, and engaging gamification elements designed to motivate long-term habit formation.*
